@@ -172,14 +172,14 @@
               <!--            <td th:text="${ member.status }" ></td>-->
               <td class="content" id="">
                                   <span th:switch="${member.status}">
-                                    <span th:case="0">기본</span>
-                                    <span th:case="1">탈퇴</span>
-                                    <span th:case="2">정지</span>
+                                    <span th:case="활동">활동</span>
+                                    <span th:case="탈퇴">탈퇴</span>
+                                    <span th:case="정지">정지</span>
                                   </span>
                 <select name="status" id="status" style="display: none">
-                  <option value="0">기본</option>
-                  <option value="1">탈퇴</option>
-                  <option value="2">정지</option>
+                  <option value="활동">활동</option>
+                  <option value="탈퇴">탈퇴</option>
+                  <option value="정지">정지</option>
                 </select>
                 <input type="hidden" name="member_ROLE" value="ROLE_USER">
                 <button type="button" onclick="statusChange()">회원 상태 변경</button>
