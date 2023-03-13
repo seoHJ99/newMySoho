@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <html lang="ko">
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+      <title>Document</title>
+
+      <th:block th:replace="fragments/head :: headFragment"></th:block>
+
+      <style>
+        .total {
+          display: flex;
+          justify-content: center;
+        }
+        .part {
+          width: 900px;
+        }
+        .all {
+          padding-top: 15px;
+        }
+        .head_table {
+          margin-top: 10px;
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+        .head_title {
+          text-align: center;
+          width: 100px;
+          height: 30px;
+          background-color: #d0d0d0;
+          border: 1px solid black;
+        }
+        .head_con {
+          text-align: center;
+          width: 200px;
+          height: 30px;
+          border: 1px solid black;
+        }
+        .nav_one {
+          border: 1px solid black;
+        }
+        .nav_one:hover {
+          background-color: #f8f8f8;
+        }
+        .nav_table {
+          border-collapse: collapse;
+          margin-top: 30px;
+        }
+
+        .nav_one {
+          text-align: center;
+          width: 220px;
+        }
+
+        .main_tr > td:nth-child(1) {
+          width: 150px;
+          height: 50px;
+          background-color: #d0d0d0;
+        }
+        .main_tr > td:nth-child(2) {
+          width: 440px;
+        }
+        .main_tr1 {
+          height: 250px;
+        }
+        .main_tr1 > td:nth-child(1) {
+          background-color: #d0d0d0;
+          text-align: center;
+        }
+        .photo_tr > td:nth-child(1) {
+          background-color: #d0d0d0;
+        }
+        .footer_tr > td:nth-child(1) {
+          width: 150px;
+          height: 50px;
+          text-align: right;
+        }
+        td {
+          border: 1px solid black;
+        }
+        .product {
+          width: 104px;
+        }
+        table {
+          width: 100%;
+        }
+        .option {
+          width: 100%;
+        }
+        .sub_option {
+          margin-left: 20px;
+        }
+        .center_right {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-left: 300px;
+          padding-right: 10px;
+        }
+        a {
+          text-decoration: none;
+          color: black;
+        }
+        .explain {
+          padding-bottom: 120px;
+          padding-left: 10px;
+        }
+        .score {
+          padding-left: 10px;
+        }
+        .score_button {
+          margin-left: 340px;
+        }
+        .ok {
+          margin-left: 40px;
+        }
+        .categori_one {
+          margin-left: 80px;
+        }
+        .categori_two {
+          margin-left: 150px;
+        }
+        .price_one {
+          margin-left: 20px;
+        }
+        .discount {
+          margin-left: 20px;
+        }
+        .explain_one {
+          margin-left: 40px;
+        }
+        .real_explain {
+          padding-left: 15px;
+        }
+        #representImage {
+          width: 100px;
+          height: 100px;
+        }
+        .main_tr > td:nth-child(3) {
+          background-color: #d0d0d0;
+        }
+        button {
+          border: 0px solid white;
+        }
+        .square_box {
+          margin-left: 3px;
+          margin-top: 7px;
+          margin-right: 10px;
+          width: 10px;
+          height: 10px;
+          background-color: black;
+        }
+        .product_box {
+          display: flex;
+          flex-direction: row;
+        }
+      </style>
+    </head>
+    <body>
+      <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+      <div class="total">
+        <div class="part">
+          <header th:replace="fragments/header :: headerFragment"></header>
+
+          <!--  -->
+          <div class="all">
+            <div class="product_box">
+              <div class="square_box"></div>
+              <div>상품정보 조회 및 수정 페이지</div>
+            </div>
+            <div class="main">
+              <!--            <form action="/admin/product/modify" method="post" enctype="multipart/form-data">-->
+              <table class="main_table">
+                <tr class="main_tr">
+                  <td>* 카테고리</td>
+                  <td id="aaaa" colspan="1">
+                    <select id="category_first" name="item_CATEGORY1">
+                      <option>카테고리 1</option>
+                      <option
+                        th:each="cate1:${cate1}"
+                        th:value="${cate1}"
+                        th:text="${cate1}"
+                      ></option>
+                    </select>
+                    <select id="category_second" name="item_CATEGORY2">
+                      <option value="">카테고리 2</option>
+                      <option
+                        th:each="cate2:${cate2}"
+                        th:value="${cate2}"
+                        th:text="${cate2}"
+                      ></option>
+                    </select>
+                  </td>
+                  <td>* 원본상품</td>
+                  <td id="original" th:text="${dto.item_ORIGINAL}"></td>
+                </tr>
+
+                <tr class="main_tr">
+                  <td>* 제품명</td>
+                  <td>
+                    <input
+                      type="text"
+                      id="NAME"
+                      name="item_NAME"
+                      th:value="${ dto.item_NAME }"
+                    />
+                  </td>
+                  <td class="product">* 상품번호</td>
+                  <td id="item_idx" th:text="${ dto.item_idx }"></td>
+                </tr>
+                <tr class="photo_tr" style="height: 105px">
+                  <td>* 상품 대표 사진</td>
+                  <td>
+                    <img id="representImage" th:src="${dto.item_IMAGE}" />
+                  </td>
+                  <td colspan="2">
+                    <form
+                      id="uploadForm"
+                      action="/admin/product/changeImage"
+                      enctype="multipart/form-data"
+                      method="post"
+                    >
+                      <input
+                        type="hidden"
+                        sec:authorize="isAuthenticated()"
+                        th:name="${_csrf.parameterName}"
+                        th:value="${_csrf.token}"
+                      />
+
+                      <input
+                        type="hidden"
+                        th:value="${dto.item_idx}"
+                        name="idx"
+                      />
+                      <input type="file" multiple id="IMAGE" name="IMAGE" />
+                      <input type="submit" value="사진교환" />
+                    </form>
+                  </td>
+                </tr>
+                <tr>
+                  <td>원본상품</td>
+                  <td>
+                    <input type="text" name="item_ORIGINAL" />
+                  </td>
+                  <td>옵션 내용</td>
+                  <td>
+                    <input type="text" name="item_OPTION" />
+                  </td>
+                </tr>
+                <tr class="main_tr">
+                  <td>* 가격</td>
+                  <td>
+                    <div class="price_one">
+                      <input
+                        type="number"
+                        id="price"
+                        name="item_PRICE"
+                        th:value="${ dto.item_PRICE }"
+                        placeholder="가격 입력"
+                      />
+                    </div>
+                  </td>
+                  <td class="product">* 등록일</td>
+                  <td th:text="${dto.registeredDate}"></td>
+                </tr>
+                <tr class="main_tr">
+                  <td>* 할인율</td>
+                  <td class="discount" colspan="3">
+                    <div class="discount">
+                      <input
+                        id="salePer"
+                        type="number"
+                        name="item_DISCOUNT"
+                        th:value="${ dto.item_DISCOUNT }"
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr class="main_tr">
+                  <td>* 재고량</td>
+                  <td
+                    class="option"
+                    colspan="3"
+                    th:text="${dto.item_SELL}"
+                  ></td>
+                </tr>
+                <tr class="main_tr">
+                  <td>* 발주</td>
+                  <td colspan="3">
+                    <!-- 발주는 못하니까 맵핑x -->
+                    <form action="">
+                      <input
+                        type="hidden"
+                        sec:authorize="isAuthenticated()"
+                        th:name="${_csrf.parameterName}"
+                        th:value="${_csrf.token}"
+                      />
+                      <input type="number" id="order" />
+                      <button onclick="submit">발주</button>
+                    </form>
+                  </td>
+                </tr>
+                <tr class="main_tr">
+                  <td>* 상품 리뷰</td>
+                  <td colspan="3">
+                    <span class="score" th:text="${scoreAvg}"
+                      >상품 평균 별점</span
+                    >
+                    <a
+                      th:href="@{/product(idx=${dto.item_idx})}"
+                      class="score_button"
+                    >
+                      해당 상품 리뷰 보러가기
+                    </a>
+                  </td>
+                </tr>
+                <tr class="main_tr1">
+                  <td class="real_explain">
+                    * 상품 사진 및<br />
+                    <span class="explain_one">설명</span>
+                  </td>
+                  <td colspan="3">
+                    <textarea
+                      id="editor"
+                      name="item_DETAIL"
+                      th:text="${dto.item_DETAIL}"
+                    ></textarea>
+                    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+                    <div class="explain">상품 사진 및 설명</div>
+                  </td>
+                </tr>
+                <tr class="footer_tr">
+                  <td colspan="4">
+                    <div class="center_right">
+                      <div class="center">
+                        <button onclick="deletePD()">삭제</button>
+                        <button onclick="modify()">수정</button>
+                      </div>
+
+                      <div class="right">
+                        <button>이전</button>
+                        <button onclick="location.href='/admin/list/product'">
+                          목록
+                        </button>
+                        <button>다음</button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+              <!--            </form>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
+
+    <script th:inline="javascript">
+         let editor;
+         let a = [[${_csrf.token}]];
+         let b = [[${_csrf.parameterName}]];
+         console.log(a);
+         console.log(b);
+         ClassicEditor.create(document.querySelector("#editor"), {
+           language: "ko",
+           ckfinder: {
+         	uploadUrl:"/admin/imgUpload?"+ b + "=" + a,
+           },
+         })
+           .then((newEditor) => {
+         	editor = newEditor;
+           })
+           .catch((error) => {
+         	console.error(error);
+           });
+
+      function deletePD() {
+      	$.ajax({
+      		url: "/admin/product/delete",
+      		type: "POST",
+      		data: {
+      			id: $("#item_idx").text(),
+      		},
+      		success: function (response) {
+      			alert("삭제 성공");
+      			location.href = "/admin/list/product";
+      		},
+      	});
+      }
+
+             function modify() {
+               console.log($("#category_first option:selected").text());
+
+      	$.ajax({
+      		url: "/admin/product/modify",
+      		type: "POST",
+      		data: {
+      			item_CATEGORY1: $("#category_first option:selected").text(),
+      			item_CATEGORY2: $("#category_second option:selected").text(),
+      			item_ORIGINAL: $("#original").text(),
+      			item_NAME: $("#NAME").val(),
+      			item_DETAIL: $("#editor").text(),
+      			item_DISCOUNT: $("#salePer").val(),
+      			item_idx: $("#item_idx").text(),
+      			item_PRICE: $("#price").val(),
+      		},
+      		success: function (response) {
+      			alert("수정 성공");
+      			location.href = "/admin/list/product";
+      		},
+      	});
+      }
+    </script>
+  </html>
+</html>
