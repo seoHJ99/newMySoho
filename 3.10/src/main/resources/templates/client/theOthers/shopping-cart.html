@@ -657,9 +657,7 @@
   </head>
 
   <body id="bodytest">
-    <th:block
-      th:replace="/client/fragments/Clheader :: headerFragment"
-    ></th:block>
+    <th:block th:replace="/client/fragments/Clheader :: headerFragment"></th:block>
     <!-- <form action="/save/order" name="payComplete" method="post"> -->
     <div class="content-view text-align-center">
       <!-- 장바구니 -->
@@ -689,6 +687,7 @@
         <div class="prd-info MSH-prd-info-19520"
              th:value="${itemList.item_IDX}">
           <input type="checkbox" class="check-box-pd" onchange="check(this)" th:value="${itemList.item_PRICE_DISCOUNT}" checked />
+          <span th:text="${itemList.item_IDX}" ></span>
           <div class="cart-info">
             <div class="bsk-info">
               <!-- 상품이미지 -->
@@ -727,11 +726,9 @@
                 <div class="window">
                   <div class="popup-share">
                     <div class="lhd-share">
-                      <a href="javascript:closeOrderList()" class="closebtn"
-                        ><img
-                          src="https://image.makeshop.co.kr/mysoho/assets/shop/img/btn/h30_close.png"
-                          alt=""
-                      /></a>
+                      <a href="javascript:closeOrderList()" class="closebtn">
+                        <img  src="https://image.makeshop.co.kr/mysoho/assets/shop/img/btn/h30_close.png" alt="" />
+                      </a>
                     </div>
                     <div class="share-tit">
                       <div>상품 정보를</div>
@@ -1453,12 +1450,6 @@
             autocomplete="off"
             onclick="onclickAgree()"
           />
-          <label></label>
-          <!-- <input
-                                type="checkbox"
-                                name="terms_agree_all"
-                                autocomplete="off"
-                              /> -->
           <div>
             <strong> 약관/결제 전체 동의</strong>
           </div>
@@ -1668,7 +1659,6 @@
         document.getElementById("mySidenav").style.width = "0";
       }
     </script>
-
     <script>
       //돋보기
       function openSearch() {
@@ -1958,11 +1948,9 @@
 
       function trashAll(){ // 모든 상품 장바구니 삭제 및 쿠키 삭제
        let cookiesAll = document.cookie.split('; ');
-
        for(let i=0; i<$(".prd-info").length ; i++){
           if($(".prd-info").eq(i).children("input").is(":checked")){
-            let cookieName =  cookiesAll[i].substring(0, cookiesAll[i].indexOf("="));
-            setCookie(cookieName,0,-3);
+              setCookie($(".prd-info").eq(i).children("span").text(),0,-3);
             goCart();
           }
        }
@@ -2168,5 +2156,6 @@
       }
       
     </script>
+
   </body>
 </html>

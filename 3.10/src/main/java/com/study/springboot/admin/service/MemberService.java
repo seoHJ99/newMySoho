@@ -12,6 +12,12 @@ import org.springframework.stereotype.Service;
 public class MemberService {
     private final MemberListRepository memberRepository;
 
+    public MemberResponseDTO findByMail(String email, String id){
+        Member entity = memberRepository.findByMailAndID(email, id);
+        MemberResponseDTO dto = new MemberResponseDTO(entity);
+        return dto;
+    }
+
     public MemberResponseDTO findByIDX(int idx){
         Member entity = memberRepository.findById(idx).get();
         MemberResponseDTO dto = new MemberResponseDTO(entity);
@@ -27,6 +33,16 @@ public class MemberService {
             return "0";
         }else {
             return "1";
+        }
+    }
+    public String findID(String name, String phone){
+        Member entity = memberRepository.findByNameAndPhone(name, phone);
+        String memberID ="";
+        if(entity !=null){
+            memberID = entity.getMemberID();
+            return memberID;
+        }else {
+            return "없음";
         }
     }
 }

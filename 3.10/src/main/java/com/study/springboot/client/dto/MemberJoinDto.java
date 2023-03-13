@@ -38,11 +38,8 @@ public class MemberJoinDto {
                 .memberPw(memberPw)
                 .member_NAME(member_NAME)
                 .member_MAIL(member_MAIL)
-                .member_ADDRESS(member_ADDRESS)
-                .member_POST(member_POST)
                 .member_PHONE(member_PHONE)
                 .joinDate(member_SIGNUP)
-                .member_ROLE(member_ROLE)
                 .status(status)
                 .build();
     }
