@@ -113,7 +113,7 @@
             <tr class="main_tr">
               <td>PW</td>
               <td class="content">
-                <input type="text" name="member_PW" id="member_PW" th:value="${ member.memberPw }">
+                <input type="text" name="memberPw" id="memberPw" th:value="${ member.memberPw }">
               </td>
             </tr>
             <tr class="main_tr">
@@ -181,6 +181,7 @@
                   <option value="1">탈퇴</option>
                   <option value="2">정지</option>
                 </select>
+                <input type="hidden" name="member_ROLE" value="ROLE_USER">
                 <button type="button" onclick="statusChange()">회원 상태 변경</button>
               </td>
             </tr>

@@ -10,6 +10,7 @@ import com.study.springboot.entity.MemberListRepository;
 import com.study.springboot.admin.dto.CouponResoponseDTO;
 import com.study.springboot.admin.dto.MemberResponseDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ import java.util.Optional;
 public class MemberController {
     private final MemberListRepository memberListRepository;
     private final CouponRepository couponRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/member")
     public String memDetailForm(int idx, Model model) throws Exception {
@@ -55,6 +57,8 @@ public class MemberController {
 
         memberResponseDTO.setMember_SIGNUP(memberListRepository.findById(memberResponseDTO.getMember_IDX()).get().getJoinDate());
         try {
+            String encodedPassword = passwordEncoder.encode(memberResponseDTO.getMemberPw());
+            memberResponseDTO.setMemberPw( encodedPassword );
             Member entity = memberResponseDTO.toUpdateEntity();
             memberListRepository.save(entity);
         } catch (IllegalArgumentException e) {

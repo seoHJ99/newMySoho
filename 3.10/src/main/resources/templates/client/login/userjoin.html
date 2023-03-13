@@ -193,19 +193,10 @@
 					onsubmit="return submitJoin()"
 					;
 				>
-					<input
-						type="hidden"
-						sec:authorize="isAuthenticated()"
-						th:name="${_csrf.parameterName}"
-						th:value="${_csrf.token}"
-					/>
-
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 					<div class="mt-20">
 						<strong> 기본정보</strong>
 					</div>
-					<!--            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
-					<!--            <input type="hidden" name="member_ROLE" th:value="${ member.member_ }" />-->
-					<!-- action="/user/loginProcess" -->
 					<input
 						class="input-st01 users-login-input input-id mt-10"
 						type="text"
@@ -363,16 +354,8 @@
 							</li>
 						</ul>
 					</div>
-					<input
-						type="hidden"
-						name="member_ROLE"
-						value="ROLE_USER"
-					/>
-					<input
-						type="hidden"
-						name="status"
-						value="0"
-					/>
+					<input type="hidden" name="member_ROLE" value="ROLE_USER">
+					<input type="hidden" name="status" value="0">
 					<div>
 						<!-- 이용약관 -->
 						<ul class="users-cont-full">
