@@ -3,7 +3,9 @@ package com.study.springboot.client.controller;
 import com.study.springboot.admin.dto.CouponResoponseDTO;
 import com.study.springboot.admin.dto.MemberResponseDTO;
 import com.study.springboot.admin.dto.OrderResponseDto;
+import com.study.springboot.admin.dto.ProductResponseDto;
 import com.study.springboot.admin.service.OrderService;
+import com.study.springboot.admin.service.ReviewService;
 import com.study.springboot.client.dto.*;
 import com.study.springboot.client.service.ClientReviewService_JunTae;
 import com.study.springboot.client.service.CouponService;
@@ -12,6 +14,7 @@ import com.study.springboot.entity.Member;
 import com.study.springboot.entity.MemberListRepository;
 import com.study.springboot.admin.service.MemberService;
 
+import com.study.springboot.entity.OrderDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -21,17 +24,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-
-import javax.mail.*;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
-import java.util.Random;
 
 @Controller
 @RequiredArgsConstructor
@@ -224,7 +221,9 @@ public class UserController_MyungJin {
         model.addAttribute("order3", test.getOrderingCnt() );
         model.addAttribute("order4", test.getCompleteCnt() );
         model.addAttribute("order5", refundCnt);
+
         model.addAttribute("list", orderTests);
+
         return "/client/user/Nonmember/myorder-list";
     }
 
@@ -241,89 +240,4 @@ public class UserController_MyungJin {
         }
         return "/client/user/Member/review-mylist";
     }
-
-    @RequestMapping("/findID")
-    public String findID(@RequestParam("user_name") String name, @RequestParam("user_mobileNumber") String phone, Model model){
-        String memberID = memberService.findID(name, phone);
-        System.out.println(memberID);
-        if(!memberID.equals("없음")){
-            model.addAttribute("id",memberID);
-        }
-        return "/client/login/find-ID";
-    }
-
-
-    @RequestMapping("/findPW")
-    @ResponseBody
-    public String findPW(@RequestParam("email") String email, @RequestParam("id") String id){
-        int leftLimit = 48; // numeral '0'
-        int rightLimit = 122; // letter 'z'
-        int targetStringLength = 10;
-        Random random = new Random();
-        String generatedString = random.ints(leftLimit,rightLimit + 1)
-                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
-                .limit(targetStringLength)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString();
-        MemberResponseDTO dto = memberService.findByMail(email, id);
-        String encodePW = passwordEncoder.encode(generatedString);
-        dto.setMemberPw(encodePW);
-        Member entity = dto.toUpdateUserEntity();
-        memberListRepository.save(entity);
-        sendMail(email, generatedString);
-        return "alert('임시비밀번호가 발급되었습니다. 메일을 확인해주세요!'); location.href='/main';";
-    }
-
-
-
-    public void sendMail(String email, String PW) {
-        String recipient = email;
-        String code = PW;
-
-        // 1. 발신자의 메일 계정과 비밀번호 설정
-        final String user = "a9669579@gmail.com";
-        final String password = "fhrmdls1541";
-
-        // 2. Property에 SMTP 서버 정보 설정
-        Properties prop = new Properties();
-        prop.put("mail.smtp.host", "smtp.gmail.com");
-        prop.put("mail.smtp.port", 465);
-        prop.put("mail.smtp.auth", "true");
-        prop.put("mail.smtp.ssl.enable", "true");
-        prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-
-        // 3. SMTP 서버정보와 사용자 정보를 기반으로 Session 클래스의 인스턴스 생성
-        Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(user, password);
-            }
-        });
-
-        // 4. Message 클래스의 객체를 사용하여 수신자와 내용, 제목의 메시지를 작성한다.
-        // 5. Transport 클래스를 사용하여 작성한 메세지를 전달한다.
-
-        MimeMessage message = new MimeMessage(session);
-        try {
-            message.setFrom(new InternetAddress(user));
-
-            // 수신자 메일 주소
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-
-            // Subject
-            message.setSubject("PLAYDDIT verification code");
-
-            // Text
-            message.setText("임시비밀번호를 발급합니다. 비밀번호는 ["+code+"]입니다.");
-
-            Transport.send(message);    // send message
-
-        } catch (AddressException e) {
-            e.printStackTrace();
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-
-    }
 }
-
-

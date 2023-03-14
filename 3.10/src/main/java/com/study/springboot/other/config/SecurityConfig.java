@@ -54,7 +54,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     response.sendRedirect("/main");
                     List<Member> list = memberListRepository.findByUserLoginId(request.getParameter("memberID"));
                     Member entity = list.get(0);
-                    request.getSession().setAttribute("memberID", entity.getMemberID());
+                    request.getSession().setAttribute("memberEntity", entity);
+                    request.getSession().setAttribute("memberID", request.getParameter("memberID"));
+                    request.getSession().setAttribute("memberPw", request.getParameter("memberPw"));
+                    request.getSession().setAttribute("member_IDX", entity.getMember_IDX());
+                    request.getSession().setAttribute("member_NAME", entity.getMember_NAME());
                     request.getSession().setAttribute("member_IDX", entity.getMember_IDX());
                 })
                 //인증이 실패 했을 경우 이동하는 페이지를 설정합니다.

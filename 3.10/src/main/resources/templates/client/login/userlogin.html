@@ -97,7 +97,7 @@
 										</div>
 
 										<form
-											action="/findID"
+											action="frmLogin"
 											method="post"
 										>
 											<input
@@ -120,7 +120,7 @@
 											/>
 											<button
 												class="btn-h42-gray mt-10"
-												onclick="findID()"
+												onclick="alert('입력한 정보를 다시 한번 확인해주세요.')"
 											>
 												찾기
 											</button>
@@ -159,8 +159,7 @@
 										</div>
 
 										<form
-											action="/findPW"
-											onsubmit="return checkINPUT2()"
+											action="frmLogin"
 											method="post"
 										>
 											<input
@@ -172,20 +171,14 @@
 											<input
 												class="input-st01 users-login-input"
 												type="email"
-												id="pwMAIL"
-												name="email"
+												name="user_name"
 												placeholder="이메일을 입력해주세요"
 											/>
-											<input
-												class="input-st01 users-login-input mt-10"
-												type="text"
-												name="id"
-												id="pwID"
-												placeholder="id를 입력하세요"
-											/>
+
 											<button
 												type="submit"
 												class="btn-h42-gray mt-10"
+												onclick="alert('이메일 주소를 입력해주세요.')"
 											>
 												발송하기
 											</button>
@@ -203,6 +196,7 @@
 						class="btn-h42-gray"
 						>비회원 주문조회</a
 					>
+					<!-- 이거 맵핑할만한 컨트롤러 클래스가 없는것 같은데 -->
 				</div>
 			</div>
 		</div>
@@ -210,19 +204,8 @@
 		<th:block
 			th:replace="/client/fragments/Clfooter :: footerFragment"
 		></th:block>
-		<script th:inline="javascript">
-			const id =[[${id}]];
-			if(id != null){
 
-			}
-		</script>
 		<script>
-			function checkINPUT2() {
-<!--				if ($("#pwMAIL").val() != "" || $("#pwID").val() != "") {-->
-<!--					alert("아이디, 이메일을 적어주세요!");-->
-<!--					return false;-->
-<!--				}-->
-			}
 			//사이드메뉴
 			function openNav() {
 				// document.body.style.backgroundColor = "rgba(0,0,0,0.5)";
@@ -251,7 +234,6 @@
 			}
 
 			function close(i) {
-				console.log(i);
 				document.querySelector(".background").className = "background";
 				$(".popup").eq(i).css("z-index", "-1");
 			}
@@ -272,15 +254,15 @@
 			}
 			function openPopup2() {
 				popup = window.open("agreement3");
-
-				// document.querySelector("#show").addEventListener("click", show);
-				// document.querySelector("#close").addEventListener("click", close);
-
-				// document.querySelector("#show2").addEventListener("click", show2);
-				// document.querySelector("#close2").addEventListener("click", close2);
 			}
+			// document.querySelector("#show").addEventListener("click", show);
+			// document.querySelector("#close").addEventListener("click", close);
+
+			// document.querySelector("#show2").addEventListener("click", show2);
+			// document.querySelector("#close2").addEventListener("click", close2);
 		</script>
 		<script>
+		
 			function openPopupsoho1() {
 				popup = window.open("https://mysoho.com/");
 			}
