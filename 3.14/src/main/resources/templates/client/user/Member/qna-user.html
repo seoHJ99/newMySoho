@@ -1,0 +1,213 @@
+<html
+	lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+	<head>
+		<th:block th:replace="/client/fragments/Clhead :: headFragment"></th:block>
+
+		<link
+			rel="stylesheet"
+			href="/css/login.css"
+		/>
+		<style>
+			.container-qna-user {
+				padding-bottom: 100px;
+				min-height: 550px;
+			}
+
+			.users-title-line-hd-wrap {
+				display: flex;
+			}
+			.users-title-line-hd {
+				background-color: white;
+				width: 50%;
+			}
+			.users-title-line-hd {
+				font-size: 14px;
+				color: #999;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			#this-page {
+				border-bottom: 2px solid #000;
+				color: #000;
+				font-weight: bold;
+			}
+			.txt-detail {
+				max-height: 864px;
+				overflow: hidden;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 70px 0;
+				font-size: 14px;
+				flex-direction: column;
+			}
+			.txt-detail-btn {
+				width: 120px;
+				border: 1px solid #d9d9d9;
+				margin-top: 15px;
+				border-radius: 50px;
+				box-sizing: border-box;
+				font-weight: bold;
+				padding: 13px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.txt-detail img {
+				width: 13px;
+				margin-right: 3px;
+			}
+			.result {
+				height: 400px;
+			}
+		</style>
+	</head>
+	<body id="bodytest">
+		<th:block
+			th:replace="/client/fragments/Clheader :: headerFragment"
+		></th:block>
+		<!-- 나의 상품문의 -->
+		<div class="container-qna-user">
+			<div class="users-title-line-hd-wrap">
+				<a
+					href="myProductInquiries.html"
+					class="users-title-line-hd"
+				>
+					<div>나의 상품문의</div>
+				</a>
+				<a
+					href="qna-user.html"
+					class="users-title-line-hd"
+					id="this-page"
+				>
+					<div>나의 Q&A</div>
+				</a>
+			</div>
+			<div class="txt-detail non result">
+				<div>등록된 Q&A가 없습니다.</div>
+				<div
+					onclick="openQnAwrite()"
+					class="txt-detail-btn"
+				>
+					<img
+						src="https://image.makeshop.co.kr/mysoho/assets/shop/img/common/ico_write_btn.png"
+						alt=""
+					/>문의 작성
+				</div>
+			</div>
+		</div>
+		<!-- 푸터 -->
+		<th:block
+			th:replace="/client/fragments/Clfooter :: footerFragment"
+		></th:block>
+
+		<script>
+			//사이드메뉴
+			function openNav() {
+				// document.body.style.backgroundColor = "rgba(0,0,0,0.5)";
+				document.getElementById("mySidenav").style.width = "80%";
+			}
+			function closeNav() {
+				// document.body.style.backgroundColor = "white";
+				document.getElementById("mySidenav").style.width = "0";
+			}
+		</script>
+
+		<script>
+			//돋보기
+			function openSearch() {
+				document.getElementById("myOverlay").style.display = "block";
+			}
+
+			function closeSearch() {
+				document.getElementById("myOverlay").style.display = "none";
+			}
+		</script>
+		<script>
+			function show() {
+				document.querySelector(".background").className = "background show";
+			}
+
+			function close() {
+				document.querySelector(".background").className = "background";
+			}
+
+			// document.querySelector("#show").addEventListener("click", show);
+			// document.querySelector("#close").addEventListener("click", close);
+		</script>
+		<script>
+			function show2() {
+				document.querySelector(".background2").className = "background2 show2";
+			}
+
+			function close2() {
+				document.querySelector(".background2").className = "background2";
+			}
+
+			// document.querySelector("#show2").addEventListener("click", show2);
+			// document.querySelector("#close2").addEventListener("click", close2);
+			function openPopup1() {
+				popup = window.open("agreement2");
+			}
+			function openPopup2() {
+				popup = window.open("agreement3");
+			}
+			function openPopupsoho1() {
+				popup = window.open("https://mysoho.com/");
+			}
+			function openPopupsoho2() {
+				popup = window.open("https://sohomarket.kr/?shop=sohonara");
+			}
+			function footerbtn() {
+				//
+				if (document.querySelector(".hidden").style.display === "block") {
+					document.querySelector(".hidden").style.display = "none";
+					document.querySelector(".footer-down").style.display = "block";
+					document.querySelector(".footer-up").style.display = "none";
+				} else {
+					document.querySelector(".hidden").style.display = "block";
+					document.querySelector(".footer-down").style.display = "none";
+					document.querySelector(".footer-up").style.display = "block";
+				}
+			}
+			function footerbtn2() {
+				popup = window.open(
+					"https://www.ftc.go.kr/bizCommPop.do?wrkr_no=2068121131&apv_perm_no="
+				);
+			}
+			// Get the button
+			let mybutton = document.getElementById("myBtnfooter");
+
+			// When the user scrolls down 20px from the top of the document, show the button
+			window.onscroll = function () {
+				scrollFunction();
+			};
+
+			function scrollFunction() {
+				if (
+					document.body.scrollTop > 20 ||
+					document.documentElement.scrollTop > 20
+				) {
+					//mybutton.style.display = "block";
+					mybutton.style.opacity = "1";
+				} else {
+					//mybutton.style.display = "none";
+					mybutton.style.opacity = "0";
+				}
+			}
+
+			// When the user clicks on the button, scroll to the top of the document
+			function topFunction() {
+				document.body.scrollTop = 0;
+				document.documentElement.scrollTop = 0;
+			}
+			function openQnAwrite() {
+				popup = window.open("QnA-write.html");
+			}
+		</script>
+	</body>
+</html>

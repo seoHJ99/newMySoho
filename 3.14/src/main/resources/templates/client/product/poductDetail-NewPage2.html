@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .tbl-terms {
+        font-size: 13px;
+      }
+      .popTopWrap {
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid #e4e4e4;
+      }
+      a {
+        color: black;
+        text-decoration: none;
+      }
+      .close-btn {
+        width: 45px;
+        height: 48px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-left: 1px solid #e4e4e4;
+      }
+      .close-btn img {
+        width: 11px;
+      }
+      .popTitWrap {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+      }
+      .popTitWrap a {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 13px;
+      }
+      .popTitWrap a:first-child {
+        border-bottom: 2px solid black;
+        font-weight: bold;
+      }
+      .popTitWrap a:last-child {
+        color: #999999;
+        font-weight: bold;
+      }
+
+      .t-div {
+        display: flex;
+      }
+      .swiper-wrapper {
+        padding: 20px;
+        position: relative;
+      }
+      .swiper-wrapper a img {
+        position: absolute;
+        width: 40px;
+        bottom: 20px;
+        right: 20px;
+      }
+      .MSH-prd-name {
+        font-size: 20px;
+        padding: 28px 20px 0;
+      }
+      .prd-desc {
+        padding: 20px 20px;
+      }
+      .txt-black {
+        display: flex;
+        align-items: flex-end;
+      }
+      .sale-rate {
+        font-weight: bold;
+        font-style: italic;
+        color: #c70000;
+        margin-right: 5px;
+      }
+      .fs-21 {
+        font-size: 21px;
+      }
+      .fs-15 {
+        font-size: 15px;
+      }
+      .gray-through {
+        margin-right: 6px;
+        font-weight: normal;
+        color: #ccc;
+        text-decoration: line-through;
+      }
+      .prd-option-non {
+        padding: 16px 0 26px;
+        margin: 0 18px;
+        border-top: 1px solid #f0f0f0;
+        display: flex;
+        justify-content: space-between;
+      }
+      .MSH-sto-stock {
+        width: 50px;
+        height: 32px;
+        border: none;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        text-align: center;
+      }
+      .count {
+        border: 1px solid #ccc;
+        display: flex;
+      }
+      .btn-minus,
+      .btn-plus {
+        width: 33px;
+        height: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .btn-minus img,
+      .btn-plus img {
+        width: 8px;
+        height: 8px;
+      }
+      .price {
+        font-size: 21px;
+        font-weight: bold;
+        color: #c70000;
+      }
+      .red2 {
+        color: #c70000;
+      }
+      .red {
+        color: red;
+      }
+      .prd-btn-type2 {
+        padding: 0 20px 25px;
+        display: flex;
+      }
+      .btn-cart img,
+      .btn-share img {
+        width: 15px;
+        margin-right: 10px;
+      }
+      .btn-cart,
+      .btn-h42-gray {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 46px;
+        background: #333;
+        box-sizing: border-box;
+        color: #fff;
+        font-size: 14px;
+        font-weight: bold;
+        width: 100%;
+      }
+      .btn-h42-gray2 {
+        width: 85%;
+      }
+      .btn-share {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 46px;
+        background: #666;
+        width: 15%;
+      }
+      .black {
+        color: black;
+      }
+      .bg-blank {
+        height: 9px;
+        border-top: 1px solid #d0d0d0;
+        background: rgb(242, 243, 245);
+      }
+      .tab {
+        border-bottom: 1px solid rgb(228, 228, 228);
+
+        display: flex;
+      }
+      .tab a {
+        height: 46px;
+        width: 100%;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .js-showdArea,
+      .js-showReviewArea,
+      .js-showInquiryArea {
+        width: 33.3%;
+        font-size: 14px;
+      }
+
+      .js-showdArea a,
+      .js-showReviewArea a,
+      .js-showInquiryArea a {
+        color: #999999;
+      }
+      .now a {
+        color: black;
+        font-weight: bold;
+        border-bottom: 2px solid black;
+      }
+      .page1 {
+        padding: 70px 12%;
+      }
+      .txt-detail {
+        border-bottom: 1px solid #d0d0d0;
+      }
+      .sect-text,
+      .inp-text {
+        text-align: center;
+        font-size: 14px;
+      }
+      .image img {
+        width: 100%;
+      }
+      .image-div {
+        padding: 0 12.5%;
+        margin: 30px 0;
+      }
+      .mono-color img {
+        max-width: 400px;
+      }
+      .btn-bottom {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .btn-expand {
+        border-right: 1px solid #d0d0d0;
+        width: 60%;
+      }
+      .btn-ViewOriginal {
+        width: 40%;
+      }
+      .btn-expand,
+      .btn-ViewOriginal {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 41px;
+        font-size: 14px;
+        background-color: #f8f8f8;
+        border-bottom: 1px solid #d0d0d0;
+      }
+      .btn-expand img,
+      .btn-ViewOriginal img {
+        width: 11px;
+        margin-left: 8px;
+      }
+      .order-hd {
+        display: flex;
+        justify-content: space-between;
+        padding: 19px;
+        border-bottom: 1px solid #d4d4d4;
+      }
+      .order-hd img {
+        width: 12px;
+      }
+      .order-frm,
+      .order-mileage {
+        padding: 20px;
+      }
+      .order-frm strong {
+        font-size: 15px;
+      }
+      .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .cbx-tit {
+        font-size: 12px;
+      }
+      .order-frm input {
+        height: 42px;
+        padding: 0 10px;
+        border: 1px solid #dedede;
+        width: 100%;
+        font-size: 15px;
+      }
+      .array-2x {
+        display: flex;
+        margin-top: 10px;
+      }
+      .same select {
+        border: 1px solid #dedede;
+        width: 150px;
+        padding: 0 10px;
+        appearance: none;
+        border-right: 0;
+      }
+      select[name="message"] {
+        width: 100%;
+        height: 42px;
+        padding: 0 10px;
+        border: 1px solid #dedede;
+        width: 100%;
+        font-size: 15px;
+        margin-top: 10px;
+      }
+      .cbx-tit input {
+        width: 15px;
+      }
+      .cbx-tit {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .same2 {
+        margin-top: 25px;
+      }
+      .delivery-address2,
+      .delivery-address1 {
+        margin-top: 10px;
+      }
+      .open-layer-addr {
+        display: flex;
+      }
+      .open-layer-addr a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        border: 1px solid #dedede;
+        border-left: 0;
+      }
+      .open-layer-addr img {
+        width: 16px;
+      }
+      .order-mileage .title {
+        font-size: 15px;
+      }
+      .readonly-input {
+        width: 100%;
+        height: 42px;
+        padding: 0 10px;
+        border: 1px solid #dedede;
+        background-color: #f0f0f0;
+        border: 1px solid #d4d4d4;
+        font-size: 15px;
+      }
+      .order-mileage .cbx-tit {
+        display: flex;
+      }
+      .paymethod-mobile {
+        display: none;
+        color: #297bcf;
+        font-size: 14px;
+      }
+      .blue {
+        color: #297bcf;
+      }
+      .js-order-paymethod-area img {
+        margin-left: 8px;
+        width: 11px;
+      }
+      .order-pay {
+        padding: 20px;
+      }
+      .order-pay-div {
+        display: flex;
+        margin-bottom: 10px;
+      }
+      .order-pay input {
+        margin-right: 10px;
+      }
+      .gray {
+        color: rgb(136, 136, 136);
+      }
+      .order-pay-div-tit {
+        font-size: 15px;
+        font-weight: bold;
+        display: flex;
+        margin-bottom: 10px;
+
+        align-items: center;
+      }
+      .order-pay-div-tit a {
+        font-weight: 100;
+        font-size: 11px;
+        padding: 5px 10px;
+        border: 1px solid black;
+        margin-left: 10px;
+      }
+      .order-pay-div-text {
+        font-size: 12px;
+      }
+      .order-from-new {
+        border-bottom: 1px solid #d4d4d4;
+      }
+
+      .order-from-new .order-hd {
+        justify-content: flex-start;
+        background-color: #f7f7f7;
+        padding: 18px 40px 16px 20px;
+        border-bottom: 1px solid #d4d4d4;
+      }
+      .order-from-new .order-hd input {
+        margin-right: 10px;
+      }
+      .agree-box {
+        padding: 20px;
+      }
+      .agree-box li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 12px;
+        font-size: 15px;
+      }
+      .agree-box li:first-child {
+        margin-top: 0;
+      }
+      .agree-box li div {
+        display: flex;
+      }
+      .agree-box li div input {
+        margin-right: 10px;
+      }
+      .agree-box li a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        padding: 5px 10px;
+        border: 1px solid black;
+      }
+
+      .price-box,
+      .pay-price {
+        padding: 0 15px;
+      }
+      .price-text,
+      .price-text-price {
+        font-size: 12px;
+      }
+      .bold {
+        font-weight: bold;
+      }
+      .between {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .price-tit {
+        font-size: 15px;
+      }
+      .mt-10 {
+        margin-top: 10px;
+      }
+      .mb-6 {
+        margin-bottom: 6px;
+      }
+      .h23 {
+        height: 23px;
+      }
+      .pay-price .between {
+        font-size: 20px;
+        height: 55px;
+      }
+      .left {
+        display: flex;
+        flex-direction: row-reverse;
+      }
+      .mt-25 {
+        margin-top: 25px;
+      }
+      .warning-labels-font img {
+        width: 14px;
+        height: 14px;
+      }
+      .warning-labels-font {
+        margin-top: 30px;
+        text-align: center;
+        font-size: 11px;
+        color: #a8a8a8;
+      }
+      /* 체크박스변경 */
+      input[type="checkbox"] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background: #fff;
+        border: 1px solid #d0d0d0;
+        cursor: pointer;
+        height: 20px;
+        outline: 0;
+        width: 20px;
+        margin-right: 10px;
+      }
+      input[type="checkbox"]::after {
+        border: solid #fff;
+        border-width: 0 1px 1px 0;
+        content: "";
+        display: none;
+        height: 45%;
+        left: 40%;
+        position: relative;
+        top: 20%;
+        transform: rotate(45deg);
+        width: 25%;
+      }
+      input[type="checkbox"]:checked {
+        background: #333;
+      }
+      input[type="checkbox"]:checked::after {
+        display: block;
+      }
+      .containerlogin {
+        border-bottom: 1px solid #dedede;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="pop-page">
+      <div class="popTopWrap">
+        <div class="popTitWrap">
+          <a href="pop-page-one-piece3.html">상품 상세 정보</a>
+          <a href="pop-page-one-piece3 copy.html">상품 정보 고시</a>
+        </div>
+        <!-- 엑스이미지 -->
+        <a class="close-btn" href="javascript:closePopup()"
+          ><img
+            src="https://image.makeshop.co.kr/mysoho/assets/shop/img/btn/h22_close_gray.png"
+            alt=""
+        /></a>
+      </div>
+      <div class="tab-cont">
+        <div class="inner">
+          <div class="tbl-terms" style="text-align: left"></div>
+          <div class="tbl-detail">
+            <!-- page1 -->
+            <div class="page1">
+              <div id="overflow" class="overflow">
+                <div class="sect">
+                  <div class="image">
+                    <!-- 상세 이미지 -->
+                    <div class="image-div">
+                      <a href=""
+                        ><img
+                          src="https://img.makeshop.co.kr/1/1371/201902/5ea10187021f32483958eb8c91e943bb.jpg"
+                          alt=""
+                      /></a>
+                    </div>
+                    <div class="image-div">
+                      <a href=""
+                        ><img
+                          src="https://img.makeshop.co.kr/1/1371/201902/cff066de03048bb32a8393ddaf5d7590.jpg"
+                          alt=""
+                      /></a>
+                    </div>
+                    <div class="image-div">
+                      <a href=""
+                        ><img
+                          src="https://img.makeshop.co.kr/1/1371/201902/89a4cfc63952dd46b75281cfa7197950.jpg"
+                          alt=""
+                      /></a>
+                    </div>
+                  </div>
+                  <div class="sect-text">
+                    <div><strong>모델 사이즈</strong></div>
+                    <div>168cm / 52kg / 상의 55 / 하의 26-27</div>
+                    <div><br /></div>
+                    <div><br /></div>
+                    <div><br /></div>
+                    <div><strong>[배송지연]</strong></div>
+                    <div>배송예정일에 맞춰 최대한 빠르게 전달해 드리려</div>
+                    <div>노력합니다.</div>
+                    <div>하지만 거래처 지연 또는 리오더에 들어갈 경우</div>
+                    <div>배송지연으로 인한 주문취소는 불가하세요.</div>
+                    <div>입고지연 불품 발생 시 따로 공지드리겠습니다.</div>
+                    <div>거래처 사정에 따라 갑작스러운 품절이</div>
+                    <div>발생했을 경우, 100% 환불해드립니다!</div>
+                    <div><br /></div>
+                    <div><br /></div>
+                    <div><br /></div>
+                    <div>
+                      <strong class="red">[교환,반품]</strong>
+                    </div>
+                    <div>꼼꼼하게 확인 후 보내드리나 혹시라도 불량제품을</div>
+                    <div>받으셨을 경우, 물품수령 '당일' 연락부탁드립니다.</div>
+                    <div>당일 연락이 없으시면 상품 교환, 환불 불가입니다.</div>
+                    <div>불량상품의 경우, 수령 후 검수절차를 마친 후에</div>
+                    <div>이상이 없을 시 교환해드립니다.</div>
+                    <div><br /></div>
+                    <div>
+                      <strong>*교환/반품이 불가한 경우</strong>
+                    </div>
+                    <div>-제품 착용이나 고객의 부주의로 인한</div>
+                    <div>제품의 변형, 훼손, 오염이나 파손 등으로 인해</div>
+                    <div>상품의 가치가 떨어진 경우</div>
+                    <div>(ex, 립스틱, 화장품, 음식물 등 이물질, 향수</div>
+                    <div>및 섬유유연제, 담배냄새 등의 향이 베인 경우)</div>
+                    <div>-인위적인 수선이나 세탁으로 인한 상품 훼손</div>
+                    <div>(불량, 오배송 이더라도 새상품이 아닌 세탁 등</div>
+                    <div>인위적인 훼손이 가해진 상품은 교환/반품 불가</div>
+                    <div class="red">
+                      +린넨(마) 소재, 체크소재 등 재질 특성의 잡사는
+                    </div>
+                    <div class="red">
+                      불량으로 간주하지 않아 환불이 불가합니다.
+                    </div>
+                    <div class="red">
+                      +실밥, 단추위의 초크자국, 옷먼지 등의 사유
+                    </div>
+                    <div><br /></div>
+                    <div><br /></div>
+                    <div><br /></div>
+                    <div><strong>[사이즈 교환]</strong></div>
+                    <div>사이즈 교환은 1번만 가능 (free size 제외)</div>
+                    <div>교환 시 왕복택배비 본인 부담</div>
+                    <div><br /></div>
+                    <div><br /></div>
+                    <div><br /></div>
+                    <div><br /></div>
+                    <div><br /></div>
+                    <div><br /></div>
+                    <!-- 명암이미지 -->
+                    <div class="mono-color">
+                      <img
+                        src="https://www.pagekin.com/images/pages/cloth_gamma.png"
+                        alt=""
+                      />
+                    </div>
+                    <div><br /></div>
+                    <div>위 컬러가 모두 뚜렷하게 구분이 되는지 확인하세요.</div>
+                    <div>제품의 정확한 정보 표현을 위하여</div>
+                    <div>모니터의 밝기 및 명암 감마 조정을 권장합니다.</div>
+                    <div><br /></div>
+                    <div><br /></div>
+                    <div><br /></div>
+                    <div><br /></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function closePopup() {
+        window.close();
+      }
+      // Get the button
+      let mybutton = document.getElementById("myBtn");
+
+      // When the user scrolls down 20px from the top of the document, show the button
+      window.onscroll = function () {
+        scrollFunction();
+      };
+
+      function scrollFunction() {
+        if (
+          document.body.scrollTop > 20 ||
+          document.documentElement.scrollTop > 20
+        ) {
+          //mybutton.style.display = "block";
+          mybutton.style.opacity = "1";
+        } else {
+          //mybutton.style.display = "none";
+          mybutton.style.opacity = "0";
+        }
+      }
+
+      // When the user clicks on the button, scroll to the top of the document
+      function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }
+    </script>
+  </body>
+</html>

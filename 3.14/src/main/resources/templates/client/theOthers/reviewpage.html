@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html
+	lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			http-equiv="X-UA-Compatible"
+			content="IE=edge"
+		/>
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>Document</title>
+		<style>
+			.all1 {
+				display: flex;
+				justify-content: center;
+			}
+			.all {
+				width: 640px;
+			}
+			.header {
+				display: flex;
+				justify-content: center;
+				width: 640px;
+				border-bottom: 1px solid rgb(240, 240, 240);
+			}
+			.review {
+				text-align: center;
+				margin-bottom: -15px;
+				padding-top: 10px;
+			}
+			.review_name {
+				border-bottom: 10px solid #f8f8f8;
+			}
+			.review_content {
+				display: flex;
+				justify-content: center;
+			}
+			.review_content1 {
+				display: flex;
+				justify-content: center;
+			}
+			.review_file {
+				padding-top: 10px;
+			}
+			.review_file > p {
+				color: red;
+				font-size: small;
+			}
+			textarea {
+				min-width: 618px;
+				background-color: #f8f8f8;
+				min-height: 350px;
+				max-height: 350px;
+				padding: 10px;
+			}
+			.star-rating {
+				display: flex;
+				flex-direction: row-reverse;
+				font-size: 2.25rem;
+				line-height: 2.5rem;
+				justify-content: space-around;
+				padding: 0 0.2em;
+				text-align: center;
+				width: 5em;
+			}
+
+			.star-rating input {
+				display: none;
+			}
+
+			.star-rating label {
+				-webkit-text-fill-color: transparent;
+				-webkit-text-stroke-width: 2.3px;
+				-webkit-text-stroke-color: #2b2a29;
+				cursor: pointer;
+			}
+
+			.star-rating :checked ~ label {
+				-webkit-text-fill-color: yellow;
+			}
+
+			.star-rating label:hover,
+			.star-rating label:hover ~ label {
+				-webkit-text-fill-color: yellow;
+			}
+			.review_score {
+				display: flex;
+				justify-content: center;
+				padding-bottom: 30px;
+				border-bottom: 1px solid rgb(240, 240, 240);
+			}
+			.review_name > input {
+				width: 632px;
+			}
+			.sub_header {
+				background-color: rgb(216, 226, 240);
+				text-align: center;
+				padding: 0.2px;
+				color: white;
+			}
+
+			.product_name {
+				padding-top: 12px;
+				padding-bottom: 12px;
+				height: 75px;
+				width: 640px;
+			}
+			.footer {
+				display: flex;
+				justify-content: center;
+				gap: 10px;
+			}
+			.footer > input {
+				padding-left: 142px;
+				padding-right: 142px;
+				padding-top: 3px;
+				padding-bottom: 3px;
+			}
+			.sub_footer {
+				background-color: #f8f8f8;
+				padding: 10px;
+				font-weight: bold;
+				border: 1px solid #d0d0d0;
+			}
+			.footer_under {
+				border: 4px solid rgb(240, 240, 240);
+				margin-bottom: 10px;
+			}
+			.dropbtn {
+				background-color: rgb(122, 133, 231);
+				color: white;
+				width: 640px;
+				padding: 16px;
+				font-size: 16px;
+				border: none;
+				cursor: pointer;
+			}
+
+			/* Dropdown button on hover & focus */
+			.dropbtn:hover,
+			.dropbtn:focus {
+				background-color: rgb(122, 133, 231);
+			}
+
+			/* The container <div> - needed to position the dropdown content */
+			.dropdown {
+				position: relative;
+				display: inline-block;
+			}
+
+			/* Dropdown Content (Hidden by Default) */
+			.dropdown-content {
+				display: none;
+				position: absolute;
+				background-color: rgb(184, 190, 238);
+				min-width: 640px;
+				box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+				color: rgb(43, 24, 209);
+			}
+
+			/* Links inside the dropdown */
+			.dropdown-content a {
+				color: black;
+				padding: 12px 16px;
+				text-decoration: none;
+				display: block;
+			}
+
+			/* Change color of dropdown links on hover */
+			.dropdown-content a:hover {
+				background-color: #f1f1f1;
+			}
+
+			/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+			.show {
+				display: block;
+			}
+		</style>
+		<script>
+			function myFunction() {
+				document.getElementById("myDropdown").classList.toggle("show");
+			}
+
+			// Close the dropdown menu if the user clicks outside of it
+			window.onclick = function (event) {
+				if (!event.target.matches(".dropbtn")) {
+					var dropdowns = document.getElementsByClassName("dropdown-content");
+					var i;
+					for (i = 0; i < dropdowns.length; i++) {
+						var openDropdown = dropdowns[i];
+						if (openDropdown.classList.contains("show")) {
+							openDropdown.classList.remove("show");
+						}
+					}
+				}
+			};
+		</script>
+	</head>
+	<body>
+		<div class="all1">
+			<form
+				action="/review/save"
+				method="post"
+				onsubmit="return checkAndMileage()"
+				enctype="multipart/form-data"
+			>
+				<input
+					type="hidden"
+					sec:authorize="isAuthenticated()"
+					th:name="${_csrf.parameterName}"
+					th:value="${_csrf.token}"
+				/>
+
+				<div class="all">
+					<div class="header"><h2>리뷰 작성</h2></div>
+					<input
+						type="hidden"
+						name="reviewREGDATE"
+					/>
+					<div class="review_name">
+						<div class="dropdown">
+							<button
+								onclick="myFunction()"
+								class="dropbtn"
+							>
+								<span class="review_nav"
+									>☆ 포토/동영상 첨부 시 추가 적립금 ☆</span
+								>
+							</button>
+							<div
+								id="myDropdown"
+								class="dropdown-content"
+							>
+								텍스트 리뷰 150원 <br />
+								포토/동영상 리뷰 250원
+							</div>
+						</div>
+
+						<div class="product_name">
+							<img
+								th:src="${dto.item_IMAGE}"
+								width="75px"
+								height="75.5px"
+							/>
+							<span th:text="${dto.item_NAME}">상품 이름</span>
+							<th:block th:if="${dto.item_OPTION} != null">
+								, <span class="name" th:text="${dto.item_OPTION}">퍼프 블라우스 퍼플</span>
+							</th:block>
+							<input
+								type="hidden"
+								name="item_IDX"
+								value="1"
+							/>
+							<input
+								type="hidden"
+								name="orders_IDX"
+								value="1"
+							/>
+						</div>
+					</div>
+					<div class="review"><h3>구매하신 상품은 어떠셨나요?</h3></div>
+					<div class="review_score">
+						<div class="star-rating space-x-4 mx-auto">
+							<input
+								type="radio"
+								id="5-stars"
+								name="review_SCORE"
+								value="5"
+								v-model="ratings"
+							/>
+							<label
+								for="5-stars"
+								class="star pr-4"
+								>★</label
+							>
+							<input
+								type="radio"
+								id="4-stars"
+								name="review_SCORE"
+								value="4"
+								v-model="ratings"
+							/>
+							<label
+								for="4-stars"
+								class="star"
+								>★</label
+							>
+							<input
+								type="radio"
+								id="3-stars"
+								name="review_SCORE"
+								value="3"
+								v-model="ratings"
+							/>
+							<label
+								for="3-stars"
+								class="star"
+								>★</label
+							>
+							<input
+								type="radio"
+								id="2-stars"
+								name="review_SCORE"
+								value="2"
+								v-model="ratings"
+							/>
+							<label
+								for="2-stars"
+								class="star"
+								>★</label
+							>
+							<input
+								type="radio"
+								id="1-star"
+								name="review_SCORE"
+								value="1"
+								v-model="ratings"
+							/>
+							<label
+								for="1-star"
+								class="star"
+								>★</label
+							>
+						</div>
+					</div>
+
+					<div class="review_content1"><h4>상품평을 작성해주세요.</h4></div>
+					<div class="review_name">
+						<input
+							type="text"
+							name="review_TITLE"
+						/>
+					</div>
+					<div class="review_content">
+						<textarea
+							name="review_CONTENT"
+							id="content"
+							cols="30"
+							rows="10"
+							placeholder="최소 20자 이상 입력해주세요."
+						></textarea>
+					</div>
+					<div class="review_file">
+						<input
+							type="file"
+							name="image"
+							multiple="multiple"
+						/>
+						<div class="review_img">
+							<img
+								src=""
+								alt=""
+							/><img
+								src=""
+								alt=""
+							/>
+						</div>
+
+						<p>
+							상품과 무관한 사진/동영상을 첨부한 리뷰는 통보없이 삭제 및 적립
+							혜택이 회수됩니다.
+						</p>
+					</div>
+					<div class="sub_footer">
+						<span>상품을 구매해주셔서 감사드립니다.</span>
+					</div>
+					<div class="footer_under"></div>
+					<div class="footer">
+						<input
+							type="button"
+							onclick="location.href='/myorder/list'"
+							value="취소"
+						/>
+						<input
+							type="submit"
+							value="등록"
+						/>
+					</div>
+				</div>
+			</form>
+		</div>
+		<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+
+		<script>
+			function check() {
+				if (
+					$("#1-star").is(":checked") == false &&
+					$("#2-stars").is(":checked") == false &&
+					$("#3-stars").is(":checked") == false &&
+					$("#4-stars").is(":checked") == false &&
+					$("#5-stars").is(":checked") == false
+				) {
+					alert("별점을 선택해 주세요");
+					return false;
+				} else if ($("input[name = review_TITLE]").val() == "") {
+					alert("리뷰 제목을 작성해 주세요");
+					return false;
+				} else if ($("#content").val().length < 20) {
+					alert("리뷰 내용은 20자 이상이어야 합니다!");
+					return false;
+				} else {
+					return true;
+				}
+				return false;
+			}
+		</script>
+	</body>
+</html>
