@@ -9,6 +9,7 @@ import com.study.springboot.admin.service.ReviewService;
 import com.study.springboot.client.dto.*;
 import com.study.springboot.client.service.ClientReviewService_JunTae;
 import com.study.springboot.client.service.CouponService;
+import com.study.springboot.client.service.EmailService;
 import com.study.springboot.client.service.NonmemberService;
 import com.study.springboot.entity.Member;
 import com.study.springboot.entity.MemberListRepository;
@@ -29,6 +30,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 @RequiredArgsConstructor
@@ -252,7 +254,6 @@ public class UserController_MyungJin {
         }
         return "/client/login/find-ID";
     }
-
     // 임시 비밀번호 발급
     @PostMapping("/findPW")
     public String sendPasswordMail(@RequestParam("email") String mail, @RequestParam("id")String id) {
@@ -261,15 +262,15 @@ public class UserController_MyungJin {
                 .subject("임시 비밀번호 발급")
                 .build();
         String pw = createCode();
-        emailService.sendMail(emailMessage, pw);
         MemberResponseDTO dto = memberService.findByMail(mail, id);
         if(dto == null){
             return "/client/login/noID";
         }else {
+            emailService.sendMail(emailMessage, pw);
             dto.setMemberPw(passwordEncoder.encode(pw));
             Member member = dto.toUpdateEntity();
             memberListRepository.save(member);
-            return "redirect: /main";
+            return "redirect:/main";
         }
     }
 

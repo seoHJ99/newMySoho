@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //인증성공 후 별도의 처리가 필요한경우 커스텀 핸들러를 생성하여 등록할 수 있습니다.
                 .successHandler((request, response, authentication) -> {
                     response.sendRedirect("/main");
-                    List<Member> list = memberListRepository.findByUserLoginId(request.getParameter("memberId"));
+                    List<Member> list = memberListRepository.findByUserLoginId(request.getParameter("memberID"));
                     Member entity = list.get(0);
                     request.getSession().setAttribute("memberID", entity.getMemberID());
                     request.getSession().setAttribute("member_IDX", entity.getMember_IDX());
