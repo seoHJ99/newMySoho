@@ -33,5 +33,10 @@ public class ClientNoticeService {
         }
         return dtoList;
     }
+    public NoticeResponseDTO findRecentNotice(){
+        Notice notice = noticeListRepository.findRecentNotice();
+        NoticeResponseDTO noticeResponseDTO = new NoticeResponseDTO(notice);
+        return noticeResponseDTO;
+    }
 
 }

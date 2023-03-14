@@ -113,6 +113,9 @@
         }
         .score_button {
           margin-left: 340px;
+          border:1px solid #d0d0d0;
+          background-color : #f8f8f8;
+          padding : 5px;
         }
         .ok {
           margin-left: 40px;
@@ -123,12 +126,12 @@
         .categori_two {
           margin-left: 150px;
         }
-        .price_one {
-          margin-left: 20px;
-        }
-        .discount {
-          margin-left: 20px;
-        }
+<!--        .price_one {-->
+<!--          margin-left: 20px;-->
+<!--        }-->
+<!--        .discount {-->
+<!--          margin-left: 20px;-->
+<!--        }-->
         .explain_one {
           margin-left: 40px;
         }
@@ -145,6 +148,9 @@
         button {
           border: 0px solid white;
         }
+        .center{
+        margin-left:100px;
+        }
         .square_box {
           margin-left: 3px;
           margin-top: 7px;
@@ -157,6 +163,14 @@
           display: flex;
           flex-direction: row;
         }
+        .product_tr1>td:nth-child(1){
+        background-color : #d0d0d0;
+        height:50px;
+        }
+        .product_tr1>td:nth-child(3){
+        background-color : #d0d0d0;
+        }
+
       </style>
     </head>
     <body>
@@ -240,7 +254,7 @@
                     </form>
                   </td>
                 </tr>
-                <tr>
+                <tr class="product_tr1">
                   <td>원본상품</td>
                   <td>
                     <input type="text" name="item_ORIGINAL" />

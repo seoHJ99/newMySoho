@@ -23,7 +23,7 @@
 
 			td {
 				display: flex;
-				border: solid 1px;
+				border: 1px solid #f8f8f8;
 				padding-right: 10px;
 				justify-content: right;
 				align-items: center;
@@ -108,7 +108,7 @@
 				flex-direction: row;
 				min-width: 900px;
 				justify-content: start;
-				margin-left: 10px;
+				margin-left: 60px;
 				padding-top: 15px;
 			}
 
@@ -159,6 +159,12 @@
 			.order_color {
 				background-color: rgb(240, 240, 240);
 			}
+			.member_now{
+			background-color: #d0d0d0;
+			}
+			.button_nav{
+			width:800px;
+			}
 		</style>
 	</head>
 	<body>
@@ -188,7 +194,7 @@
 							id="child"
 							th:text="${order.orders_NAME}"
 						></td>
-						<td>회원여부</td>
+						<td class="member_now">회원여부</td>
 						<td></td>
 					</tr>
 					<tr class="order_tr">

@@ -122,7 +122,7 @@ public class Cl_ListService_HyungMin {
 
     @Transactional(readOnly = true)
     public List<ProductResponseDto> pdOrderByScore(){
-        List<Product> entityList = productRepository.findAllNoRepeat();
+        List<Product> entityList = productRepository.findAll();
         List<ProductResponseDto> list = getPriceDiscount(entityList);
         for(int i=0; i<entityList.size(); i++) {
             ProductResponseDto dto = new ProductResponseDto(entityList.get(i));

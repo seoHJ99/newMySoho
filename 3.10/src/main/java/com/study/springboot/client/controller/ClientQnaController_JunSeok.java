@@ -138,7 +138,7 @@ public class ClientQnaController_JunSeok {
         Qna entity = list.get(0);
         request.getSession().setAttribute("qnaEntity", entity);
         String realPw = entity.getQna_PW();
-        String ppw = request.getParameter("qna_Pw");
+        String ppw = request.getParameter("qna_PW");
         int idx = entity.getQna_IDX();
         boolean checkPw = realPw.equals(ppw);
         if (checkPw) {

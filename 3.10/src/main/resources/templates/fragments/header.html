@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org">
   <header th:fragment="headerFragment">
     <!-- header.html  시작 -->
 
@@ -73,14 +73,16 @@
             type="button"
           >
             카테고리
+
           </button>
+          <a href="http://localhost:8080/main">
           <button
-          class="btn me-1"
-          th:onclick="|location.href='@{/main}'|"
-          type="button"
+                  class="btn me-1"
+                  th:onclick="|location.href='@{/admin/category-manager}'|"
+                  type="button"
           >
-          메인화면
-          </button>
+            메인화면
+          </button></a>
         </form>
       </nav>
     </div>

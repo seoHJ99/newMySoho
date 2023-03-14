@@ -111,9 +111,9 @@
 
     .square_box {
     margin-left: 10px;
-    margin-bottom: 3px;
-    margin-top: 5px;
-    margin-right: 5px;
+    margin-bottom: 1px;
+
+
     width: 10px;
     height: 10px;
     background-color: black;
@@ -121,6 +121,10 @@
 
   .title > div {
     display: inline-block;
+  }
+  .title{
+  margin-left: -8px;
+  margin-top: 10px;
   }
 
   tbody {
@@ -130,6 +134,10 @@
   td > .content {
     width: auto;
   }
+  textarea{
+  border: 1px solid #d0d0d0;
+  }
+
 
     </style>
 
@@ -160,7 +168,7 @@
         <td>* 질문 게시판</td>
         <td colspan="3" class="content" th:text="${dto.qna_CATE}"></td>
       </tr>
-      <tr>
+      <tr class="main_tr">
         <td>
           * 질문 종류
         </td>
@@ -193,7 +201,7 @@
           <input type="submit" value="확인" />
           <input type="button" onclick="history.back();" value="취소" />
         </td>
-        <td id="button_td2">
+        <td id="button_td2" colspan="3">
           <input type="button" onclick="location.href='/admin/list/QnA';" value="목록가기"></input>
         </td>
       </tr>

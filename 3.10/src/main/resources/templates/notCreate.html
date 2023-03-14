@@ -17,7 +17,6 @@
 
       td {
         display: flex;
-        border: solid 1px;
         align-items: center;
       }
       #notice_content {
@@ -44,6 +43,7 @@
         display: flex;
         justify-content: center;
         text-align: center;
+        border : 1px solid #d0d0d0;
       }
 
       .main_tr td:nth-child(1) {
@@ -59,6 +59,16 @@
         width: 750px;
         justify-content: start;
       }
+      .main_tr1 > td:nth-child(1){
+      background-color: #f8f8f8;
+      height:200px;
+      width:150px;
+      }
+      .main_tr1 > td:nth-child(2){
+      width:750px;
+      }
+
+
 
       #notice_content {
         display: flex;
@@ -123,6 +133,10 @@
       .head_table {
         border: 0px;
       }
+      .notice_input{
+      padding-right : 15px;
+      }
+
     </style>
   </head>
   <body>
@@ -184,11 +198,12 @@
                   공지
                 </td>
               </tr>
-              <tr class="main_tr">
+              <tr class="main_tr1">
                 <td id="notice_content">내용</td>
-                <script src="https://cdn.ckeditor.com/ckeditor5/36.0.0/classic/ckeditor.js"></script>
-                <script src="https://cdn.ckeditor.com/ckeditor5/36.0.0/classic/translations/ko.js"></script>
-                <td>
+
+                <td >
+                  <script src="https://cdn.ckeditor.com/ckeditor5/36.0.0/classic/ckeditor.js"></script>
+                  <script src="https://cdn.ckeditor.com/ckeditor5/36.0.0/classic/translations/ko.js"></script>
                   <textarea
                     id="editor"
                     name="notice_CONTENT"
@@ -199,8 +214,8 @@
               </tr>
               <tr class="button_tr">
                 <td id="button_td" colspan="2">
-                  <input type="submit" value="확인" />
-                  <input type="button" value="취소" />
+                  <input class="notice_input" type="submit" value="확인" />
+                  <input class="notice_input" type="button" value="취소" />
                 </td>
               </tr>
             </table>
@@ -210,6 +225,7 @@
       </div>
     </div>
     <script th:inline="javascript">
+
       let editor;
       let a = [[${_csrf.token}]];
       let b = [[${_csrf.parameterName}]];

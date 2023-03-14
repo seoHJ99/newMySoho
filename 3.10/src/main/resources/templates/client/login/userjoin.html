@@ -162,6 +162,7 @@
 			.blue {
 				color: #3c89f2;
 			}
+
 			.check-txt {
 				font-size: 12px;
 				display: none;
@@ -175,28 +176,38 @@
 				top: 20px;
 			}
 		</style>
-	<meta name="_csrf" th:content="${_csrf.token}"/>
-	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-</head>
-<body id="bodytest">
-<th:block
-		th:replace="/client/fragments/Clheader :: headerFragment"
-></th:block>
-<!-- 회원가입 -->
-<div class="containerlogin">
-	<div class="users-title-line-hd">
-		<h2>회원가입</h2>
-	</div>
-	<div class="users-cont">
-		<form
-				action="/joinAction"
-				method="post"
-		>
-			<!--     <input type="hidden" name="member_ROLE" th:value="${ member.member_ }" />-->
-			<!-- action="/user/loginProcess" -->
-			<div>
-				<input
-						class="input-st01 users-login-input input-id"
+	</head>
+	<body id="bodytest">
+		<th:block
+			th:replace="/client/fragments/Clheader :: headerFragment"
+		></th:block>
+		<!-- 회원가입 -->
+		<div class="containerlogin">
+			<div class="users-title-line-hd">
+				<h2>회원가입</h2>
+			</div>
+			<div class="users-cont">
+				<form
+					action="/joinAction"
+					method="post"
+					onsubmit="return submitJoin()"
+					;
+				>
+					<input
+						type="hidden"
+						sec:authorize="isAuthenticated()"
+						th:name="${_csrf.parameterName}"
+						th:value="${_csrf.token}"
+					/>
+
+					<div class="mt-20">
+						<strong> 기본정보</strong>
+					</div>
+					<!--            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
+					<!--            <input type="hidden" name="member_ROLE" th:value="${ member.member_ }" />-->
+					<!-- action="/user/loginProcess" -->
+					<input
+						class="input-st01 users-login-input input-id mt-10"
 						type="text"
 						name="memberID"
 						placeholder="아이디(5자~20자 이내)"
@@ -352,8 +363,16 @@
 							</li>
 						</ul>
 					</div>
-					<input type="hidden" name="member_ROLE" value="ROLE_USER">
-					<input type="hidden" name="status" value="0">
+					<input
+						type="hidden"
+						name="member_ROLE"
+						value="ROLE_USER"
+					/>
+					<input
+						type="hidden"
+						name="status"
+						value="0"
+					/>
 					<div>
 						<!-- 이용약관 -->
 						<ul class="users-cont-full">
@@ -681,38 +700,6 @@
 				}
 				// return true;
 			}
-
-			function checkDuplicateID() {
-				let id = $(".input-id").val();
-				if ($(".check-txt-id2").css("display") == "none") {
-					$.ajax({
-						url: "/id-check",
-						type: "POST",
-						traditional: true,
-						beforeSend : function(xhr)
-						 {
-						 xhr.setRequestHeader(header, token);
-						  },
-						data: {
-							id: id,
-						},
-						success: function (response) {
-							if (response) {
-								document.querySelector(".check-txt-id3").style.display =
-									"block";
-								alert("사용 가능한 id입니다.");
-							} else {
-								alert("중복된 id입니다.");
-							}
-						},
-					});
-				}
-			}
-
-			// function join() {
-			// 	alert("축하합니다 회원가입하셨습니다.");
-			// 	location.href = "userlogin.html";
-			// }
 		</script>
 	</body>
 </html>

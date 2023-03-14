@@ -97,8 +97,8 @@
 										</div>
 
 										<form
-											action="/findID"
-											onsubmit="return checkINPUT1()"
+											action="frmLogin"
+											method="post"
 										>
 											<input
 												type="hidden"
@@ -108,19 +108,22 @@
 
 											<input
 												class="input-st01 users-login-input"
-												id="idNAME"
 												type="text"
 												name="user_name"
 												placeholder="이름을 입력하세요"
 											/>
 											<input
-												id="idPHONE"
 												class="input-st01 users-login-input mt-10"
 												type="text"
 												name="user_mobileNumber"
 												placeholder="전화번호를 입력하세요"
 											/>
-											<button class="btn-h42-gray mt-10">찾기</button>
+											<button
+												class="btn-h42-gray mt-10"
+												onclick="alert('입력한 정보를 다시 한번 확인해주세요.')"
+											>
+												찾기
+											</button>
 										</form>
 									</div>
 								</div>
@@ -203,21 +206,6 @@
 		></th:block>
 
 		<script>
-			function checkINPUT2() {
-				if ($("#pwMAIL").val() == "" || $("#pwID").val() == "") {
-					console.log($("#pwMAIL").val());
-					alert("아이디, 이메일을 적어주세요!");
-					return false;
-				}
-			}
-
-			function checkINPUT1() {
-				if ($("#idPHONE").val() == "" || $("#idNAME").val() == "") {
-					console.log($("#pwMAIL").val());
-					alert("전화번호, 이름을 적어주세요!");
-					return false;
-				}
-			}
 			//사이드메뉴
 			function openNav() {
 				// document.body.style.backgroundColor = "rgba(0,0,0,0.5)";
@@ -266,7 +254,7 @@
 			}
 			function openPopup2() {
 				popup = window.open("agreement3");
-			}
+
 			// document.querySelector("#show").addEventListener("click", show);
 			// document.querySelector("#close").addEventListener("click", close);
 
@@ -274,6 +262,7 @@
 			// document.querySelector("#close2").addEventListener("click", close2);
 		</script>
 		<script>
+		
 			function openPopupsoho1() {
 				popup = window.open("https://mysoho.com/");
 			}

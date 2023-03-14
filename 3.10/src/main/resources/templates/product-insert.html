@@ -100,6 +100,9 @@
           padding-left: 300px;
           padding-right: 10px;
         }
+        .center{
+        margin-left : 120px;
+        }
         a {
           text-decoration: none;
           color: black;
@@ -123,12 +126,7 @@
         .categori_two {
           margin-left: 150px;
         }
-        .price_one {
-          margin-left: 20px;
-        }
-        .discount {
-          margin-left: 20px;
-        }
+
         .explain_one {
           margin-left: 40px;
         }
@@ -157,6 +155,14 @@
           display: flex;
           flex-direction: row;
         }
+        .original_tr{
+        width: 50px;
+        }
+        .original_tr > td:nth-child(1){
+        background-color : #d0d0d0;
+        }
+
+
       </style>
     </head>
     <body>
@@ -182,7 +188,7 @@
                 <table class="main_table">
                   <tr class="main_tr">
                     <td>* 카테고리</td>
-                    <td id="aaaa" colspan="1">
+                    <td id="aaaa" colspan="3">
                       <select id="category_first" name="item_CATEGORY1">
                         <option>카테고리 1</option>
                         <option
@@ -204,7 +210,7 @@
 
                   <tr class="main_tr">
                     <td>* 제품명</td>
-                    <td>
+                    <td colspan="3">
                       <input type="text" id="NAME" name="item_NAME" />
                     </td>
                   </tr>
@@ -218,19 +224,19 @@
                       <input type="file" name="IMAGE" multiple="multiple" />
                     </td>
                   </tr>
-                  <tr>
-                    <td>원본상품</td>
+                  <tr class="original_tr">
+                    <td class="original_td">원본상품</td>
                     <td>
                       <input type="text" name="item_ORIGINAL" value="0" />
                     </td>
-                    <td>옵션 내용</td>
+                    <td class="original_td">옵션 내용</td>
                     <td>
                       <input type="text" name="item_OPTION" />
                     </td>
                   </tr>
                   <tr class="main_tr">
                     <td>* 가격</td>
-                    <td>
+                    <td colspan="3">
                       <div class="price_one">
                         <input
                           type="number"

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NoticeListRepository extends JpaRepository<Notice, Integer> {
 
+    @Query(value = "SELECT * FROM notice ORDER BY notice_IDX DESC LIMIT 1", nativeQuery = true)
+    Notice findRecentNotice();
     @Query(value = "SELECT * FROM notice WHERE notice_IDX LIKE CONCAT('%',:keyword,'%') OR " +    // 전체 전체
             "notice_TITLE LIKE CONCAT('%',:keyword,'%')", nativeQuery = true)
     Page<Notice> searchAll(@Param(value = "keyword") String keyword, Pageable pageable);

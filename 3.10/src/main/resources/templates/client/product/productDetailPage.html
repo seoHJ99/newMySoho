@@ -2,7 +2,6 @@
   lang="ko"
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
   <head>
     <th:block th:replace="/client/fragments/Clhead :: headFragment"></th:block>
@@ -571,14 +570,10 @@
         height: 12px;
         margin-right: 3px;
       }
-      ul, li {
-        width: 100%;
-      }
       .qa-list-wrap {
         display: flex;
-      }
-      .qa-list-wrap ul li {
         border-top: 1px solid #d6d6d6;
+        padding: 20px 0;
         position: relative;
       }
       .qna-board-list {
@@ -856,75 +851,6 @@
         bottom: 0;
         z-index: 1;
         transition: all 0.3s ease-in-out;
-      }
-      .qa-list-wrap ul li > a {
-        padding: 20px 20px 20px 10px;
-        position: relative;
-        text-align: left;
-      }
-
-      .qa-list-wrap ul li .btn-md-open {
-        display: inline-block;
-        position: absolute;
-        top: 18px;
-        right: 18px;
-        width: 25px;
-        height: 25px;
-        background: url('https://image.makeshop.co.kr/mysoho/assets/shop/img/common/ico_review_md.png') center center no-repeat;
-        background-size: 3px 13px;
-        padding: 0;
-      }
-
-      .qa-list-wrap ul li .btn-md-select {
-        display: none;
-        width: 57px;
-        height: 70px;
-        border: 1px solid #e4e4e4;
-        border-radius: 10px;
-        background: #ffffff;
-        position: absolute;
-        top: 50px;
-        right: 18px;
-        z-index: 99;
-      }
-
-      .qa-list-wrap ul li .btn-md-select a {
-        display: block;
-        line-height: 35px;
-        text-align: center;
-        font-size: 12px;
-        color: #000;
-      }
-
-      .qa-list-wrap ul li .lock-pw-area {
-        padding: 18px 15px;
-        background: #f8f8f8;
-        border-top: 1px solid #f0f0f0;
-      }
-
-      .qa-list-wrap ul li .lock-pw-area .box {
-        overflow: hidden;
-      }
-
-      .qa-list-wrap ul li .lock-pw-area .box input {
-        width: 79.26%;
-        padding: 0 12px;
-        height: 34px;
-        background: #fff;
-        border: 1px solid #d9d9d9;
-        float: left;
-        font-size: 12px;
-      }
-
-      .qa-list-wrap ul li .lock-pw-area .box .btn-h34-black {
-        display: block;
-        width: 18.9%;
-        float: right;
-        line-height: 34px;
-        text-align: center;
-        background: #000;
-        font-size: 12px;
-        color: #fff;
       }
     </style>
   </head>
@@ -1247,7 +1173,7 @@
           </li>
           <li class="js-showReviewArea pagetit">
             <a href="javascript: changePage(1)" class="pagetit1"
-              >후기(<span class="js-reviewCnt">0</span>)</a
+              >후기(<span class="js-reviewCnt" th:text="${reviewCount}">0</span>)</a
             >
           </li>
           <li class="js-showInquiryArea pagetit">
@@ -1338,7 +1264,7 @@
                       0.0
                     </div>
                   </div>
-                  <div class="txt">실제 구매 고객 0명이 작성한 리뷰입니다.</div>
+                  <div class="txt">실제 구매 고객 <span th:text="${reviewCount}"></span>명이 작성한 리뷰입니다.</div>
                 </div>
                 <!-- 구분선 빈박스 -->
                 <div class="bg-blank"></div>
@@ -1394,129 +1320,40 @@
               <div id="inquiryTab" class="tab-cont">
                 <div class="qa-btn-wrap">
                   <div class="btnBwrite js-btnMoveWritePage">
-                    <a th:onclick="'javascript:openPopupWrite(' + ${product.getItem_idx()} +');'"
-                       class="btnQna"
-                    ><img
-                            src="https://image.makeshop.co.kr/mysoho/assets/shop/img/btn/bg_ico_write.png"
-                            alt=""
-                    /><strong> 문의작성</strong></a
+                    <a href="javascript:openPopupWrite()"
+                      ><img
+                        src="https://image.makeshop.co.kr/mysoho/assets/shop/img/btn/bg_ico_write.png"
+                        alt=""
+                      /><strong> 문의작성</strong></a
                     >
                   </div>
                 </div>
                 <div class="qa-list-wrap js-qnasArea">
-                  <ul class="js-inquiries">
-                    <li class="js-inquiryArea" th:each="list:${list}" th:if="${list.item_IDX != 0}">
-                      <!--					비밀글-->
-                      <a
-                              href=""
-                              class="js-qnasArea qna-board-list"
-                              onclick="alert('작성자만 확인할 수 있습니다.')"
-                              th:if="${list.qna_SECRET == 0}"
-                      >
-                                        <span class="qa-list-icon" th:text="${list.qna_ANSWERED}">
-                                            답변
-                                            <br/>
-                                            대기
-                                        </span>
-                        <div class="tit-wrap js-qna">
-                          <div>
-                            <div class="tit js-qnaContents" th:value="${list.qna_SECRET}">
-                              비밀글입니다.
-                              <img
-                                      src="https://image.makeshop.co.kr/mysoho/assets/shop/img/common/ico_qa_lock.png"
-                                      alt=""
-                              />
-                            </div>
-                            <div class="qna-info">
-                              <div class="dil js-qnaType bar" th:text="${list.qna_SORT}"></div>
-                              <div class="name js-qnaWriter bar"
-                                   th:text="${list.qna_WRITER}"></div>
-                              <div class="date js-qnaDate" th:text="${list.qna_REGDATE}"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </a>
-                      <th:block sec:authorize="isAuthenticated()"
-                                th:if="${#strings.equals(list.qna_WRITER, session.memberID)}">
-                        <div class="js-qnaSaveBtns" style="display: block;">
-                          <a th:href="|javascript:sortSelect(${list.getQna_IDX()})|"
-                             class="btn-md-open"></a>
-                          <span class="btn-md-select" th:id="|select${list.qna_IDX}|">
-                                                <a th:href="@{/client/qna/modify(idx=${list.qna_IDX})}">수정</a>
-                                                <a th:href="@{/client/qna/list/delete2(idx=${list.qna_IDX})}"> 삭제</a>
-                                            </span>
-                        </div>
-                      </th:block>
-                      <th:block sec:authorize="isAnonymous()"
-                                th:if="${#strings.isEmpty(list.member_IDX)}">
-                        <div class="js-qnaSaveBtns" style="display: block;">
-                          <a href="javascript:sortSelect()" class="btn-md-open"></a>
-                          <span class="btn-md-select">
-                                                <a href="javascript:modifySelect()">수정</a>
-                                                <a th:href="@{/client/qna/list/delete2(idx=${list.qna_IDX})}"> 삭제</a>
-                                            </span>
-                        </div>
-                      </th:block>
-                      <!--					공개글-->
-                      <a
-                              href=""
-                              class="js-qnasArea qna-board-list"
-                              onclick="alert('공개글입니다.')"
-                              th:if="${list.qna_SECRET == 1}"
-                      >
-                                        <span class="qa-list-icon" th:text="${list.qna_ANSWERED} ">
-                                            답변
-                                            <br/>
-                                            대기
-                                        </span>
-                        <div class="tit-wrap js-qna">
-                          <div>
-                            <div class="tit js-qnaContents" th:text="${list.qna_CONTENT}">
-                            </div>
-                            <div class="qna-info">
-                              <div class="dil js-qnaType bar" th:text="${list.qna_SORT}"></div>
-                              <div class="name js-qnaWriter bar"
-                                   th:text="${list.qna_WRITER}"></div>
-                              <div class="date js-qnaDate" th:text="${list.qna_REGDATE}"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </a>
-                      <th:block sec:authorize="isAuthenticated()"
-                                th:if="${#strings.equals(list.qna_WRITER, session.memberID)}">
-                        <div class="js-qnaSaveBtns" style="display: block;">
-                          <a th:href="|javascript:sortSelect(${list.getQna_IDX()})|"
-                             class="btn-md-open"></a>
-                          <span class="btn-md-select" th:id="|select${list.qna_IDX}|">
-                                                <a th:href="@{/client/qna/modify(idx=${list.qna_IDX})}">수정</a>
-                                                <a th:href="@{/client/qna/list/delete2(idx=${list.qna_IDX})}"> 삭제</a>
-                                            </span>
-                        </div>
-                      </th:block>
-                      <th:block sec:authorize="isAnonymous()"
-                                th:if="${#strings.isEmpty(list.member_IDX)}">
-                        <div class="js-qnaSaveBtns" style="display: block;">
-                          <a th:href="|javascript:sortSelect(${list.getQna_IDX()})|"
-                             class="btn-md-open"></a>
-                          <span class="btn-md-select" th:id="|select${list.qna_IDX}|">
-                                                <a th:href="|javascript:modifySelect(${list.getQna_IDX()})|">수정</a>
-                                                <a th:href="@{/client/qna/list/delete2(idx=${list.qna_IDX})}"> 삭제</a>
-                                            </span>
-                        </div>
-                      </th:block>
-                      <div class="lock-pw-area js-passwordArea" th:id="|modify${list.qna_IDX}|"
-                           style="display: none;">
-                        <div class="box">
-                          <form th:action="@{/checkPw2}" method="post">
-                            <input type="password" name="qna_Pw" placeholder="비밀번호를 입력하세요.">
-                            <input type="hidden" name="qna_IDX" th:value="${list.qna_IDX}">
-                            <button type="submit" class="btn-h34-black js-passwordVerifyBtn"
-                            >확인
-                            </button>
-                          </form>
+                  <a href="" class="js-qnasArea qna-board-list">
+                    <div class="qa-list-icon">
+                      답변
+                      <br />
+                      대기
+                    </div>
+                    <div class="tit-wrap js-qna">
+                      <div>
+                        <div class="tit js-qnaContents">문의합니다.</div>
+                        <div class="qna-info">
+                          <div class="dil js-qnaType bar">상품</div>
+                          <div class="name js-qnaWriter bar">dl******...</div>
+                          <div class="date js-qnaDate">2022.04.11</div>
                         </div>
                       </div>
-                    </li>
+                    </div>
+                  </a>
+                  <a href="javascript:sortSelect()" class="threedot"
+                    ><img
+                      src="https://image.makeshop.co.kr/mysoho/assets/shop/img/common/ico_review_md.png"
+                      alt=""
+                  /></a>
+                  <ul id="sort">
+                    <li><a href="">수정</a></li>
+                    <li><a href="">삭제</a></li>
                   </ul>
                 </div>
               </div>
@@ -2310,22 +2147,14 @@
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
       }
-      function sortSelect(idx) {
-        if (document.querySelector("#select" + idx).style.display === "block") {
-          document.querySelector("#select" + idx).style.display = "none";
+      function sortSelect() {
+        //
+        if (document.querySelector("#sort").style.display === "block") {
+          document.querySelector("#sort").style.display = "none";
         } else {
-          document.querySelector("#select" + idx).style.display = "block";
+          document.querySelector("#sort").style.display = "block";
         }
       }
-
-      function modifySelect(idx) {
-        if (document.querySelector("#modify" + idx).style.display === "block") {
-          document.querySelector("#modify" + idx).style.display = "none";
-        } else {
-          document.querySelector("#modify" + idx).style.display = "block";
-        }
-      }
-
       function changePage(n) {
         let titarr = document.querySelectorAll(".pagetit");
         for (let i = 0; i < 3; i++) {
@@ -2335,10 +2164,9 @@
         titarr[n].classList.add("now");
         document.querySelector(".page" + (n + 1)).style.display = "block";
       }
-      function openPopupWrite(idx) {
-        popup = window.open("/client/qna/write2?idx=" + idx);
+      function openPopupWrite() {
+        popup = window.open("QnA-write.html");
       }
-
       function pageOpenClose() {
         //
         if (

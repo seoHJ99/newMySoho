@@ -63,7 +63,7 @@
 								<div>
 									<div class="aside-hd">
 										<div>
-											<a href="">
+											<a href="http://localhost:8080/main">
 												<img
 													src="https://image.makeshop.co.kr/mysoho/assets/shop/img/btn/h40_home.gif"
 													alt=""
@@ -145,12 +145,12 @@
 									<h3>어떤 상품을 찾고 계신가요?</h3>
 									<div class="overlay-content">
 										<form action="/search/product">
-											<input
-													type="hidden"
-													sec:authorize="isAuthenticated()"
-													th:name="${_csrf.parameterName}"
-													th:value="${_csrf.token}"
-											/>
+					<input
+						type="hidden"
+						sec:authorize="isAuthenticated()"
+						th:name="${_csrf.parameterName}"
+						th:value="${_csrf.token}"
+					/>
 											<input
 												type="text"
 												placeholder="검색어를 입력해주세요"
@@ -172,7 +172,7 @@
 						/></a>
 						<div class="side-icon-right">
 							<!-- hasRole: admin으로 설정 -->
-							<th:block sec:authorize="hasRole('ADMIN')">
+							<th:block sec:authorize="isAnonymous()">
 								<a th:href="@{/admin/}" class="btn-login"
 								><img
 									src="https://cdn-icons-png.flaticon.com/512/9688/9688602.png"
