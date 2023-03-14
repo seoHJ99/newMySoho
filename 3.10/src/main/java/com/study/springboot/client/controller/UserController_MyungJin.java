@@ -198,8 +198,6 @@ public class UserController_MyungJin {
     public String userMyinfo() {
         return "/client/user/Member/user-myinfo";     // loginForm.html로 응답
     }
-
-
     // 비회원페이지 by 형민
     @PostMapping("/myorder-list")
     public String nonUserMyOrderList(Model model, HttpServletRequest request) {
@@ -245,7 +243,10 @@ public class UserController_MyungJin {
         }
         return "/client/user/Member/review-mylist";
     }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     @RequestMapping("/findID")
     public String findID(@RequestParam("user_name") String name, @RequestParam("user_mobileNumber") String phone, Model model) {
         String memberID = memberService.findID(name, phone);
@@ -268,19 +269,35 @@ public class UserController_MyungJin {
         String pw = createCode();
         emailService.sendMail(emailMessage, pw);
         MemberResponseDTO dto = memberService.findByMail(mail, id);
+<<<<<<< Updated upstream
         dto.setMemberPw(passwordEncoder.encode(pw));
         Member member = dto.toUpdateEntity();
         memberListRepository.save(member);
         return "/main";
+=======
+        if(dto == null){
+            return "/client/login/noID";
+        }else {
+            dto.setMemberPw(passwordEncoder.encode(pw));
+            Member member = dto.toUpdateEntity();
+            memberListRepository.save(member);
+            return "redirect: /main";
+        }
+>>>>>>> Stashed changes
     }
 
     public String createCode() {
         Random random = new Random();
         StringBuffer key = new StringBuffer();
+<<<<<<< Updated upstream
 
         for (int i = 0; i < 8; i++) {
             int index = random.nextInt(4);
 
+=======
+        for (int i = 0; i < 8; i++) {
+            int index = random.nextInt(4);
+>>>>>>> Stashed changes
             switch (index) {
                 case 0: key.append((char) ((int) random.nextInt(26) + 97)); break;
                 case 1: key.append((char) ((int) random.nextInt(26) + 65)); break;
@@ -289,6 +306,10 @@ public class UserController_MyungJin {
         }
         return key.toString();
     }
+<<<<<<< Updated upstream
 }
 
 
+=======
+}
+>>>>>>> Stashed changes

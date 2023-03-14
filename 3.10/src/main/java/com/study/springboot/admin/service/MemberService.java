@@ -35,6 +35,18 @@ public class MemberService {
             return "1";
         }
     }
+<<<<<<< Updated upstream
+=======
+
+    public MemberResponseDTO findByMail(String email, String id){
+        Member entity = memberRepository.findByMailAndID(email, id);
+        if(entity ==null){
+            return null;
+        }
+        MemberResponseDTO dto = new MemberResponseDTO(entity);
+        return dto;
+    }
+>>>>>>> Stashed changes
     public String findID(String name, String phone){
         Member entity = memberRepository.findByNameAndPhone(name, phone);
         String memberID ="";
