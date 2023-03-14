@@ -32,6 +32,9 @@ public class MemberService {
 
     public MemberResponseDTO findByMail(String email, String id){
         Member entity = memberRepository.findByMailAndID(email, id);
+        if(entity ==null){
+            return null;
+        }
         MemberResponseDTO dto = new MemberResponseDTO(entity);
         return dto;
     }

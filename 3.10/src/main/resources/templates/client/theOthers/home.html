@@ -695,7 +695,7 @@
 													src="https://sohonara.mysoho.com/assets/shop/img/common/ico_cart_type1.png"
 													alt=""
 											/></a>
-											<a th:href="@{/product(idx=${list.item_idx})}">
+											<a th:href="@{/product(idx=${list.item_idx})}" class="type3Link">
 												<p class="img">
 													<img
 														th:src="${list.item_IMAGE}"
@@ -723,8 +723,10 @@
 												<!-- 메인사진 -->
 												<img
 												class="product-imageForType"
-													th:src="${list.item_IMAGE}"
-													alt=""
+												th:myNum="${list.item_idx}"
+												onclick="locationLink(this.getAttribute('myNum'))"
+												th:src="${list.item_IMAGE}"
+												alt=""
 												/>
 												<!-- 확대링크이미지 z-index예정 -->
 												<a
@@ -984,9 +986,12 @@
 						$(".priceForType")
 							.eq(i + count)
 							.text(numberFormatter(dateList[i].item_PRICE_DISCOUNT));
+							$(".product-imageForType").eq(i+count).attr("myNum",dateList[i].item_idx);
 							$(".PDnameForType").eq(i+count).attr("href", "/product?idx="+ dateList[i].item_idx);
 							$(".focusTag").eq(i+count).attr("href","/product?idx="+dateList[i].item_idx);
-						$(".gray-throughForType")
+							$(".type2Link").eq(i).attr("href","/product?idx="+dateList[i].item_idx);
+							$(".type3Link").eq(i).attr("href","/product?idx="+dateList[i].item_idx);
+						  $(".gray-throughForType")
 							.eq(i + count)
 							.text(dateList[i].item_PRICE);
 					}
@@ -1029,9 +1034,11 @@
 						$(".gray-throughForType")
 							.eq(i + count)
 							.text(sellingList[i].item_PRICE);
-							
+							$(".product-imageForType").eq(i+count).attr("myNum",sellingList[i].item_idx);
 							$(".PDnameForType").eq(i+count).attr("href", "/product?idx="+ sellingList[i].item_idx);
 							$(".focusTag").eq(i+count).attr("href","/product?idx="+sellingList[i].item_idx);
+							$(".type2Link").eq(i).attr("href","/product?idx="+sellingList[i].item_idx);
+							$(".type3Link").eq(i).attr("href","/product?idx="+sellingList[i].item_idx);
 					}
 					let length1 = $(".sale-rateForType").length;
 					for (let i = 0; i < length1; i++) {
@@ -1072,9 +1079,11 @@
 						$(".gray-throughForType")
 							.eq(i + count)
 							.text(priceList[i].item_PRICE);
-							
+							$(".product-imageForType").eq(i+count).attr("myNum",priceList[i].item_idx);
 							$(".PDnameForType").eq(i+count).attr("href", "/product?idx="+ priceList[i].item_idx);
 							$(".focusTag").eq(i+count).attr("href","/product?idx="+priceList[i].item_idx);
+							$(".type2Link").eq(i).attr("href","/product?idx="+priceList[i].item_idx);
+							$(".type3Link").eq(i).attr("href","/product?idx="+priceList[i].item_idx);
 					}
 					let length1 = $(".sale-rateForType").length;
 					for (let i = 0; i < length1; i++) {
@@ -1115,9 +1124,11 @@
 						$(".gray-throughForType")
 							.eq(i + count)
 							.text(reviewList[i].item_PRICE);
-							
+							$(".product-imageForType").eq(i+count).attr("myNum",reviewList[i].item_idx);
 							$(".PDnameForType").eq(i+count).attr("href", "/product?idx="+ reviewList[i].item_idx);
 							$(".focusTag").eq(i+count).attr("href","/product?idx="+reviewList[i].item_idx);
+							$(".type2Link").eq(i).attr("href","/product?idx="+reviewList[i].item_idx);
+							$(".type3Link").eq(i).attr("href","/product?idx="+reviewList[i].item_idx);
 					}
 					let length1 = $(".sale-rateForType").length;
 					for (let i = 0; i < length1; i++) {
@@ -1158,9 +1169,11 @@
 						$(".gray-throughForType")
 							.eq(i + count)
 							.text(scoreList[i].item_PRICE);
-							
+							$(".product-imageForType").eq(i+count).attr("myNum",scoreList[i].item_idx);
 							$(".PDnameForType").eq(i+count).attr("href", "/product?idx="+ scoreList[i].item_idx);
 							$(".focusTag").eq(i+count).attr("href","/product?idx="+scoreList[i].item_idx);
+							$(".type2Link").eq(i).attr("href","/product?idx="+scoreList[i].item_idx);
+							$(".type3Link").eq(i).attr("href","/product?idx="+scoreList[i].item_idx);
 					}
 					let length1 = $(".sale-rateForType").length;
 					for (let i = 0; i < length1; i++) {
@@ -1363,6 +1376,10 @@
 let basketNum = document.querySelector(".basket-num").innerHTML;
 $(".option-total-price").text($("#option-price").text());
 	
+function locationLink(a){
+	location.href="/product?idx="+a;
+}
+
 function basketNumCount(a) {
 	if($(a).attr("hasOption")!=null){
 		location.href="/product?idx="+$(a).attr("value");

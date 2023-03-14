@@ -278,19 +278,21 @@ public class UserController_MyungJin {
         String pw = createCode();
         emailService.sendMail(emailMessage, pw);
         MemberResponseDTO dto = memberService.findByMail(mail, id);
-        dto.setMemberPw(passwordEncoder.encode(pw));
-        Member member = dto.toUpdateEntity();
-        memberListRepository.save(member);
-        return "/main";
+        if(dto == null){
+            return "/client/login/noID";
+        }else {
+            dto.setMemberPw(passwordEncoder.encode(pw));
+            Member member = dto.toUpdateEntity();
+            memberListRepository.save(member);
+            return "redirect: /main";
+        }
     }
 
     public String createCode() {
         Random random = new Random();
         StringBuffer key = new StringBuffer();
-
         for (int i = 0; i < 8; i++) {
             int index = random.nextInt(4);
-
             switch (index) {
                 case 0: key.append((char) ((int) random.nextInt(26) + 97)); break;
                 case 1: key.append((char) ((int) random.nextInt(26) + 65)); break;
@@ -300,5 +302,3 @@ public class UserController_MyungJin {
         return key.toString();
     }
 }
-
-
