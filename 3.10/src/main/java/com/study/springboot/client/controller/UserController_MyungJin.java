@@ -40,8 +40,6 @@ public class UserController_MyungJin {
     private final CouponService couponService;
     private final NonmemberService nonmemberService;
     private final ClientReviewService_JunTae reviewService;
-    private final EmailService emailService;
-
     @RequestMapping("/id-check")
     @ResponseBody
     public int checkId(@RequestParam("id") String id) {
@@ -253,6 +251,7 @@ public class UserController_MyungJin {
         }
         return "/client/login/find-ID";
     }
+    private final EmailService emailService;
 
 
     // 임시 비밀번호 발급
