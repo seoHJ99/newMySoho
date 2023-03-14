@@ -662,7 +662,7 @@
 									<ul class="threeAlign threeAlign2 listType1">
 										<li th:each="list : ${list2}">
 											<p class="img">
-												<a th:href="@{/product(idx=${list.item_idx})}">
+												<a th:href="@{/product(idx=${list.item_idx})}" class="type2Link">
 													<img
 														th:src="${list.item_IMAGE}"
 														alt=""
@@ -984,6 +984,8 @@
 						$(".priceForType")
 							.eq(i + count)
 							.text(numberFormatter(dateList[i].item_PRICE_DISCOUNT));
+							$(".PDnameForType").eq(i+count).attr("href", "/product?idx="+ dateList[i].item_idx);
+							$(".focusTag").eq(i+count).attr("href","/product?idx="+dateList[i].item_idx);
 						$(".gray-throughForType")
 							.eq(i + count)
 							.text(dateList[i].item_PRICE);
@@ -1027,6 +1029,9 @@
 						$(".gray-throughForType")
 							.eq(i + count)
 							.text(sellingList[i].item_PRICE);
+							
+							$(".PDnameForType").eq(i+count).attr("href", "/product?idx="+ sellingList[i].item_idx);
+							$(".focusTag").eq(i+count).attr("href","/product?idx="+sellingList[i].item_idx);
 					}
 					let length1 = $(".sale-rateForType").length;
 					for (let i = 0; i < length1; i++) {
@@ -1067,6 +1072,9 @@
 						$(".gray-throughForType")
 							.eq(i + count)
 							.text(priceList[i].item_PRICE);
+							
+							$(".PDnameForType").eq(i+count).attr("href", "/product?idx="+ priceList[i].item_idx);
+							$(".focusTag").eq(i+count).attr("href","/product?idx="+priceList[i].item_idx);
 					}
 					let length1 = $(".sale-rateForType").length;
 					for (let i = 0; i < length1; i++) {
@@ -1107,6 +1115,9 @@
 						$(".gray-throughForType")
 							.eq(i + count)
 							.text(reviewList[i].item_PRICE);
+							
+							$(".PDnameForType").eq(i+count).attr("href", "/product?idx="+ reviewList[i].item_idx);
+							$(".focusTag").eq(i+count).attr("href","/product?idx="+reviewList[i].item_idx);
 					}
 					let length1 = $(".sale-rateForType").length;
 					for (let i = 0; i < length1; i++) {
@@ -1147,6 +1158,9 @@
 						$(".gray-throughForType")
 							.eq(i + count)
 							.text(scoreList[i].item_PRICE);
+							
+							$(".PDnameForType").eq(i+count).attr("href", "/product?idx="+ scoreList[i].item_idx);
+							$(".focusTag").eq(i+count).attr("href","/product?idx="+scoreList[i].item_idx);
 					}
 					let length1 = $(".sale-rateForType").length;
 					for (let i = 0; i < length1; i++) {
