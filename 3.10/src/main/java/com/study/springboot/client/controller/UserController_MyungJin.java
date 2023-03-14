@@ -243,7 +243,6 @@ public class UserController_MyungJin {
         return "/client/user/Member/review-mylist";
     }
 
-
     @RequestMapping("/findID")
     public String findID(@RequestParam("user_name") String name, @RequestParam("user_mobileNumber") String phone, Model model) {
         String memberID = memberService.findID(name, phone);
@@ -253,7 +252,6 @@ public class UserController_MyungJin {
         }
         return "/client/login/find-ID";
     }
-
 
     // 임시 비밀번호 발급
     @PostMapping("/findPW")
