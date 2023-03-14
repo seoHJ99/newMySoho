@@ -3,7 +3,9 @@ package com.study.springboot.client.controller;
 import com.study.springboot.admin.dto.CouponResoponseDTO;
 import com.study.springboot.admin.dto.MemberResponseDTO;
 import com.study.springboot.admin.dto.OrderResponseDto;
+import com.study.springboot.admin.dto.ProductResponseDto;
 import com.study.springboot.admin.service.OrderService;
+import com.study.springboot.admin.service.ReviewService;
 import com.study.springboot.client.dto.*;
 import com.study.springboot.client.service.ClientReviewService_JunTae;
 import com.study.springboot.client.service.CouponService;
@@ -13,6 +15,7 @@ import com.study.springboot.entity.Member;
 import com.study.springboot.entity.MemberListRepository;
 import com.study.springboot.admin.service.MemberService;
 
+import com.study.springboot.entity.OrderDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -36,6 +39,11 @@ import java.util.List;
 import java.util.Random;
 //import java.util.Properties;
 //import java.util.Random;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -228,7 +236,9 @@ public class UserController_MyungJin {
         model.addAttribute("order3", test.getOrderingCnt());
         model.addAttribute("order4", test.getCompleteCnt());
         model.addAttribute("order5", refundCnt);
+
         model.addAttribute("list", orderTests);
+
         return "/client/user/Nonmember/myorder-list";
     }
 
@@ -292,3 +302,4 @@ public class UserController_MyungJin {
 }
 
 
+}

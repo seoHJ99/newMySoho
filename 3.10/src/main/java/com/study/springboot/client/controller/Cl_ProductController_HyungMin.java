@@ -1,8 +1,11 @@
 package com.study.springboot.client.controller;
 
 import com.study.springboot.admin.dto.ProductResponseDto;
+import com.study.springboot.admin.dto.QnaResponseDto;
+import com.study.springboot.admin.service.QnaService;
 import com.study.springboot.client.dto.ReviewResponseDto;
 import com.study.springboot.client.service.Cl_ProductService_HyungMin;
+import com.study.springboot.client.service.ClientQnaService_JunSeok;
 import com.study.springboot.client.service.ClientReviewService_JunTae;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,6 +20,8 @@ import java.util.List;
 public class Cl_ProductController_HyungMin {
     private final Cl_ProductService_HyungMin clProductService;
     private final ClientReviewService_JunTae clientReviewService;
+
+    private final ClientQnaService_JunSeok clientQnaServiceJunSeok;
 
     @RequestMapping("/product")
     public String product(@RequestParam("idx") int item_IDX, Model model) {
@@ -36,17 +41,19 @@ public class Cl_ProductController_HyungMin {
         avg = avg/10;
         System.out.println(avg);
 
+        List<QnaResponseDto> list = clientQnaServiceJunSeok.findAll();
+
+        model.addAttribute("list", list);
+
         model.addAttribute("product", dto);
         model.addAttribute("review",dto1);
         model.addAttribute("reviewAVG",avg);
         model.addAttribute("reviewCount", dto1.size());
         return "/client/product/productDetailPage";
     }
-
     @RequestMapping("/product/detail")
     public String productDetail(int item_IDX, Model model){
         ProductResponseDto dto = clProductService.findById(item_IDX);
-        model.addAttribute("item", dto.getItem_idx());
         model.addAttribute("item_DETAIL", dto.getItem_DETAIL());
         return "client/product/productDetail-NewPage";
     }
