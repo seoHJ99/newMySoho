@@ -170,6 +170,8 @@
 				height: 42px;
 			}
 		</style>
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 <body id="bodytest">
 <th:block
@@ -191,7 +193,7 @@
 				<input
 						class="input-st01 users-login-input input-id"
 						type="text"
-						name="memberId"
+						name="memberID"
 						placeholder="아이디(5자~20자 이내)"
 						value=""
 						onBlur="checkTxt('id', this.value)"
@@ -577,6 +579,10 @@
 						url: "/id-check",
 						type: "POST",
 						traditional: true,
+						beforeSend : function(xhr)
+						 {
+						 xhr.setRequestHeader(header, token);
+						  },
 						data: {
 							id: id,
 						},
