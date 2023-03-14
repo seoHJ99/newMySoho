@@ -16,22 +16,22 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query(value = "SELECT * FROM item WHERE item_ORIGINAL = 0", nativeQuery = true)
     List<Product> findAllNoRepeat();
 
-    @Query(value = "SELECT * FROM item WHERE item_OPTION IS NULL ORDER BY item_REGDATE DESC", nativeQuery = true)
+    @Query(value = "SELECT * FROM item WHERE item_ORIGINAL = 0 ORDER BY item_REGDATE DESC", nativeQuery = true)
     List<Product> pdOrderByDate();
 
-    @Query(value = "SELECT * FROM item WHERE item_OPTION IS NULL ORDER BY item_SELL DESC", nativeQuery = true)
+    @Query(value = "SELECT * FROM item WHERE item_ORIGINAL = 0 ORDER BY item_SELL DESC", nativeQuery = true)
     List<Product> pdOrderBySelling();
 
-    @Query(value = "SELECT * FROM item WHERE item_OPTION IS NULL ORDER BY item_PRICE, item_DISCOUNT", nativeQuery = true)
+    @Query(value = "SELECT * FROM item WHERE item_ORIGINAL = 0 ORDER BY item_PRICE, item_DISCOUNT", nativeQuery = true)
     List<Product> pdOrderByPrice();
 
-    @Query(value = "SELECT * FROM item WHERE item_OPTION IS NULL AND item_NAME LIKE CONCAT('%',:keyword,'%') ORDER BY item_REGDATE DESC", nativeQuery = true)
+    @Query(value = "SELECT * FROM item WHERE item_ORIGINAL = 0 AND item_NAME LIKE CONCAT('%',:keyword,'%') ORDER BY item_REGDATE DESC", nativeQuery = true)
     List<Product> pdOrderByDate(@Param("keyword") String keyword);
 
-    @Query(value = "SELECT * FROM item WHERE item_OPTION IS NULL AND item_NAME LIKE CONCAT('%',:keyword,'%') ORDER BY item_SELL DESC", nativeQuery = true)
+    @Query(value = "SELECT * FROM item WHERE item_ORIGINAL = 0 AND item_NAME LIKE CONCAT('%',:keyword,'%') ORDER BY item_SELL DESC", nativeQuery = true)
     List<Product> pdOrderBySelling(@Param("keyword") String keyword);
 
-    @Query(value = "SELECT * FROM item WHERE item_OPTION IS NULL AND item_NAME LIKE CONCAT('%',:keyword,'%') ORDER BY item_PRICE, item_DISCOUNT DESC", nativeQuery = true)
+    @Query(value = "SELECT * FROM item WHERE item_ORIGINAL = 0 AND item_NAME LIKE CONCAT('%',:keyword,'%') ORDER BY item_PRICE, item_DISCOUNT DESC", nativeQuery = true)
     List<Product> pdOrderByPrice(@Param("keyword") String keyword);
 
     @Query(value = "SELECT * FROM item WHERE item_ORIGINAL = :idx OR item_IDX = :idx AND item_OPTION IS NOT NULL", nativeQuery = true)
