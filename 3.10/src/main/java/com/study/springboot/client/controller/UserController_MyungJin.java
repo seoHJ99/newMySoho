@@ -271,7 +271,7 @@ public class UserController_MyungJin {
         dto.setMemberPw(passwordEncoder.encode(pw));
         Member member = dto.toUpdateEntity();
         memberListRepository.save(member);
-        return "/main";
+        return "/client/theOthers/home";
     }
 
     public String createCode() {

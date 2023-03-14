@@ -97,7 +97,6 @@
         <form action="/myorder-list" method="post">
 					<input
 					type="hidden"
-					sec:authorize="isAuthenticated()"
 					th:name="${_csrf.parameterName}"
 					th:value="${_csrf.token}"
 				/>

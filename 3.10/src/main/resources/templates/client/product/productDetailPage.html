@@ -1015,6 +1015,7 @@
                       <div
                         class="price option-price"
                         th:value="${product.item_PRICE_DISCOUNT}"
+                        th:text="${#numbers.formatInteger(product.item_PRICE_DISCOUNT,3,'COMMA')}+'원'"
                       >
                         44,100원
                       </div>

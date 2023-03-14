@@ -42,9 +42,11 @@ public class Cl_ProductController_HyungMin {
         model.addAttribute("reviewCount", dto1.size());
         return "/client/product/productDetailPage";
     }
+
     @RequestMapping("/product/detail")
     public String productDetail(int item_IDX, Model model){
         ProductResponseDto dto = clProductService.findById(item_IDX);
+        model.addAttribute("item", dto.getItem_idx());
         model.addAttribute("item_DETAIL", dto.getItem_DETAIL());
         return "client/product/productDetail-NewPage";
     }
