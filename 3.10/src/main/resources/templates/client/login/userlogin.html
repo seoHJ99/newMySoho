@@ -15,7 +15,6 @@
 	<style>
 		.popup {
 			z-index: -1;
-			height: 350px;
 		}
 	</style>
 	<body id="bodytest">
@@ -98,8 +97,9 @@
 										</div>
 
 										<form
-											action="frmLogin"
+											action="findID"
 											method="post"
+											onsubmit=" return checkINPUT1()"
 										>
 											<input
 												type="hidden"
@@ -119,12 +119,7 @@
 												name="user_mobileNumber"
 												placeholder="전화번호를 입력하세요"
 											/>
-											<button
-												class="btn-h42-gray mt-10"
-												onclick="alert('입력한 정보를 다시 한번 확인해주세요.')"
-											>
-												찾기
-											</button>
+											<button class="btn-h42-gray mt-10">찾기</button>
 										</form>
 									</div>
 								</div>
@@ -158,7 +153,6 @@
 											<div>입력시 해당 이메일로 비밀번호 변경</div>
 											<div>가능한 링크를 보내드립니다.</div>
 										</div>
-
 										<form
 											action="/findPW"
 											onsubmit="return checkINPUT2()"
@@ -183,7 +177,6 @@
 												id="pwID"
 												placeholder="아이디을 입력해주세요"
 											/>
-
 											<button
 												type="submit"
 												class="btn-h42-gray mt-10"
@@ -216,11 +209,11 @@
 		<script>
 			function checkINPUT2() {
 				if ($("#pwMAIL").val() == "" || $("#pwID").val() == "") {
+					console.log($("#pwMAIL").val());
 					alert("아이디, 이메일을 적어주세요!");
 					return false;
 				}
 			}
-
 			function checkINPUT1() {
 				if ($("#idPHONE").val() == "" || $("#idNAME").val() == "") {
 					console.log($("#pwMAIL").val());
@@ -228,6 +221,7 @@
 					return false;
 				}
 			}
+
 			//사이드메뉴
 			function openNav() {
 				// document.body.style.backgroundColor = "rgba(0,0,0,0.5)";

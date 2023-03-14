@@ -9,6 +9,7 @@ import com.study.springboot.admin.service.ReviewService;
 import com.study.springboot.client.dto.*;
 import com.study.springboot.client.service.ClientReviewService_JunTae;
 import com.study.springboot.client.service.CouponService;
+import com.study.springboot.client.service.EmailService;
 import com.study.springboot.client.service.NonmemberService;
 import com.study.springboot.entity.Member;
 import com.study.springboot.entity.MemberListRepository;
@@ -29,6 +30,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 @RequiredArgsConstructor
@@ -40,6 +42,8 @@ public class UserController_MyungJin {
     private final CouponService couponService;
     private final NonmemberService nonmemberService;
     private final ClientReviewService_JunTae reviewService;
+    private final EmailService emailService;
+
     @RequestMapping("/id-check")
     @ResponseBody
     public int checkId(@RequestParam("id") String id) {
@@ -196,24 +200,19 @@ public class UserController_MyungJin {
     // 비회원페이지 by 형민
     @PostMapping("/myorder-list")
     public String nonUserMyOrderList(Model model,HttpServletRequest request) {
-
         String name = request.getParameter("sender");
         String phone1 = request.getParameter("phone1");
         String phone2 = request.getParameter("phone2");
         String phone = phone1 + phone2;
-
         NonmemberResponseDto nonmember = nonmemberService.findNonmember(name, phone);
         List<OrderResponseDto> orderDto = nonmemberService.findOrderByNonMemberIDX(nonmember.getIdx());
         List<OrderDetailTemp> orderTests = nonmemberService.userMyOrderLogic(orderDto);
         OrdersStatus test = orderService.dtoListLogic(orderDto, orderTests);
-
         int status = orderDto.size();
-
         int refundCnt = 0;
         for(int i =0; i < orderTests.size(); i++) {
             refundCnt = refundCnt + orderTests.get(i).getRefundCnt();
         }
-
         model.addAttribute("member", name);
         model.addAttribute("status", status);
         model.addAttribute("order1", test.getNoPayCnt() );
@@ -221,9 +220,7 @@ public class UserController_MyungJin {
         model.addAttribute("order3", test.getOrderingCnt() );
         model.addAttribute("order4", test.getCompleteCnt() );
         model.addAttribute("order5", refundCnt);
-
         model.addAttribute("list", orderTests);
-
         return "/client/user/Nonmember/myorder-list";
     }
 
@@ -241,7 +238,6 @@ public class UserController_MyungJin {
         return "/client/user/Member/review-mylist";
     }
 
-
     @RequestMapping("/findID")
     public String findID(@RequestParam("user_name") String name, @RequestParam("user_mobileNumber") String phone, Model model) {
         String memberID = memberService.findID(name, phone);
@@ -251,10 +247,8 @@ public class UserController_MyungJin {
         }
         return "/client/login/find-ID";
     }
-    private final EmailService emailService;
-
-
     // 임시 비밀번호 발급
+
     @PostMapping("/findPW")
     public String sendPasswordMail(@RequestParam("email") String mail, @RequestParam("id")String id) {
         EmailMessage emailMessage = EmailMessage.builder()
@@ -262,15 +256,15 @@ public class UserController_MyungJin {
                 .subject("임시 비밀번호 발급")
                 .build();
         String pw = createCode();
-        emailService.sendMail(emailMessage, pw);
         MemberResponseDTO dto = memberService.findByMail(mail, id);
         if(dto == null){
             return "/client/login/noID";
         }else {
+            emailService.sendMail(emailMessage, pw);
             dto.setMemberPw(passwordEncoder.encode(pw));
             Member member = dto.toUpdateEntity();
             memberListRepository.save(member);
-            return "redirect: /main";
+            return "redirect:/main";
         }
     }
 

@@ -31,4 +31,9 @@ public interface MemberListRepository extends JpaRepository<Member, Integer> {
 
     @Query(value = "select * from member where member_ID = :member_ID_param", nativeQuery = true)
     List<Member> findByUserLoginId(@Param("member_ID_param") String memberId);
+    @Query(value = "select * from member where member_NAME =:name AND member_PHONE = :phone", nativeQuery = true)
+    Member findByNameAndPhone(@Param("name") String name, @Param("phone")String phone);
+
+    @Query(value = "select * from member where member_MAIL = :MAIL AND member_ID = :ID", nativeQuery = true)
+    Member findByMailAndID(@Param("MAIL") String MAIL, @Param("ID")String ID);
 }
