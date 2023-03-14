@@ -1,6 +1,6 @@
 package com.study.springboot.admin.controller;
 
-
+import com.study.springboot.admin.dto.OrderDetailDto;
 import com.study.springboot.entity.OrderDetail;
 import com.study.springboot.admin.dto.OrderInfoDto;
 import com.study.springboot.admin.service.OrderService;
@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +20,6 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
 
-//    @RequestMapping("/order/{idx}")
-//    public String order(@PathVariable("idx") int idx, Model model){
-//        model.addAttribute("order" ,orderService.findByOrderId(idx));
-//        return "orderDetailPage16";
-//    }
 
     @RequestMapping("/order")
     public String orderDetail(Integer idx, Model model){
@@ -31,13 +27,11 @@ public class OrderController {
         ArrayList<OrderInfoDto> info = new ArrayList<>();
         List<ProductResponseDto> orderProductsInfo =
         orderService.findOrderItems(orderService.findOrderDetailByOrderId(idx));
-        System.out.println("aaaaaaaaaaaaaaa");
         List<OrderDetail> count = orderService.findOrderDetailByOrderId(idx);
 
         for(int i=0; i<orderProductsInfo.size(); i++){
             OrderInfoDto orderInfoDto = new OrderInfoDto();
             orderInfoDto.setItem_name(orderProductsInfo.get(i).getItem_NAME());
-            System.out.println(orderInfoDto.getItem_name());
            orderInfoDto.setItem_price(orderProductsInfo.get(i).getItem_PRICE());
            orderInfoDto.setItem_quantity(count.get(i).getOdetail_QTY());
            orderInfoDto.setItem_total(orderInfoDto.getItem_quantity() * orderInfoDto.getItem_price());
@@ -48,16 +42,20 @@ public class OrderController {
         for(int i=0; i<info.size(); i++){
             totalPrice += info.get(i).getItem_total();
         }
-        System.out.println(totalPrice);
-
-
         model.addAttribute("order", orderService.findByOrderId(idx));
         model.addAttribute("list",info);
         model.addAttribute("total", totalPrice);
         return "orderDetailPage16";
     }
 
-
-
-
+    @RequestMapping("/order/modify")
+    public String orderModify(@RequestParam("several_status") String status[], @RequestParam("orders_IDX") int ordersIDX){
+        List<OrderDetail> orderDetails =  orderService.findOrderDetailByOrderId(ordersIDX);
+        for(int i=0; i<orderDetails.size(); i++){
+            OrderDetailDto orderDetailDto = new OrderDetailDto(orderDetails.get(i));
+            orderDetailDto.setOdetail_STATUS(status[i]);
+            orderService.modifyOdetail(orderDetailDto);
+        }
+        return "redirect:/admin/list/order";
+    }
 }

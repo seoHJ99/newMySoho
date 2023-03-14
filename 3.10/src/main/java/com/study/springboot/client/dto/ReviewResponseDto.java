@@ -23,6 +23,7 @@ public class ReviewResponseDto {
     private String review_IMAGE;
     private LocalDate review_REGDATE;
     private String review_REPLY;
+    private String review_STATUS;
 
     public ReviewResponseDto(Review entity) {
         this.review_IDX = entity.getReview_IDX();
@@ -32,6 +33,7 @@ public class ReviewResponseDto {
         this.review_CONTENT = entity.getReview_CONTENT();
         this.review_SCORE = entity.getReview_SCORE();
         this.review_REGDATE = entity.getReviewREGDATE();
+        this.review_STATUS = entity.getReview_STATUS();
     }
     public void toViewDto(Review entity) {
         this.review_IDX = entity.getReview_IDX();
@@ -44,6 +46,7 @@ public class ReviewResponseDto {
         this.review_IMAGE = entity.getReview_IMAGE();
         this.review_REGDATE = entity.getReviewREGDATE();
         this.review_REPLY = entity.getReview_REPLY();
+        this.review_STATUS = entity.getReview_STATUS();
     }
 
     public Review toSaveEntity() {

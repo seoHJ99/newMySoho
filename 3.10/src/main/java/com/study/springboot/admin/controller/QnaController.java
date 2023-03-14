@@ -30,14 +30,13 @@ public class QnaController {
         }else{
             model.addAttribute("answer", "미답변");
         }
-
         model.addAttribute("dto", qnaResponseDto);
-
 
         return "qna"; //qna.html로 리턴
     }
 
     @RequestMapping("/qna/saveaction")
+    @ResponseBody
     public String qnaSave(@RequestParam("qna_IDX") int qna_IDX, @RequestParam("qna_REACT") String qna_REACT){
         QnaResponseDto qnaResponseDto = qnaService.findById(qna_IDX);
         qnaResponseDto.setQna_REACT(qna_REACT);
@@ -45,7 +44,7 @@ public class QnaController {
         Qna qna = new Qna();
         qna.toSaveEntity(qnaResponseDto);
         qnaService.save(qna);
-        return "redirect:/admin/qna?idx=" + qna_IDX;
+        return "<script>alert('답변이 성공적으로 등록되었습니다.'); location.href = '/admin/list/QnA';</script>";
     }
 
     @RequestMapping("/qnas/delete")

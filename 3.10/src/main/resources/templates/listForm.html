@@ -42,6 +42,8 @@
     margin-left : -19px;
     }
     </style>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 <body>
 
@@ -532,7 +534,9 @@
 
 
      function deleteValue(){
-          console.log($("input[name='RowCheck']:checked")[0].className);
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		var name = $("#userName").val();
 
      let reviewNo = "";
      $( "input[name='RowCheck']:checked" ).each (function (){
@@ -548,6 +552,10 @@
             url : '/admin/products/delete',
             type : 'POST',
             traditional : true,
+            beforeSend : function(xhr)
+            {   
+				xhr.setRequestHeader(header, token);
+            },
             data : {
               reviewNo : reviewNo
             },
@@ -568,6 +576,10 @@
             url : '/admin/notices/delete',
             type : 'POST',
             traditional : true,
+            beforeSend : function(xhr)
+            {   
+				xhr.setRequestHeader(header, token);
+            },
             data : {
               reviewNo : reviewNo
             },
@@ -587,6 +599,10 @@
             url : '/admin/qnas/delete',
             type : 'POST',
             traditional : true,
+            beforeSend : function(xhr)
+            {   
+				xhr.setRequestHeader(header, token);
+            },
             data : {
               reviewNo : reviewNo
             },
@@ -607,6 +623,10 @@
             url : '/admin/reviews/delete',
             type : 'POST',
             traditional : true,
+            beforeSend : function(xhr)
+            {   
+				xhr.setRequestHeader(header, token);
+            },
             data : {
               reviewNo : reviewNo
             },

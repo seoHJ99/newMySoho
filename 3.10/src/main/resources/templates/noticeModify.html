@@ -58,6 +58,8 @@ border : 0px solid white;
 
     </style>
 
+      <meta name="_csrf" th:content="${_csrf.token}" />
+      <meta name="_csrf_header" th:content="${_csrf.headerName}" />
 
 </head>
 <body>
@@ -157,17 +159,23 @@ border : 0px solid white;
   </script>
   <script>
         function deleteNot() {
+          var token = $("meta[name='_csrf']").attr("content");
+          var header = $("meta[name='_csrf_header']").attr("content");
+          console.log('%cnoticeModify.html line:164 object', 'color: #007acc;', $("#notice_IDX").val());
 
-    if(confirm('정말로 삭제하시겠습니까?')){
-    $.ajax({
-				url: "/admin/notice/delete",
-				type: "POST",
-				data: {
-					notice_idx : $("#notice_idx").val()
+       if(confirm('정말로 삭제하시겠습니까?')){
+         $.ajax({
+			  	url: "/admin/notice/delete",
+			  	type: "POST",
+          beforeSend : function(xhr){
+           xhr.setRequestHeader(header, token);
+         },
+			  	data: {
+					notice_idx : $("#notice_IDX").val()
 				},
-				success: function (response) {
-						alert("삭제 성공");
-					location.href='/admin/list/product';
+				  success: function (response) {
+					alert("삭제 성공");
+					location.href='/admin/list/notice';
 
 				},
 			});

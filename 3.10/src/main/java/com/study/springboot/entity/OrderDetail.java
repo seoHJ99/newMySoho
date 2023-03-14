@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "orders_detail")
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class OrderDetail {
@@ -22,4 +21,13 @@ public class OrderDetail {
     private int item_IDX;
     private int odetail_QTY;
     private String odetail_STATUS;
+
+    @Builder
+    public OrderDetail(int odetail_IDX, int ordersIDX, int item_IDX, int odetail_QTY, String odetail_STATUS) {
+        this.odetail_IDX = odetail_IDX;
+        this.ordersIDX = ordersIDX;
+        this.item_IDX = item_IDX;
+        this.odetail_QTY = odetail_QTY;
+        this.odetail_STATUS = odetail_STATUS;
+    }
 }
