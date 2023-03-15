@@ -118,6 +118,7 @@ public class UserController_MyungJin {
 
 
     @PostMapping("/checkPw")
+    @ResponseBody
     public String checkPw(HttpServletRequest request)  {
         Member entity = memberListRepository.findById((int) request.getSession().getAttribute("member_IDX")).get();
         request.getSession().setAttribute("memberEntity", entity);
@@ -126,9 +127,12 @@ public class UserController_MyungJin {
         String encodedPassword = passwordEncoder.encode(ppw);
         boolean checkPw = passwordEncoder.matches(ppw, realPw);
         if (checkPw) {
-            return "/client/user/Member/user-myinfo";
+//            return "/client/user/Member/user-myinfo";
+            return "<script>location.href='/user/myinfo';</script>";
+        } else {
+//            return "/client/user/Member/myorder-list-user";
+            return "<script>alert('비밀번호가 일치하지 않습니다.'); history.back();</script>";
         }
-        return "/client/user/Member/myorder-list-user";
     }
 
     @RequestMapping("/userModify")
