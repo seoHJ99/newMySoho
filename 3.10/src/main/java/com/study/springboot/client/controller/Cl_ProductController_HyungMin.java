@@ -1,9 +1,11 @@
 package com.study.springboot.client.controller;
 
 import com.study.springboot.admin.dto.ProductResponseDto;
+import com.study.springboot.admin.dto.QnaResponseDto;
 import com.study.springboot.admin.dto.ReviewResponseDTO;
 import com.study.springboot.client.dto.ReviewResponseDto;
 import com.study.springboot.client.service.Cl_ProductService_HyungMin;
+import com.study.springboot.client.service.ClientQnaService_JunSeok;
 import com.study.springboot.client.service.ClientReviewService_JunTae;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,7 @@ public class
 Cl_ProductController_HyungMin {
     private final Cl_ProductService_HyungMin clProductService;
     private final ClientReviewService_JunTae clientReviewService;
+    private final ClientQnaService_JunSeok clientQnaServiceJunSeok;
 
     @RequestMapping("/product")
     public String product(@RequestParam("idx") int item_IDX, Model model) {
@@ -40,6 +43,9 @@ Cl_ProductController_HyungMin {
                 }
             avg = ((int)( avg  / dto1.size() * 10) / 10f);
         }
+        List<QnaResponseDto> list = clientQnaServiceJunSeok.findAll();
+
+        model.addAttribute("list", list);
         model.addAttribute("product", dto);
         model.addAttribute("review",dto1);
         model.addAttribute("reviewAVG",avg);

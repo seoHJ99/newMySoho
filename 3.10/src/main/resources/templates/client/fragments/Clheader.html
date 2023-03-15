@@ -172,7 +172,7 @@
 						/></a>
 						<div class="side-icon-right">
 							<!-- hasRole: admin으로 설정 -->
-							<th:block sec:authorize="isAnonymous()">
+							<th:block sec:authorize="hasRole('ADMIN')">
 								<a th:href="@{/admin/}" class="btn-login"
 								><img
 									src="https://cdn-icons-png.flaticon.com/512/9688/9688602.png"

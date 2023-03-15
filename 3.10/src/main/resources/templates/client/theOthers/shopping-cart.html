@@ -1015,6 +1015,8 @@
           </ul>
         </div>
         <!-- 회원가입 -->
+        <form action="/joinAction" method="post">
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <div id="userJoinFormDiv" class="receiver-wrap users-join-line">
           <div class="title bold">회원가입 정보</div>
           <div class="users-cont nopd">
@@ -1022,7 +1024,7 @@
               <input
                 class="input-st01 users-login-input input-id"
                 type="text"
-                name="user_id"
+                name="memberID"
                 placeholder="아이디(5자~20자 이내)"
                 onBlur="checkTxt('id', this.value)"
                 onchange="checkUserinfo('id', this.value)"
@@ -1042,7 +1044,7 @@
               <input
                 class="input-st01 users-login-input mt-10"
                 type="email"
-                name="user_email"
+                name="member_MAIL"
                 placeholder="이메일(비밀번호 찾기 시 이메일로 발송됩니다"
                 onBlur="checkTxt('email', this.value)"
                 onchange="checkUserinfo('email', this.value)"
@@ -1067,7 +1069,7 @@
               id="check-txt-pw"
               class="input-st01 users-login-input mt-10"
               type="password"
-              name="user_password"
+              name="memberPw"
               placeholder="비밀번호 (영문,숫자,특수문자 조합 8자리 이상)"
               onchange="checkUserinfo('pw', this.value)"
             />
@@ -1086,7 +1088,7 @@
               id="check-txt-pwcheck"
               class="input-st01 users-login-input mt-10"
               type="password"
-              name="user_password"
+              name=""
               placeholder="비밀번호 재입력"
               onBlur="checkPW(this.value)"
               onchange="checkTxt('pw', this.value)"
@@ -1112,7 +1114,7 @@
             <li class="mt-none">
               <input
                 type="text"
-                name="orders_NAME"
+                name="member_NAME"
                 placeholder="이름"
                 value
                 maxlength="20"
@@ -1147,7 +1149,7 @@
               <input
                 id="sample6_postcode"
                 type="text"
-                name="orders_POST"
+                name="member_POST"
                 placeholder="우편번호"
                 value
                 readonly
@@ -1212,6 +1214,9 @@
             </li>
           </ul>
         </div>
+          <input type="hidden" name="member_ROLE" value="ROLE_USER">
+          <input type="hidden" name="status" value="활동">
+        </form>
         <!-- 구분선 빈박스-->
         <div class="bg-blank none"></div>
       </div>

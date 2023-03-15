@@ -174,7 +174,7 @@
                     </div>
                 </a>
                 <th:block sec:authorize="isAuthenticated()"
-                          th:if="${#strings.equals(list.qna_WRITER, session.memberId)}">
+                          th:if="${#strings.equals(list.qna_WRITER, session.memberID)}">
                     <div class="js-qnaSaveBtns" style="display: block;">
                         <a th:href="|javascript:sortSelect(${list.getQna_IDX()})|" class="btn-md-open"></a>
                         <span class="btn-md-select" th:id="|select${list.qna_IDX}|">
@@ -193,17 +193,6 @@
                         </span>
                     </div>
                 </th:block>
-                <div class="lock-pw-area js-passwordArea" th:id="|modify${list.qna_IDX}|" style="display: none;">
-                    <div class="box">
-                        <form th:action="@{/checkPw2}" method="post">
-                                  	<input type="hidden"  th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                            <input type="password" name="qna_PW" placeholder="비밀번호를 입력하세요.">
-                            <input type="hidden" name="qna_IDX" th:value="${list.qna_IDX}">
-                            <button type="submit" class="btn-h34-black js-passwordVerifyBtn"
-                            >확인</button>
-                        </form>
-                    </div>
-                </div>
                 <!--					공개글-->
                 <a
                         href=""
@@ -230,7 +219,7 @@
                     </div>
                 </a>
                 <th:block sec:authorize="isAuthenticated()"
-                          th:if="${#strings.equals(list.qna_WRITER, session.memberId)}">
+                          th:if="${#strings.equals(list.qna_WRITER, session.memberID)}">
                     <div class="js-qnaSaveBtns" style="display: block;">
                         <a th:href="|javascript:sortSelect(${list.getQna_IDX()})|" class="btn-md-open"></a>
                         <span class="btn-md-select" th:id="|select${list.qna_IDX}|">
@@ -252,8 +241,6 @@
                 <div class="lock-pw-area js-passwordArea" th:id="|modify${list.qna_IDX}|" style="display: none;">
                     <div class="box">
                         <form th:action="@{/checkPw2}" method="post">
-                                  	<input type="hidden" sec:authorize="isAuthenticated()" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-
                             <input type="password" name="qna_PW" placeholder="비밀번호를 입력하세요.">
                             <input type="hidden" name="qna_IDX" th:value="${list.qna_IDX}">
                             <button type="submit" class="btn-h34-black js-passwordVerifyBtn"
