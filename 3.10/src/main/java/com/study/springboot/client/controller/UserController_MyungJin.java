@@ -158,6 +158,7 @@ public class UserController_MyungJin {
     public String userMyOrderList(HttpSession session, Model model) {
         int memSession = (int) session.getAttribute("member_IDX");
         MemberResponseDTO mem = memberService.findByIDX(memSession);
+        System.out.println(mem.getMember_ROLE());
         List<OrderResponseDto> dtoList = orderService.findOrderByMemberIDX(memSession); // 주문 정보. 해당 사용자가 주문한 모든 내역
         List<CouponResoponseDTO> couponList = couponService.findCouponByMemberIDX(memSession);
         List<OrderDetailTemp> orderTests = orderService.userMyOrderLogic(dtoList,couponList);
