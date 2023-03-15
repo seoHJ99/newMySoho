@@ -146,7 +146,7 @@
                   >상품관련 공지</a
                 >
               </div>
-              <div class="span_list" th:text="${list.noticeREGDATE}">
+              <div class="span_list" id="noticeDATE" th:text="${list.noticeREGDATE}">
                 2022-02-22
               </div>
             </div>
@@ -160,6 +160,7 @@
     ></th:block>
 
     <script>
+     $('#noticeDATE').text($('#noticeDATE').text().substr(0,10));
       //사이드메뉴
       function openNav() {
         // document.body.style.backgroundColor = "rgba(0,0,0,0.5)";

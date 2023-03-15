@@ -34,6 +34,7 @@ public class ReviewResponseDto {
         this.review_SCORE = entity.getReview_SCORE();
         this.review_REGDATE = entity.getReviewREGDATE();
         this.review_STATUS = entity.getReview_STATUS();
+        this.review_IMAGE = entity.getReview_IMAGE();
     }
     public void toViewDto(Review entity) {
         this.review_IDX = entity.getReview_IDX();

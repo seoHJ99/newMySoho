@@ -118,14 +118,16 @@ public class UserController_MyungJin {
 
 
     @PostMapping("/checkPw")
-    public String checkPw(HttpServletRequest request)  {
+    public String checkPw(HttpServletRequest request, Model model)  {
         Member entity = memberListRepository.findById((int) request.getSession().getAttribute("member_IDX")).get();
-        request.getSession().setAttribute("memberEntity", entity);
         String realPw = entity.getMemberPw();
         String ppw = request.getParameter("memberPw");
         String encodedPassword = passwordEncoder.encode(ppw);
         boolean checkPw = passwordEncoder.matches(ppw, realPw);
         if (checkPw) {
+            MemberResponseDTO dto = new MemberResponseDTO(entity);
+            model.addAttribute("member",dto);
+            model.addAttribute("memberID", request.getSession().getAttribute("memberID"));
             return "/client/user/Member/user-myinfo";
         }
         return "/client/user/Member/myorder-list-user";
@@ -134,7 +136,6 @@ public class UserController_MyungJin {
     @RequestMapping("/userModify")
     @ResponseBody
     public String modifyAction(MemberResponseDTO memberResponseDTO) {
-
         memberResponseDTO.setMember_SIGNUP(memberListRepository.findById(memberResponseDTO.getMember_IDX()).get().getJoinDate());
         try {
             String encodedPassword = passwordEncoder.encode(memberResponseDTO.getMemberPw());
