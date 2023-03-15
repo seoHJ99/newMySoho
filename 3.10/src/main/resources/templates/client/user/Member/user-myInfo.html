@@ -232,7 +232,6 @@
 				>
 					<input
 						type="hidden"
-						sec:authorize="isAuthenticated()"
 						th:name="${_csrf.parameterName}"
 						th:value="${_csrf.token}"
 					/>
@@ -306,7 +305,7 @@
 						placeholder="이름"
 						onBlur="checkTxt('name', this.value)"
 						onchange="checkUserinfo('name', this.value)"
-						th:value="${member.member_NAME}"
+						th:value="${session.member_NAME}"
 					/>
 					<div class="red check-txt check-txt-name">이름을 입력해주세요</div>
 					<div class="red check-txt check-txt-name2">
@@ -320,7 +319,7 @@
 						placeholder="이메일/ 비밀번호 찾기 시 이메일로 발송됩니다"
 						onBlur="checkTxt('email', this.value)"
 						onchange="checkUserinfo('email', this.value)"
-						th:value="${member.member_MAIL}"
+						th:value="${session.member_MAIL}"
 					/>
 					<div class="red check-txt check-txt-email">
 						이메일 주소를 입력하세요.
@@ -338,7 +337,7 @@
 						placeholder="휴대폰번호"
 						onBlur="checkTxt('phone', this.value)"
 						onchange="checkUserinfo('phone', this.value)"
-						th:value="${member.member_PHONE}"
+						th:value="${session.member_PHONE}"
 					/>
 					<div class="red check-txt check-txt-phone">
 						전화번호를 입력 해주세요
@@ -408,7 +407,7 @@
 							<input
 								type="hidden"
 								name="member_IDX"
-								th:value="${member.member_IDX}"
+								th:value="${session.member_IDX}"
 							/>
 							<input
 								type="hidden"
@@ -446,8 +445,7 @@
 								</div>
 							</li>
 							<div class="btn-box">
-								<a
-									href="myorder-list-user.html"
+								<a th:href="@{/myorder/list}"
 									type="button"
 									id="join"
 									class="btn-h42-gray width30"

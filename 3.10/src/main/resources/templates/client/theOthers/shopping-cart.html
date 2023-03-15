@@ -1014,9 +1014,9 @@
             </li>
           </ul>
         </div>
+
+
         <!-- 회원가입 -->
-        <form action="/joinAction" method="post">
-          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <div id="userJoinFormDiv" class="receiver-wrap users-join-line">
           <div class="title bold">회원가입 정보</div>
           <div class="users-cont nopd">
@@ -1101,6 +1101,8 @@
             </div>
           </div>
         </div>
+
+
         <!-- 수령자정보 -->
         <div class="receiver-wrap same same2">
           <div class="title js-useDeliveryOff">
@@ -1114,7 +1116,7 @@
             <li class="mt-none">
               <input
                 type="text"
-                name="member_NAME"
+                name="orders_NAME"
                 placeholder="이름"
                 value
                 maxlength="20"
@@ -1149,7 +1151,7 @@
               <input
                 id="sample6_postcode"
                 type="text"
-                name="member_POST"
+                name="orders_POST"
                 placeholder="우편번호"
                 value
                 readonly
@@ -1216,7 +1218,6 @@
         </div>
           <input type="hidden" name="member_ROLE" value="ROLE_USER">
           <input type="hidden" name="status" value="활동">
-        </form>
         <!-- 구분선 빈박스-->
         <div class="bg-blank none"></div>
       </div>

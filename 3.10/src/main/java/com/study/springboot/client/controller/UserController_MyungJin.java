@@ -121,6 +121,7 @@ public class UserController_MyungJin {
     @ResponseBody
     public String checkPw(HttpServletRequest request)  {
         Member entity = memberListRepository.findById((int) request.getSession().getAttribute("member_IDX")).get();
+        request.getSession().setAttribute("memberEntity", entity);
         String realPw = entity.getMemberPw();
         String ppw = request.getParameter("memberPw");
         String encodedPassword = passwordEncoder.encode(ppw);
