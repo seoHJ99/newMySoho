@@ -175,8 +175,8 @@
 				top: 20px;
 			}
 		</style>
-	<meta name="_csrf" th:content="${_csrf.token}"/>
-	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<!--	<meta name="_csrf" th:content="${_csrf.token}"/>-->
+<!--	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
 </head>
 <body id="bodytest">
 <th:block
@@ -192,6 +192,7 @@
 				action="/joinAction"
 				method="post"
 		>
+			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 			<!--     <input type="hidden" name="member_ROLE" th:value="${ member.member_ }" />-->
 			<!-- action="/user/loginProcess" -->
 			<div>
@@ -353,7 +354,7 @@
 					</ul>
 				</div>
 				<input type="hidden" name="member_ROLE" value="ROLE_USER">
-				<input type="hidden" name="status" value="0">
+				<input type="hidden" name="status" value="활동">
 				<div>
 					<!-- 이용약관 -->
 					<ul class="users-cont-full">
