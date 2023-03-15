@@ -26,6 +26,7 @@
       table {
         display: flex;
         justify-content: center;
+
       }
 
       tr {
@@ -43,33 +44,34 @@
         display: flex;
         justify-content: center;
         text-align: center;
-        border : 1px solid #d0d0d0;
+        border : 1px solid black;
       }
 
       .main_tr td:nth-child(1) {
-        background-color: #f8f8f8;
+        background-color: #d0d0d0;
         height: 40px;
         width: 150px;
         display: flex;
         padding-right: 10px;
         justify-content: right;
         align-items: center;
+        border-right:0px solid black;
+        border-bottom: 0px solid black;
       }
       .main_tr td:nth-child(2) {
         width: 750px;
         justify-content: start;
+        border-bottom : 0px solid black;
       }
       .main_tr1 > td:nth-child(1){
-      background-color: #f8f8f8;
+      background-color: #d0d0d0;
       height:200px;
       width:150px;
+      border-right: 0px solid black;
       }
       .main_tr1 > td:nth-child(2){
       width:750px;
       }
-
-
-
       #notice_content {
         display: flex;
         align-items: center;
@@ -126,7 +128,7 @@
       textarea {
         resize: none;
         border: 0px;
-        width: 745px;
+        width: 750px;
         height: 195px;
       }
 
@@ -135,6 +137,10 @@
       }
       .notice_input{
       padding-right : 15px;
+      }
+      .notice_editor{
+      margin-top: -100px;
+      min-width:745px;
       }
 
     </style>
@@ -179,14 +185,16 @@
                     type="radio"
                     name="notice_REGTYPE"
                     value="일반"
+                    class="looknotice"
                   />즉시노출
                   <input
                     type="radio"
                     name="notice_REGTYPE"
                     value="예약"
+                    class="looknotice"
                   />예약노출 (
-                  <input name="date" type="date" />
-                  <input name="time" type="time" />
+                  <input name="date" type="date" class="radio_detail"/>
+                  <input name="time" type="time" class="radio_detail"/>
                   )
                 </td>
               </tr>
@@ -201,7 +209,8 @@
               <tr class="main_tr1">
                 <td id="notice_content">내용</td>
 
-                <td >
+                <td>
+                  <div class="notice_editor">
                   <script src="https://cdn.ckeditor.com/ckeditor5/36.0.0/classic/ckeditor.js"></script>
                   <script src="https://cdn.ckeditor.com/ckeditor5/36.0.0/classic/translations/ko.js"></script>
                   <textarea
@@ -209,11 +218,11 @@
                     name="notice_CONTENT"
                     cols="67"
                     rows="8"
-                  ></textarea>
+                  ></textarea></div>
                 </td>
               </tr>
               <tr class="button_tr">
-                <td id="button_td" colspan="2">
+                <td id="button_td" >
                   <input class="notice_input" type="submit" value="확인" />
                   <input class="notice_input" type="button" value="취소" />
                 </td>
@@ -226,6 +235,17 @@
     </div>
     <script th:inline="javascript">
 
+$('.looknotice').on('click',function(){
+  var valueCheck = $('.looknotice:checked').val();
+  if( valueCheck == '예약'){
+  $('.radio_detail').attr('disabled',false);
+  $('.radio_detail').focus();
+  }else{
+  $('.radio_detail').attr('disabled',true);
+  $('.radio_detail').val('');
+
+  }
+  });
       let editor;
       let a = [[${_csrf.token}]];
       let b = [[${_csrf.parameterName}]];

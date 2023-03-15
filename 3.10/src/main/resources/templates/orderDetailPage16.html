@@ -23,7 +23,8 @@
 
       td {
         display: flex;
-        border: 1px solid #f8f8f8;
+        border: 1px solid black;
+        border-bottom: 0px solid black;
         padding-right: 10px;
         justify-content: right;
         align-items: center;
@@ -31,6 +32,7 @@
 
       .order_tr td:nth-child(1) {
         background-color: #d0d0d0;
+        border-right: 0px solid black;
         height: 40px;
         width: 150px;
       }
@@ -39,6 +41,8 @@
       }
       .order_tr td:nth-child(3) {
         width: 100px;
+        border-right: 0px solid black;
+        border-left: 0px solid black;
       }
       .order_tr td:nth-child(4) {
         width: 262px;
@@ -62,6 +66,7 @@
       .order_detail > td:nth-child(1) {
         width: 150px;
         background-color: #d0d0d0;
+        border-right: 0px solid black;
       }
       .order_detail > td:nth-child(2) {
         width: 625.9px;
@@ -84,6 +89,7 @@
       .right {
         display: flex;
         margin-right: 12px;
+        gap: 5px;
       }
 
       input[type="submit"],
@@ -165,6 +171,9 @@
       .button_nav {
         width: 800px;
       }
+      .order_table {
+        border-bottom: 1px solid black;
+      }
     </style>
   </head>
   <body>
@@ -184,7 +193,7 @@
         <input type="hidden" th:value="${order.orders_IDX}" name="orders_IDX" />
         <!-- <input type="hidden" name="several_status"> -->
 
-        <table>
+        <table class="order_table">
           <tr class="order_tr">
             <td>주문번호</td>
             <td th:text="${order.orders_IDX}"></td>
@@ -268,11 +277,13 @@
 
         <div class="button_nav">
           <div class="left">
-            <input type="submit" value="저장" />
-            <input type="button" value="삭제" />
+            <a href="http://localhost:8080/admin/list/order"
+              ><input type="button" value="목록"
+            /></a>
           </div>
           <div class="right">
-            <input type="button" value="목록" />
+            <input type="submit" value="저장" />
+            <input type="button" value="삭제" />
           </div>
         </div>
       </form>

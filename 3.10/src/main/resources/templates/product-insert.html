@@ -101,7 +101,7 @@
           padding-right: 10px;
         }
         .center{
-        margin-left : 120px;
+        margin-left : -290px;
         }
         a {
           text-decoration: none;
@@ -273,7 +273,7 @@
                           th:value="${_csrf.token}"
                         />
                         <input type="number" id="order" />
-                        <button onclick="submit">발주</button>
+                        <button type="button">발주</button>
                       </form>
                     </td>
                   </tr>
@@ -292,13 +292,14 @@
                     <td colspan="4">
                       <div class="center_right">
                         <div class="center">
-                          <button>등록</button>
-                        </div>
-                        <div class="right">
-                          <!-- <button>이전</button> -->
                           <button onclick="location.href='/admin/list/product'">
                             목록
                           </button>
+
+                        </div>
+                        <div class="right">
+                          <!-- <button>이전</button> -->
+                          <button>등록</button>
                           <!-- <button>다음</button> -->
                         </div>
                       </div>

@@ -3,7 +3,6 @@
   lang="ko"
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
   <head>
     <th:block th:replace="/client/fragments/Clhead :: headFragment"></th:block>
@@ -728,8 +727,7 @@
                   <div class="popup-share">
                     <div class="lhd-share">
                       <a href="javascript:closeOrderList()" class="closebtn">
-                        <img 
-                         src="https://image.makeshop.co.kr/mysoho/assets/shop/img/btn/h30_close.png" alt="" />
+                        <img  src="https://image.makeshop.co.kr/mysoho/assets/shop/img/btn/h30_close.png" alt="" />
                       </a>
                     </div>
                     <div class="share-tit">
@@ -1015,10 +1013,7 @@
             </li>
           </ul>
         </div>
-
-
         <!-- 회원가입 -->
-        <input type="hidden" sec:authorize="isAnonymous()" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <div id="userJoinFormDiv" class="receiver-wrap users-join-line">
           <div class="title bold">회원가입 정보</div>
           <div class="users-cont nopd">
@@ -1026,7 +1021,7 @@
               <input
                 class="input-st01 users-login-input input-id"
                 type="text"
-                name="memberID"
+                name="user_id"
                 placeholder="아이디(5자~20자 이내)"
                 onBlur="checkTxt('id', this.value)"
                 onchange="checkUserinfo('id', this.value)"
@@ -1046,7 +1041,7 @@
               <input
                 class="input-st01 users-login-input mt-10"
                 type="email"
-                name="member_MAIL"
+                name="user_email"
                 placeholder="이메일(비밀번호 찾기 시 이메일로 발송됩니다"
                 onBlur="checkTxt('email', this.value)"
                 onchange="checkUserinfo('email', this.value)"
@@ -1071,7 +1066,7 @@
               id="check-txt-pw"
               class="input-st01 users-login-input mt-10"
               type="password"
-              name="memberPw"
+              name="user_password"
               placeholder="비밀번호 (영문,숫자,특수문자 조합 8자리 이상)"
               onchange="checkUserinfo('pw', this.value)"
             />
@@ -1090,7 +1085,7 @@
               id="check-txt-pwcheck"
               class="input-st01 users-login-input mt-10"
               type="password"
-              name=""
+              name="user_password"
               placeholder="비밀번호 재입력"
               onBlur="checkPW(this.value)"
               onchange="checkTxt('pw', this.value)"
@@ -1101,13 +1096,8 @@
             <div class="red check-txt check-txt-pwcheck-not">
               비밀번호가 일치하지 않습니다.
             </div>
-<!--            <input type="hidden" name="member_NAME" value="임시">-->
-<!--            <input type="hidden" name="member_PHONE" value="00000000000">-->
-            <input type="hidden" name="member_ROLE" value="ROLE_USER">
           </div>
         </div>
-
-
         <!-- 수령자정보 -->
         <div class="receiver-wrap same same2">
           <div class="title js-useDeliveryOff">
@@ -1221,7 +1211,6 @@
             </li>
           </ul>
         </div>
-
         <!-- 구분선 빈박스-->
         <div class="bg-blank none"></div>
       </div>
@@ -1965,11 +1954,9 @@
             goCart();
           }
        }
-       if(document.cookie.split(';').length == 1){
+       if(document.cookie.split('; ') == ''){
         alert('장바구니가 비었습니다. 상품을 담아보세요.');
          location.href = "/main";  
-       }else{
-        goCart();
        }
        check();
       }

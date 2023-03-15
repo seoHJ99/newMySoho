@@ -83,7 +83,8 @@
 			textarea {
 				width: 650px;
 				border: none;
-				height: 200px;
+				min-height: 200px;
+				max-height: 200px;
 			}
 
 			.btn-right {
@@ -93,6 +94,11 @@
 			button{
 			border : 1px solid #d0d0d0;
 			}
+			form{
+			display:flex;
+			justify-content:center;
+			}
+
 		</style>
 	</head>
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
@@ -182,13 +188,15 @@
 							</td>
 						</tr>
 						<tr>
-							<td>
-								<button onclick="submit">답변 등록</button>
+
+							<td class="btn-left">
+								<button onclick="location.href='/admin/list/review'">
+									<a href="http://localhost:8080/admin/list/review">목록</a>
+								</button>
+
 							</td>
 							<td class="btn-right">
-								<button onclick="location.href='/admin/list/review'">
-									목록
-								</button>
+								<button onclick="submit">답변 등록</button>
 							</td>
 						</tr>
 					</table>

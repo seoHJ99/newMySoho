@@ -427,23 +427,6 @@
         flex-direction: row;
         gap: 5px;
       }
-      .review_textbutton {
-        border: 1px solid #a79342;
-        color: #a79342;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 20px;
-        padding: 0 5px;
-        border-radius: 15px;
-        font-size: 11px;
-        font-weight: bold;
-        line-height: 20px;
-        width: 60px;
-      }
-      .review_textbutton > a {
-        min-width: 60px;
-      }
     </style>
   </head>
   <body id="bodytest">
@@ -480,13 +463,13 @@
           </div>
         </div>
         <div class="myPointBox">
-          <a class="myPoint">
+          <a href="user-mileage.html" class="myPoint">
             <div class="myPoint-tit">
               <span class="myPoint-radio">P</span>나의 적립금
             </div>
             <div class="myPoint-info"><span th:text="${point}">0</span>원</div>
           </a>
-          <a class="myPoint">
+          <a href="coubons-mylist.html" class="myPoint">
             <div class="myPoint-tit">
               <span class="myPoint-radio">C</span>나의 쿠폰
             </div>
@@ -501,7 +484,7 @@
               src="https://image.makeshop.co.kr/mysoho/assets/shop/img/common/arr_h21.png"
               alt=""
           /></a>
-          <a href="/qna/myList" class="review-qa-list-tit"
+          <a href="myProductInquiries.html" class="review-qa-list-tit"
             >나의 문의 내역<img
               src="https://image.makeshop.co.kr/mysoho/assets/shop/img/common/arr_h21.png"
               alt=""
