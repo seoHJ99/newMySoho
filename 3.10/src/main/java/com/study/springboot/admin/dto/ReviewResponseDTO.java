@@ -32,6 +32,7 @@ public class ReviewResponseDTO {
         this.review_TITLE = entity.getReview_TITLE();
         this.review_REGDATE = entity.getReviewREGDATE();
         this.item_IDX = entity.getItemIDX();
+        this.review_STATUS = entity.getReview_STATUS();
     }
 
     public void toViewDto(Review entity) {
@@ -45,6 +46,5 @@ public class ReviewResponseDTO {
         this.review_IMAGE = entity.getReview_IMAGE();
         this.review_REGDATE = entity.getReviewREGDATE();
         this.review_REPLY = entity.getReview_REPLY();
-        this.review_STATUS =entity.getReview_STATUS();
     }
 }

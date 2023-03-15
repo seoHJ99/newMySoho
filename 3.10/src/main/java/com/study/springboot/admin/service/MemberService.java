@@ -29,4 +29,19 @@ public class MemberService {
             return "1";
         }
     }
+    public MemberResponseDTO findByMail(String email, String id){
+        Member entity = memberRepository.findByMailAndID(email, id);
+        MemberResponseDTO dto = new MemberResponseDTO(entity);
+        return dto;
+    }
+    public String findID(String name, String phone){
+        Member entity = memberRepository.findByNameAndPhone(name, phone);
+        String memberID ="";
+        if(entity !=null){
+            memberID = entity.getMemberID();
+            return memberID;
+        }else {
+            return "없음";
+        }
+    }
 }

@@ -9,6 +9,19 @@ spring:
       enabled: true
       port: 35729
 
+  mail:
+    host: smtp.gmail.com # 1
+    port: 587 # 2
+    username: a01043429904 # 3
+    password: nivttdfmojoymhul    # 4
+    properties:
+      mail:
+        smtp:
+          auth: true # 5
+          timeout: 5000 # 6
+          starttls:
+            enable: true # 7
+
   servlet:
     multipart:
       max-file-size: 10MB

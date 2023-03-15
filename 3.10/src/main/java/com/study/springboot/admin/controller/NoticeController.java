@@ -79,7 +79,7 @@ public class NoticeController {
 
     @RequestMapping("/notice/delete")
     @ResponseBody
-    public String deleteNotice(@RequestParam("id") int id){
+    public String deleteNotice(@RequestParam("notice_idx") int id){
         noticeService.noticeDeleteById(id);
         return "1";
     }

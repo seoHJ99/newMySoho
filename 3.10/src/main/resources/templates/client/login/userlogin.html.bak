@@ -87,7 +87,7 @@
 										<!-- <button id="close">팝업닫기</button> -->
 										<a
 											id="close"
-											onclick="close1(0)"
+											onclick="close(0)"
 											>&times;</a
 										>
 									</div>
@@ -97,9 +97,8 @@
 										</div>
 
 										<form
-											action="findID"
+											action="/findID"
 											method="post"
-											onsubmit=" return checkINPUT1()"
 										>
 											<input
 												type="hidden"
@@ -119,7 +118,12 @@
 												name="user_mobileNumber"
 												placeholder="전화번호를 입력하세요"
 											/>
-											<button class="btn-h42-gray mt-10">찾기</button>
+											<button
+												class="btn-h42-gray mt-10"
+												onclick="findID()"
+											>
+												찾기
+											</button>
 										</form>
 									</div>
 								</div>
@@ -153,6 +157,7 @@
 											<div>입력시 해당 이메일로 비밀번호 변경</div>
 											<div>가능한 링크를 보내드립니다.</div>
 										</div>
+
 										<form
 											action="/findPW"
 											onsubmit="return checkINPUT2()"
@@ -167,15 +172,16 @@
 											<input
 												class="input-st01 users-login-input"
 												type="email"
-												name="email"
 												id="pwMAIL"
+												name="email"
 												placeholder="이메일을 입력해주세요"
 											/>
 											<input
-												class="input-st01 users-login-input"
+												class="input-st01 users-login-input mt-10"
+												type="text"
 												name="id"
 												id="pwID"
-												placeholder="아이디을 입력해주세요"
+												placeholder="id를 입력하세요"
 											/>
 											<button
 												type="submit"
@@ -197,7 +203,6 @@
 						class="btn-h42-gray"
 						>비회원 주문조회</a
 					>
-					<!-- 이거 맵핑할만한 컨트롤러 클래스가 없는것 같은데 -->
 				</div>
 			</div>
 		</div>
@@ -205,23 +210,20 @@
 		<th:block
 			th:replace="/client/fragments/Clfooter :: footerFragment"
 		></th:block>
+		<script th:inline="javascript">
+			const id =[[${id}]];
+			if(id != null){
 
+			}
+		</script>
 		<script>
-			function checkINPUT2() {
-				if ($("#pwMAIL").val() == "" || $("#pwID").val() == "") {
-					console.log($("#pwMAIL").val());
-					alert("아이디, 이메일을 적어주세요!");
-					return false;
-				}
-			}
-			function checkINPUT1() {
-				if ($("#idPHONE").val() == "" || $("#idNAME").val() == "") {
-					console.log($("#pwMAIL").val());
-					alert("전화번호, 이름을 적어주세요!");
-					return false;
-				}
-			}
-
+	//		function checkINPUT2() {
+	//			if ($("#pwMAIL").val() = '' || $("#pwID").val() = '' ) {
+	//			console.log($("#pwMAIL").val());
+	//				alert("아이디, 이메일을 적어주세요!");
+	//				return false;
+	//			}
+	//		}
 			//사이드메뉴
 			function openNav() {
 				// document.body.style.backgroundColor = "rgba(0,0,0,0.5)";
@@ -249,7 +251,8 @@
 				$(".popup").eq(i).css("z-index", "5000");
 			}
 
-			function close1(i) {
+			function close(i) {
+				console.log(i);
 				document.querySelector(".background").className = "background";
 				$(".popup").eq(i).css("z-index", "-1");
 			}

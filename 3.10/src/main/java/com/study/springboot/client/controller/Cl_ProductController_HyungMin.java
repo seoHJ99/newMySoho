@@ -1,6 +1,7 @@
 package com.study.springboot.client.controller;
 
 import com.study.springboot.admin.dto.ProductResponseDto;
+import com.study.springboot.admin.dto.ReviewResponseDTO;
 import com.study.springboot.client.dto.ReviewResponseDto;
 import com.study.springboot.client.service.Cl_ProductService_HyungMin;
 import com.study.springboot.client.service.ClientReviewService_JunTae;
@@ -28,14 +29,16 @@ public class Cl_ProductController_HyungMin {
         }
         float avg=0;
         if(dto1.size()>0) {
-            for (ReviewResponseDto reviewResponseDto : dto1) {
-                avg += reviewResponseDto.getReview_SCORE();
-            }
-            avg = Math.round ((((float) avg *10 / (dto1.size())) / 10) *10);
+                for (int i=0; i<dto1.size(); i++) {
+                    ReviewResponseDto reviewResponseDto = dto1.get(i);
+                    if(reviewResponseDto.getReview_STATUS().equals("공개")) {
+                        avg += reviewResponseDto.getReview_SCORE();
+                    }else {
+                        dto1.remove(i);
+                    }
+                }
+            avg = ((int)( avg  / dto1.size() * 10) / 10f);
         }
-        avg = avg/10;
-        System.out.println(avg);
-
         model.addAttribute("product", dto);
         model.addAttribute("review",dto1);
         model.addAttribute("reviewAVG",avg);
