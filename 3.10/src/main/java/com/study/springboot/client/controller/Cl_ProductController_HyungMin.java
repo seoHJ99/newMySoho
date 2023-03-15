@@ -34,6 +34,7 @@ Cl_ProductController_HyungMin {
                     ReviewResponseDto reviewResponseDto = dto1.get(i);
                     if(reviewResponseDto != null && reviewResponseDto.getReview_STATUS().equals("공개")) {
                         avg += reviewResponseDto.getReview_SCORE();
+                        System.out.println(reviewResponseDto.getReview_IMAGE());
                     }else {
                         dto1.remove(i);
                     }

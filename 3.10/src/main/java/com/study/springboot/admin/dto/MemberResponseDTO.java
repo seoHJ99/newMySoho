@@ -68,6 +68,7 @@ public class MemberResponseDTO {
                 .member_MAIL(member_MAIL)
                 .member_ADDRESS(member_ADDRESS)
                 .member_POST(member_POST)
+                .member_POINT(member_POINT)
                 .member_PHONE(member_PHONE)
                 .joinDate(member_SIGNUP)
                 .member_ROLE(member_ROLE)
