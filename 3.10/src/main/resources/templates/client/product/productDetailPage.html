@@ -1134,61 +1134,120 @@
 				color: white;
 			}
 
-			/* 옵션선택 버튼 */
-			.option-tap-btn {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				width: 100%;
-				height: 46px;
-				border: 1px solid #d9d9d9;
-				box-sizing: border-box;
-				background: #fff;
-				font-weight: bold;
-				color: #4c4c4c;
-			}
-			.option-tap-btn img {
-				margin-left: 5px;
-				width: 11px;
-			}
-			.MSH-prd-name-sub {
-				margin-top: 10px;
-				font-size: 14px;
-				color: #666666;
-			}
-			.lhd-option {
-				display: flex;
-				justify-content: center;
-			}
-			.review_table {
-				min-width: 640px;
-				border-radius: 20px;
-				margin-top: 15px;
-			}
+      /* 옵션선택 버튼 */
+      .option-tap-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 46px;
+        border: 1px solid #d9d9d9;
+        box-sizing: border-box;
+        background: #fff;
+        font-weight: bold;
+        color: #4c4c4c;
+      }
+      .option-tap-btn img {
+        margin-left: 5px;
+        width: 11px;
+      }
+      .MSH-prd-name-sub {
+        margin-top: 10px;
+        font-size: 14px;
+        color: #666666;
+      }
+      .lhd-option {
+        display: flex;
+        justify-content: center;
+      }
+      .review_table {
+        min-width: 640px;
+        border: 1px solid #d0d0d0;
+        border-radius: 20px;
+        margin-top: 15px;
+      }
 			.tab {
 				z-index: 1;
 			}
-			.review_tr > td {
-				font-size: smaller;
-				color: black;
-				padding-left: 10px;
-				padding-right: 10px;
+      .review_tr > td {
+        font-size: smaller;
+        color: black;
+        padding-left: 10px;
+        padding-right: 10px;
 				max-width: 500px;
 				padding-top: 5px;
 				padding-bottom: 5px;
-			}
+      }
 			.starScore {
 				font-weight: bold;
 				color: #ff8844;
 			}
-			.review_title > td {
-				font-size: large;
-				font-weight: bolder;
-				color: black;
-				padding-left: 10px;
-				padding-bottom: 10px;
-			}
-
+      .review_score > td {
+        font-weight: bold;
+        padding: 10px;
+        color: rgb(122, 133, 231);
+      }
+      .review_title > td {
+        font-size: large;
+        font-weight: bolder;
+        color: rgb(122, 121, 121);
+        padding-left: 10px;
+        padding-bottom: 10px;
+      }
+      .review_content > td {
+        font-size: small;
+        padding-left: 10px;
+        padding-bottom: 10px;
+        padding-top: 5px;
+      }
+      .optionCont {
+        overflow-y: scroll;
+      }
+      .optionBlue > span {
+        color: #297bcf;
+      }
+      .rating {
+        display: flex;
+        align-items: center;
+        position: relative;
+      }
+      .starcolor {
+        fill: #ff8844;
+      }
+      .star:last-of-type {
+        margin-right: 0;
+      }
+      .overlay {
+        background-color: #000;
+        opacity: 1;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        transition: all 0.3s ease-in-out;
+      }
+      @supports (mix-blend-mode: color) {
+        .overlay {
+          mix-blend-mode: color;
+          opacity: unset;
+        }
+      }
+      .star {
+        width: 30px;
+        height: 30px;
+        margin-right: 2px;
+      }
+      .overlay {
+        background-color: #000;
+        opacity: 0.5;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        transition: all 0.3s ease-in-out;
+      }
 			.review_content > td {
 				font-size: medium;
 				padding-left: 10px;
@@ -2663,168 +2722,174 @@
 								</ul>
 							</div>
 						</div> -->
-						<div class="order-terms">
-							<div class="inner">
-								<div class="price-box">
-									<div class="between">
-										<div class="price-tit">총 상품금액</div>
-										<div>
-											<strong
-												class="price-tit-price"
-												th:text="${#numbers.formatInteger(product.item_PRICE,3,'COMMA')}+'원'"
-												>49,000원</strong
-											>
-										</div>
-									</div>
-									<div>
-										<div class="between mt-10 mb-6">
-											<div class="price-tit">총 배송비</div>
-											<div class="price-tit-price bold">+ 0원</div>
-										</div>
-										<div class="between h23">
-											<div class="price-text">- 기본 배송비</div>
-											<div class="price-text-price">
-												<span class="gray">(+)</span>0원
-											</div>
-										</div>
-										<div class="between h23">
-											<div class="price-text">- 지역 배송비</div>
-											<div class="price-text-price">
-												<span class="gray">(+)</span>0원
-											</div>
-										</div>
-									</div>
-									<div>
-										<div class="between mt-10 mb-6">
-											<div class="price-tit">총 할인/적립금 사용 금액</div>
-											<th:block
-												th:if="${product.item_PRICE - product.item_PRICE_DISCOUNT} >= 1000"
-											>
-												<div
-													class="price-tit-price bold"
-													th:text="'-'+${#numbers.formatInteger(product.item_PRICE - product.item_PRICE_DISCOUNT,3,'COMMA')}+'원'"
-												>
-													- 4,500원
-												</div>
-											</th:block>
-											<th:block
-												th:if="${product.item_PRICE - product.item_PRICE_DISCOUNT} < 1000"
-											>
-												<div
-													class="price-tit-price bold"
-													th:text="'-'+${product.item_PRICE - product.item_PRICE_DISCOUNT}+'원'"
-												>
-													- 4,500원
-												</div>
-											</th:block>
-										</div>
-										<div class="between h23">
-											<div class="price-text">- 상품 할인</div>
-											<div class="price-text-price">
-												<!--<span class="gray">(-)</span>-->
-												<th:block
-													th:if="${product.item_PRICE - product.item_PRICE_DISCOUNT} >= 1000"
-												>
-													<div
-														class="price-tit-price bold"
-														th:text="'-'+${#numbers.formatInteger(product.item_PRICE - product.item_PRICE_DISCOUNT,3,'COMMA')}+'원'"
-													>
-														- 4,500원
-													</div>
-												</th:block>
-												<th:block
-													th:if="${product.item_PRICE - product.item_PRICE_DISCOUNT} < 1000"
-												>
-													<div
-														class="price-tit-price bold"
-														th:text="'-'+${product.item_PRICE - product.item_PRICE_DISCOUNT}+'원'"
-													>
-														- 4,500원
-													</div>
-												</th:block>
-											</div>
-										</div>
-										<div class="between h23">
-											<div class="price-text">- 쿠폰 할인</div>
-											<div class="price-text-price">
-												<span class="gray">(-)</span>0원
-											</div>
-										</div>
-										<div class="between h23">
-											<div class="price-text">- 적립금 사용</div>
-											<div class="price-text-price">
-												<span class="gray">(-)</span>0원
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="pay-price">
-									<div class="between">
-										<div>
-											<strong>최종 주문금액</strong>
-										</div>
-										<div>
-											<strong
-												class="red2"
-												th:text="${#numbers.formatInteger(product.item_PRICE_DISCOUNT,3,'COMMA')}+'원'"
-												>44,500원</strong
-											>
-										</div>
-									</div>
-									<div class="left blue">
-										<strong
-											>(예상 적립금
-											<span
-												th:text="${#numbers.formatInteger(product.item_PRICE_DISCOUNT/10,3,'COMMA')}"
-												>0</span
-											>원, 비회원적립 불가)</strong
-										>
-									</div>
-								</div>
-								<form action="/cart">
-									<input
-										type="hidden"
-										sec:authorize="isAuthenticated()"
-										th:name="${_csrf.parameterName}"
-										th:value="${_csrf.token}"
-									/>
+            <div class="order-terms">
+              <div class="inner">
+                <div class="price-box">
+                  <div class="between">
+                    <div class="price-tit">총 상품금액</div>
+                    <div>
+                      <strong
+                        class="price-tit-price"
+                        th:text="${#numbers.formatInteger(product.item_PRICE,3,'COMMA')}+'원'"
+                        >49,000원</strong
+                      >
+                    </div>
+                  </div>
+                  <div>
+                    <div class="between mt-10 mb-6">
+                      <div class="price-tit">총 배송비</div>
+                      <div class="price-tit-price bold">+ 0원</div>
+                    </div>
+                    <div class="between h23">
+                      <div class="price-text">- 기본 배송비</div>
+                      <div class="price-text-price">
+                        <span class="gray">(+)</span>0원
+                      </div>
+                    </div>
+                    <div class="between h23">
+                      <div class="price-text">- 지역 배송비</div>
+                      <div class="price-text-price">
+                        <span class="gray">(+)</span>0원
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="between mt-10 mb-6">
+                      <div class="price-tit">총 할인/적립금 사용 금액</div>
+                      <th:block
+                        th:if="${product.item_PRICE - product.item_PRICE_DISCOUNT} >= 1000"
+                      >
+                        <div
+                          class="price-tit-price bold"
+                          th:text="'-'+${#numbers.formatInteger(product.item_PRICE - product.item_PRICE_DISCOUNT,3,'COMMA')}+'원'"
+                        >
+                          - 4,500원
+                        </div>
+                      </th:block>
+                      <th:block
+                        th:if="${product.item_PRICE - product.item_PRICE_DISCOUNT} < 1000"
+                      >
+                        <div
+                          class="price-tit-price bold"
+                          th:text="'-'+${product.item_PRICE - product.item_PRICE_DISCOUNT}+'원'"
+                        >
+                          - 4,500원
+                        </div>
+                      </th:block>
+                    </div>
+                    <div class="between h23">
+                      <div class="price-text">- 상품 할인</div>
+                      <div class="price-text-price">
+                        <!--<span class="gray">(-)</span>-->
+                        <th:block
+                          th:if="${product.item_PRICE - product.item_PRICE_DISCOUNT} >= 1000"
+                        >
+                          <div
+                            class="price-tit-price bold"
+                            th:text="'-'+${#numbers.formatInteger(product.item_PRICE - product.item_PRICE_DISCOUNT,3,'COMMA')}+'원'"
+                          >
+                            - 4,500원
+                          </div>
+                        </th:block>
+                        <th:block
+                          th:if="${product.item_PRICE - product.item_PRICE_DISCOUNT} < 1000"
+                        >
+                          <div
+                            class="price-tit-price bold"
+                            th:text="'-'+${product.item_PRICE - product.item_PRICE_DISCOUNT}+'원'"
+                          >
+                            - 4,500원
+                          </div>
+                        </th:block>
+                      </div>
+                    </div>
+                    <div class="between h23">
+                      <div class="price-text">- 쿠폰 할인</div>
+                      <div class="price-text-price">
+                        <span class="gray">(-)</span>0원
+                      </div>
+                    </div>
+                    <div class="between h23">
+                      <div class="price-text">- 적립금 사용</div>
+                      <div class="price-text-price">
+                        <span class="gray">(-)</span>0원
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="pay-price">
+                  <div class="between">
+                    <div>
+                      <strong>최종 주문금액</strong>
+                    </div>
+                    <div>
+                      <strong
+                        class="red2"
+                        th:text="${#numbers.formatInteger(product.item_PRICE_DISCOUNT,3,'COMMA')}+'원'"
+                        >44,500원</strong
+                      >
+                    </div>
+                  </div>
+                  <div class="left blue">
+                    <strong
+                      >(예상 적립금
+                      <span
+                        th:text="${#numbers.formatInteger(product.item_PRICE_DISCOUNT/10,3,'COMMA')}"
+                        >0</span
+                      >원, 비회원적립 불가)</strong
+                    >
+                  </div>
+                </div>
+                <th:block th:if="${product.item_AMOUNT} != 0">
+                  <form action="/cart">
+                    <input
+                      type="hidden"
+                      sec:authorize="isAuthenticated()"
+                      th:name="${_csrf.parameterName}"
+                      th:value="${_csrf.token}"
+                    />
 
-									<input
-										type="hidden"
-										name="item_idx"
-										th:value="${product.item_idx}"
-									/>
-									<input
-										type="hidden"
-										name="item_quantity"
-										th:value="1"
-									/>
-									<!--                  <input type="hidden" id="item_IDX" name="item_IDX" />-->
-									<!--                  <input type="hidden" id="item_QTY" name="item_QTY" />-->
-									<!--                  <input type="hidden" id="mileage" name="accumulate_MILEAGE" />-->
-									<button class="js-btnOrder js-mo-tpl btn-h42-gray mt-25">
-										결제하기
-									</button>
-								</form>
-								<div class="warning-labels-font">
-									<img
-										src="https://image.makeshop.co.kr/mysoho/assets/admin/images/common/m-notice-icon.png"
-										alt=""
-									/>
-									마이소호는 통신판매 당사자가 아닙니다.
-									<br />
-									상품정보/주문/배송/환불 등 일체의 책임을 지지 않습니다.
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- 푸터 -->
-		<th:block
-			th:replace="/client/fragments/Clfooter :: footerFragment"
-		></th:block>
+                    <input
+                      type="hidden"
+                      name="item_idx"
+                      th:value="${product.item_idx}"
+                    />
+                    <input type="hidden" name="item_quantity" th:value="1" />
+                    <!--                  <input type="hidden" id="item_IDX" name="item_IDX" />-->
+                    <!--                  <input type="hidden" id="item_QTY" name="item_QTY" />-->
+                    <!--                  <input type="hidden" id="mileage" name="accumulate_MILEAGE" />-->
+                    <button class="js-btnOrder js-mo-tpl btn-h42-gray mt-25">
+                      결제하기
+                    </button>
+                  </form>
+                </th:block>
+                <th:block th:if="${product.item_AMOUNT} == 0">
+                  <form>
+                    <!--                  <input type="hidden" id="item_IDX" name="item_IDX" />-->
+                    <!--                  <input type="hidden" id="item_QTY" name="item_QTY" />-->
+                    <!--                  <input type="hidden" id="mileage" name="accumulate_MILEAGE" />-->
+                    <input type="button" class="js-mo-tpl btn-h42-gray mt-25" value="구매불가">
+                  </form>
+                </th:block>
+                <div class="warning-labels-font">
+                  <img
+                    src="https://image.makeshop.co.kr/mysoho/assets/admin/images/common/m-notice-icon.png"
+                    alt=""
+                  />
+                  마이소호는 통신판매 당사자가 아닙니다.
+                  <br />
+                  상품정보/주문/배송/환불 등 일체의 책임을 지지 않습니다.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 푸터 -->
+    <th:block
+      th:replace="/client/fragments/Clfooter :: footerFragment"
+    ></th:block>
 
 		<script>
 			// 리뷰 점수 보여주기

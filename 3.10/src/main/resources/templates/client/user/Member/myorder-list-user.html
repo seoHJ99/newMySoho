@@ -142,20 +142,20 @@
         font-size: 14px;
         line-height: 20px;
       }
-      /* 주문정보 팝업 */
-      .bg {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.9);
-        z-index: 1000;
+			/* 주문정보 팝업 */
+			.bg1, .bg2, .bg3, .bg4, .bg5, .bg6, .bg7, .bg8, .bg9, .bg10, .bg11, .bg12, .bg13, .bg14, .bg15, .bg16, .bg17, .bg18, .bg19, .bg20  {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100vh;
+				background-color: rgba(0, 0, 0, 0.9);
+				z-index: 1000;
 
-        /* 숨기기 */
-        z-index: -1;
-        opacity: 0;
-      }
+				/* 숨기기 */
+				z-index: -1;
+				opacity: 0;
+			}
 
       .showOrderList {
         opacity: 1;
@@ -607,489 +607,1411 @@
 
         <!-- 반복 1 전체 -->
         <th:block th:each="firstList, status : ${list}">
-          <div class="bg">
-            <div class="window">
-              <div class="popup">
-                <div class="lhd">
-                  <div>주문번호</div>
-                  <div class="ord-num" th:text="${firstList.orders_IDX}">
-                    2023010608355933
-                  </div>
-                  <button id="closeBtn" onclick="closeOrderList()">
-                    <img
-                      src="https://image.makeshop.co.kr/mysoho/assets/shop/img/btn/h30_close.png"
-                      alt=""
-                    />
-                  </button>
+            <div class="order_list list-type0" style="display: block;" >
+                <div class="list-wrap">
+                    <div class="list-hd">
+                        <div>
+                            <div class="od-num" th:text="${firstList.orders_IDX}">
+                                2023010608355933
+                            </div>
+                            <div class="od-date" th:text="${firstList.orders_DATE}">
+                                2023-01-06 08:35:59
+                            </div>
+                        </div>
+
+                        <button class="btn-h30-black open-layer btn-order-layer"
+                                th:onclick="showOrderList([[${status.count}]])">
+                            주문정보
+                        </button>
+                        <div th:class="bg+${status.count}">
+                            <div class="window">
+                                <div class="popup">
+                                    <div class="lhd">
+                                        <div>주문번호</div>
+                                        <div class="ord-num" th:text="${firstList.orders_IDX}">2023010608355933</div>
+                                        <button id="closeBtn" th:onclick="closeOrderList([[${status.count}]])">
+                                            <img
+                                                    src="https://image.makeshop.co.kr/mysoho/assets/shop/img/btn/h30_close.png"
+                                                    alt=""
+                                            />
+                                        </button>
+                                    </div>
+                                    <div class="lcont">
+                                        <div class="lcont-con">
+                                            <div class="lcont-tit">주문자 정보</div>
+                                            <div class="lcont-info">
+                                                <span class="lcont-info" th:text="${firstList.orders_NAME}">박선교</span>
+                                                <span class="lcont-info"
+                                                      th:text="${firstList.orders_PHONE}">010-4024-6575</span>
+                                            </div>
+                                        </div>
+                                        <div class="lcont-con">
+                                            <div class="lcont-tit">주문자 정보</div>
+                                            <div class="lcont-info" th:text="${firstList.orders_ADDRESS}">
+                                                (18115) 경기 오산시 경기대로 389 123
+                                            </div>
+                                        </div>
+                                        <div class="lcont-con">
+                                            <div class="lcont-tit">결제정보</div>
+                                            <div class="lcont-info" th:text="${firstList.orders_PAYMENT}">무통장</div>
+                                            <div class="lcont-info" th:text="${firstList.senders_PHONE}">기업은행
+                                                0106-859-3030119
+                                            </div>
+                                            <div class="lcont-info" th:text="${firstList.senders_NAME}">(예금주: 소호나라)
+                                            </div>
+                                        </div>
+                                        <div class="lcont-con">
+                                            <div class="lcont-tit">결제금액</div>
+                                            <div class="between">
+                                                <div class="lcont-tit-sub">총 상품금액</div>
+                                                <div class="lcont-info-sub"
+                                                     th:text="${#numbers.formatInteger(firstList.item_PRICE,3,'COMMA')+'원'}">
+                                                    49,000원
+                                                </div>
+                                            </div>
+                                            <th:block th:if="${#strings.equals(firstList.orders_DELIVERYPAY, '무료')}">
+                                                <div class="between">
+                                                    <div class="lcont-tit-sub">총 배송비</div>
+                                                    <div class="lcont-info-sub">+ 0원</div>
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 기본 배송비</div>
+                                                    <div class="lcont-info-gray">(+)0원</div>
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 지역 배송비</div>
+                                                    <div class="lcont-info-gray">(+)0원</div>
+                                                </div>
+                                            </th:block>
+                                            <th:block th:if="${#strings.equals(firstList.orders_DELIVERYPAY, '일반')}">
+                                                <div class="between">
+                                                    <div class="lcont-tit-sub">총 배송비</div>
+                                                    <div class="lcont-info-sub">+ 3,000원</div>
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 기본 배송비</div>
+                                                    <div class="lcont-info-gray">(+)3,000원</div>
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 지역 배송비</div>
+                                                    <div class="lcont-info-gray">(+)0원</div>
+                                                </div>
+                                            </th:block>
+                                            <th:block th:if="${#strings.equals(firstList.orders_DELIVERYPAY, '특수')}">
+                                                <div class="between">
+                                                    <div class="lcont-tit-sub">총 배송비</div>
+                                                    <div class="lcont-info-sub">+ 5,000원</div>
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 기본 배송비</div>
+                                                    <div class="lcont-info-gray">(+)3,000원</div>
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 지역 배송비</div>
+                                                    <div class="lcont-info-gray">(+)2,000원</div>
+                                                </div>
+                                            </th:block>
+                                            <div class="between">
+                                                <div class="lcont-tit-sub">
+                                                    총 할인/적립금 사용 금액
+                                                </div>
+
+
+                                                <th:block th:if="${firstList.item_DISCOUNT} < 1000">
+                                                    <div class="lcont-info-sub"
+                                                         th:text="${firstList.item_DISCOUNT}+'원'">
+                                                        44,500
+                                                        <span class="final-price-tit"> 원</span>
+                                                    </div>
+                                                </th:block>
+                                                <th:block th:if="${firstList.item_DISCOUNT} >= 1000">
+                                                    <div class="lcont-info-sub"
+                                                         th:text="${#numbers.formatInteger(firstList.item_DISCOUNT,3,'COMMA')}+'원'">
+                                                        4,500원
+                                                    </div>
+                                                </th:block>
+
+                                            </div>
+                                            <div class="between">
+                                                <div class="lcont-tit-gray">- 상품 할인</div>
+                                                <div class="lcont-info-gray">(-)
+                                                    <th:block th:if="${firstList.item_DISCOUNT} < 1000">
+                                                        <th:block th:text="${firstList.item_DISCOUNT}+'원'">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </th:block>
+                                                    </th:block>
+                                                    <th:block th:if="${firstList.item_DISCOUNT} >= 1000">
+                                                        <th:block
+                                                                th:text="${#numbers.formatInteger(firstList.item_DISCOUNT,3,'COMMA')}+'원'">
+                                                            4,500원
+                                                        </th:block>
+                                                    </th:block>
+                                                </div>
+                                            </div>
+                                            <div class="between">
+                                                <div class="lcont-tit-gray">- 쿠폰</div>
+                                                <div class="lcont-info-gray">(+)0원</div>
+                                            </div>
+                                            <div class="between">
+                                                <div class="lcont-tit-gray">- 프로모션 할인코드</div>
+                                                <div class="lcont-info-gray">(+)0원</div>
+                                            </div>
+                                            <div class="between">
+                                                <div class="lcont-tit-gray">- 적립금 사용</div>
+                                                <th:block th:if="${firstList.using_MILEAGE} < 1000">
+                                                    <div class="lcont-info-gray"
+                                                         th:text="${firstList.using_MILEAGE}+'원'">
+                                                        (+)0원
+                                                    </div>
+                                                </th:block>
+                                                <th:block th:if="${firstList.using_MILEAGE} >= 1000">
+                                                    <div class="lcont-info-gray"
+                                                         th:text="${#numbers.formatInteger(firstList.using_MILEAGE,3,'COMMA')+'원'}">
+                                                        (+)0원
+                                                    </div>
+                                                </th:block>
+                                            </div>
+
+                                            <div class="between final">
+                                                <div class="final-price-tit">최종 결제금액</div>
+                                                <th:block th:if="${firstList.refund_PRICE} == 0">
+                                                    <div class="final-price"
+                                                         th:text="${#numbers.formatInteger(firstList.item_LAST_PRICE,3,'COMMA')+'원'}">
+                                                        44,500
+                                                        <span class="final-price-tit"> 원</span>
+                                                    </div>
+                                                </th:block>
+                                                <th:block
+                                                        th:if="${firstList.refund_PRICE} == ${firstList.item_LAST_PRICE}">
+                                                    <div class="final-price" th:text="0원">
+                                                        44,500
+                                                        <span class="final-price-tit"> 원</span>
+                                                    </div>
+                                                </th:block>
+                                                <th:block
+                                                        th:if="${firstList.refund_PRICE} > 0 and ${firstList.refund_PRICE} != ${firstList.item_LAST_PRICE}">
+                                                    <div class="final-price"
+                                                         th:text="${#numbers.formatInteger((firstList.item_LAST_PRICE - firstList.refund_PRICE),3,'COMMA')+'원'}">
+                                                        44,500
+                                                        <span class="final-price-tit"> 원</span>
+                                                    </div>
+                                                </th:block>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="lcont-con">
+                                            <div class="lcont-tit">환불/재결제 금액</div>
+                                            <div class="between">
+                                                <div class="lcont-tit-sub">환불금액</div>
+                                                <th:block th:if="${firstList.refund_PRICE} < 1000">
+                                                    <div class="lcont-info-sub" th:text="${firstList.refund_PRICE}+'원'">
+                                                        44,500
+                                                        <span class="final-price-tit"> 원</span>
+                                                    </div>
+                                                </th:block>
+                                                <th:block th:if="${firstList.refund_PRICE} >= 1000">
+                                                    <div class="lcont-info-sub"
+                                                         th:text="${#numbers.formatInteger(firstList.refund_PRICE,3,'COMMA')}+'원'">
+                                                        4,500원
+                                                    </div>
+                                                </th:block>
+                                            </div>
+
+                                            <div class="between">
+                                                <div class="lcont-tit-sub">재결제금액</div>
+                                                <div class="lcont-info-sub">+ 0원</div>
+                                            </div>
+                                        </div>
+                                        <div></div>
+
+                                        <button
+                                                type="submit"
+                                                class="btn-h42-gray"
+                                                id="closeBtnStr"
+                                                th:onclick="closeOrderList([[${status.count}]])"
+                                        >
+                                            닫기
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="lcont">
-                  <div class="lcont-con">
-                    <div class="lcont-tit">주문자 정보</div>
-                    <div class="lcont-info">
-                      <span
-                        class="lcont-info"
-                        th:text="${firstList.orders_NAME}"
-                        >박선교</span
-                      >
-                      <span
-                        class="lcont-info"
-                        th:text="${firstList.orders_PHONE}"
-                        >010-4024-6575</span
-                      >
-                    </div>
-                  </div>
-                  <div class="lcont-con">
-                    <div class="lcont-tit">주문자 정보</div>
-                    <div
-                      class="lcont-info"
-                      th:text="${firstList.orders_ADDRESS}"
-                    >
-                      (18115) 경기 오산시 경기대로 389 123
-                    </div>
-                  </div>
-                  <div class="lcont-con">
-                    <div class="lcont-tit">결제정보</div>
-                    <div
-                      class="lcont-info"
-                      th:text="${firstList.orders_PAYMENT}"
-                    >
-                      무통장
-                    </div>
-                    <div
-                      class="lcont-info"
-                      th:text="${firstList.senders_PHONE}"
-                    >
-                      기업은행 0106-859-3030119
-                    </div>
-                    <div class="lcont-info" th:text="${firstList.senders_NAME}">
-                      (예금주: 소호나라)
-                    </div>
-                  </div>
-                  <div class="lcont-con">
-                    <div class="lcont-tit">결제금액</div>
-                    <div class="between">
-                      <div class="lcont-tit-sub">총 상품금액</div>
-                      <div
-                        class="lcont-info-sub"
-                        th:text="${#numbers.formatInteger(firstList.item_PRICE,3,'COMMA')+'원'}"
-                      >
-                        49,000원
-                      </div>
-                    </div>
-                    <th:block
-                      th:if="${#strings.equals(firstList.orders_DELIVERYPAY, '무료')}"
-                    >
-                      <div class="between">
-                        <div class="lcont-tit-sub">총 배송비</div>
-                        <div class="lcont-info-sub">+ 0원</div>
-                      </div>
-                      <div class="between">
-                        <div class="lcont-tit-gray">- 기본 배송비</div>
-                        <div class="lcont-info-gray">(+)0원</div>
-                      </div>
-                      <div class="between">
-                        <div class="lcont-tit-gray">- 지역 배송비</div>
-                        <div class="lcont-info-gray">(+)0원</div>
-                      </div>
-                    </th:block>
-                    <th:block
-                      th:if="${#strings.equals(firstList.orders_DELIVERYPAY, '일반')}"
-                    >
-                      <div class="between">
-                        <div class="lcont-tit-sub">총 배송비</div>
-                        <div class="lcont-info-sub">+ 3,000원</div>
-                      </div>
-                      <div class="between">
-                        <div class="lcont-tit-gray">- 기본 배송비</div>
-                        <div class="lcont-info-gray">(+)3,000원</div>
-                      </div>
-                      <div class="between">
-                        <div class="lcont-tit-gray">- 지역 배송비</div>
-                        <div class="lcont-info-gray">(+)0원</div>
-                      </div>
-                    </th:block>
-                    <th:block
-                      th:if="${#strings.equals(firstList.orders_DELIVERYPAY, '특수')}"
-                    >
-                      <div class="between">
-                        <div class="lcont-tit-sub">총 배송비</div>
-                        <div class="lcont-info-sub">+ 5,000원</div>
-                      </div>
-                      <div class="between">
-                        <div class="lcont-tit-gray">- 기본 배송비</div>
-                        <div class="lcont-info-gray">(+)3,000원</div>
-                      </div>
-                      <div class="between">
-                        <div class="lcont-tit-gray">- 지역 배송비</div>
-                        <div class="lcont-info-gray">(+)2,000원</div>
-                      </div>
-                    </th:block>
-                    <div class="between">
-                      <div class="lcont-tit-sub">총 할인/적립금 사용 금액</div>
-
-                      <th:block th:if="${firstList.item_DISCOUNT} < 1000">
-                        <div
-                          class="lcont-info-sub"
-                          th:text="${firstList.item_DISCOUNT}+'원'"
-                        >
-                          44,500
-                          <span class="final-price-tit"> 원</span>
-                        </div>
-                      </th:block>
-                      <th:block th:if="${firstList.item_DISCOUNT} >= 1000">
-                        <div
-                          class="lcont-info-sub"
-                          th:text="${#numbers.formatInteger(firstList.item_DISCOUNT,3,'COMMA')}+'원'"
-                        >
-                          4,500원
-                        </div>
-                      </th:block>
-                    </div>
-                    <div class="between">
-                      <div class="lcont-tit-gray">- 상품 할인</div>
-                      <div class="lcont-info-gray">
-                        (-)
-                        <th:block th:if="${firstList.item_DISCOUNT} < 1000">
-                          <th:block th:text="${firstList.item_DISCOUNT}+'원'">
-                            44,500
-                            <span class="final-price-tit"> 원</span>
-                          </th:block>
-                        </th:block>
-                        <th:block th:if="${firstList.item_DISCOUNT} >= 1000">
-                          <th:block
-                            th:text="${#numbers.formatInteger(firstList.item_DISCOUNT,3,'COMMA')}+'원'"
-                          >
-                            4,500원
-                          </th:block>
-                        </th:block>
-                      </div>
-                    </div>
-                    <div class="between">
-                      <div class="lcont-tit-gray">- 쿠폰</div>
-                      <div class="lcont-info-gray">(+)0원</div>
-                    </div>
-                    <div class="between">
-                      <div class="lcont-tit-gray">- 프로모션 할인코드</div>
-                      <div class="lcont-info-gray">(+)0원</div>
-                    </div>
-                    <div class="between">
-                      <div class="lcont-tit-gray">- 적립금 사용</div>
-                      <th:block th:if="${firstList.using_MILEAGE} < 1000">
-                        <div
-                          class="lcont-info-gray"
-                          th:text="${firstList.using_MILEAGE}+'원'"
-                        >
-                          (+)0원
-                        </div>
-                      </th:block>
-                      <th:block th:if="${firstList.using_MILEAGE} >= 1000">
-                        <div
-                          class="lcont-info-gray"
-                          th:text="${#numbers.formatInteger(firstList.using_MILEAGE,3,'COMMA')+'원'}"
-                        >
-                          (+)0원
-                        </div>
-                      </th:block>
-                    </div>
-
-                    <div class="between final">
-                      <div class="final-price-tit">최종 결제금액</div>
-                      <th:block th:if="${firstList.refund_PRICE} == 0">
-                        <div
-                          class="final-price"
-                          th:text="${#numbers.formatInteger(firstList.item_LAST_PRICE,3,'COMMA')+'원'}"
-                        >
-                          44,500
-                          <span class="final-price-tit"> 원</span>
-                        </div>
-                      </th:block>
-                      <th:block
-                        th:if="${firstList.refund_PRICE} == ${firstList.item_LAST_PRICE}"
-                      >
-                        <div class="final-price" th:text="0원">
-                          44,500
-                          <span class="final-price-tit"> 원</span>
-                        </div>
-                      </th:block>
-                      <th:block
-                        th:if="${firstList.refund_PRICE} > 0 and ${firstList.refund_PRICE} != ${firstList.item_LAST_PRICE}"
-                      >
-                        <div
-                          class="final-price"
-                          th:text="${#numbers.formatInteger((firstList.item_LAST_PRICE - firstList.refund_PRICE),3,'COMMA')+'원'}"
-                        >
-                          44,500
-                          <span class="final-price-tit"> 원</span>
-                        </div>
-                      </th:block>
-                    </div>
-                  </div>
-
-                  <div class="lcont-con">
-                    <div class="lcont-tit">환불/재결제 금액</div>
-                    <div class="between">
-                      <div class="lcont-tit-sub">환불금액</div>
-                      <th:block th:if="${firstList.item_DISCOUNT} < 1000">
-                        <div
-                          class="lcont-info-sub"
-                          th:text="${firstList.refund_PRICE}+'원'"
-                        >
-                          44,500
-                          <span class="final-price-tit"> 원</span>
-                        </div>
-                      </th:block>
-                      <th:block th:if="${firstList.item_DISCOUNT} >= 1000">
-                        <div
-                          class="lcont-info-sub"
-                          th:text="${#numbers.formatInteger(firstList.refund_PRICE,3,'COMMA')}+'원'"
-                        >
-                          4,500원
-                        </div>
-                      </th:block>
-                    </div>
-
-                    <div class="between">
-                      <div class="lcont-tit-sub">재결제금액</div>
-                      <div class="lcont-info-sub">+ 0원</div>
-                    </div>
-                  </div>
-                  <div></div>
-
-                  <button
-                    type="submit"
-                    class="btn-h42-gray"
-                    id="closeBtnStr"
-                    onclick="closeOrderList()"
-                  >
-                    닫기
-                  </button>
-                </div>
-              </div>
+                <th:block th:replace="/client/user/Member/myorder-fragment :: myorderFragment"></th:block>
             </div>
-          </div>
-          <div class="order_list list-type0">
-            <th:block
-              th:replace="/client/user/Member/myorder-fragment :: myorderFragment"
-            ></th:block>
-          </div>
+
+            <div class="order_list list-type1" style="display: none;">
+                <th:block th:if="${#strings.equals(firstList.orders_STATUS, '입금대기')}">
+                    <div class="list-wrap">
+                        <div class="list-hd">
+                            <div>
+                                <div class="od-num" th:text="${firstList.orders_IDX}">
+                                    2023010608355933
+                                </div>
+                                <div class="od-date" th:text="${firstList.orders_DATE}">
+                                    2023-01-06 08:35:59
+                                </div>
+                            </div>
+
+                            <button class="btn-h30-black open-layer btn-order-layer"
+                                    th:onclick="showOrderList([[${status.count}]])">
+                                주문정보
+                            </button>
+                            <div th:class="bg+${status.count}">
+                                <div class="window">
+                                    <div class="popup">
+                                        <div class="lhd">
+                                            <div>주문번호</div>
+                                            <div class="ord-num" th:text="${firstList.orders_IDX}">2023010608355933
+                                            </div>
+                                            <button id="closeBtn" th:onclick="closeOrderList([[${status.count}]])">
+                                                <img
+                                                        src="https://image.makeshop.co.kr/mysoho/assets/shop/img/btn/h30_close.png"
+                                                        alt=""
+                                                />
+                                            </button>
+                                        </div>
+                                        <div class="lcont">
+                                            <div class="lcont-con">
+                                                <div class="lcont-tit">주문자 정보</div>
+                                                <div class="lcont-info">
+                                                    <span class="lcont-info"
+                                                          th:text="${firstList.orders_NAME}">박선교</span>
+                                                    <span class="lcont-info"
+                                                          th:text="${firstList.orders_PHONE}">010-4024-6575</span>
+                                                </div>
+                                            </div>
+                                            <div class="lcont-con">
+                                                <div class="lcont-tit">주문자 정보</div>
+                                                <div class="lcont-info" th:text="${firstList.orders_ADDRESS}">
+                                                    (18115) 경기 오산시 경기대로 389 123
+                                                </div>
+                                            </div>
+                                            <div class="lcont-con">
+                                                <div class="lcont-tit">결제정보</div>
+                                                <div class="lcont-info" th:text="${firstList.orders_PAYMENT}">무통장</div>
+                                                <div class="lcont-info" th:text="${firstList.senders_PHONE}">기업은행
+                                                    0106-859-3030119
+                                                </div>
+                                                <div class="lcont-info" th:text="${firstList.senders_NAME}">(예금주:
+                                                    소호나라)
+                                                </div>
+                                            </div>
+                                            <div class="lcont-con">
+                                                <div class="lcont-tit">결제금액</div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-sub">총 상품금액</div>
+                                                    <div class="lcont-info-sub"
+                                                         th:text="${#numbers.formatInteger(firstList.item_PRICE,3,'COMMA')+'원'}">
+                                                        49,000원
+                                                    </div>
+                                                </div>
+                                                <th:block
+                                                        th:if="${#strings.equals(firstList.orders_DELIVERYPAY, '무료')}">
+                                                    <div class="between">
+                                                        <div class="lcont-tit-sub">총 배송비</div>
+                                                        <div class="lcont-info-sub">+ 0원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 기본 배송비</div>
+                                                        <div class="lcont-info-gray">(+)0원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 지역 배송비</div>
+                                                        <div class="lcont-info-gray">(+)0원</div>
+                                                    </div>
+                                                </th:block>
+                                                <th:block
+                                                        th:if="${#strings.equals(firstList.orders_DELIVERYPAY, '일반')}">
+                                                    <div class="between">
+                                                        <div class="lcont-tit-sub">총 배송비</div>
+                                                        <div class="lcont-info-sub">+ 3,000원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 기본 배송비</div>
+                                                        <div class="lcont-info-gray">(+)3,000원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 지역 배송비</div>
+                                                        <div class="lcont-info-gray">(+)0원</div>
+                                                    </div>
+                                                </th:block>
+                                                <th:block
+                                                        th:if="${#strings.equals(firstList.orders_DELIVERYPAY, '특수')}">
+                                                    <div class="between">
+                                                        <div class="lcont-tit-sub">총 배송비</div>
+                                                        <div class="lcont-info-sub">+ 5,000원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 기본 배송비</div>
+                                                        <div class="lcont-info-gray">(+)3,000원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 지역 배송비</div>
+                                                        <div class="lcont-info-gray">(+)2,000원</div>
+                                                    </div>
+                                                </th:block>
+                                                <div class="between">
+                                                    <div class="lcont-tit-sub">
+                                                        총 할인/적립금 사용 금액
+                                                    </div>
+
+
+                                                    <th:block th:if="${firstList.item_DISCOUNT} < 1000">
+                                                        <div class="lcont-info-sub"
+                                                             th:text="${firstList.item_DISCOUNT}+'원'">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </div>
+                                                    </th:block>
+                                                    <th:block th:if="${firstList.item_DISCOUNT} >= 1000">
+                                                        <div class="lcont-info-sub"
+                                                             th:text="${#numbers.formatInteger(firstList.item_DISCOUNT,3,'COMMA')}+'원'">
+                                                            4,500원
+                                                        </div>
+                                                    </th:block>
+
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 상품 할인</div>
+                                                    <div class="lcont-info-gray">(-)
+                                                        <th:block th:if="${firstList.item_DISCOUNT} < 1000">
+                                                            <th:block th:text="${firstList.item_DISCOUNT}+'원'">
+                                                                44,500
+                                                                <span class="final-price-tit"> 원</span>
+                                                            </th:block>
+                                                        </th:block>
+                                                        <th:block th:if="${firstList.item_DISCOUNT} >= 1000">
+                                                            <th:block
+                                                                    th:text="${#numbers.formatInteger(firstList.item_DISCOUNT,3,'COMMA')}+'원'">
+                                                                4,500원
+                                                            </th:block>
+                                                        </th:block>
+                                                    </div>
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 쿠폰</div>
+                                                    <div class="lcont-info-gray">(+)0원</div>
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 프로모션 할인코드</div>
+                                                    <div class="lcont-info-gray">(+)0원</div>
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 적립금 사용</div>
+                                                    <th:block th:if="${firstList.using_MILEAGE} < 1000">
+                                                        <div class="lcont-info-gray"
+                                                             th:text="${firstList.using_MILEAGE}+'원'">
+                                                            (+)0원
+                                                        </div>
+                                                    </th:block>
+                                                    <th:block th:if="${firstList.using_MILEAGE} >= 1000">
+                                                        <div class="lcont-info-gray"
+                                                             th:text="${#numbers.formatInteger(firstList.using_MILEAGE,3,'COMMA')+'원'}">
+                                                            (+)0원
+                                                        </div>
+                                                    </th:block>
+                                                </div>
+
+                                                <div class="between final">
+                                                    <div class="final-price-tit">최종 결제금액</div>
+                                                    <th:block th:if="${firstList.refund_PRICE} == 0">
+                                                        <div class="final-price"
+                                                             th:text="${#numbers.formatInteger(firstList.item_LAST_PRICE,3,'COMMA')+'원'}">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </div>
+                                                    </th:block>
+                                                    <th:block
+                                                            th:if="${firstList.refund_PRICE} == ${firstList.item_LAST_PRICE}">
+                                                        <div class="final-price" th:text="0원">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </div>
+                                                    </th:block>
+                                                    <th:block
+                                                            th:if="${firstList.refund_PRICE} > 0 and ${firstList.refund_PRICE} != ${firstList.item_LAST_PRICE}">
+                                                        <div class="final-price"
+                                                             th:text="${#numbers.formatInteger((firstList.item_LAST_PRICE - firstList.refund_PRICE),3,'COMMA')+'원'}">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </div>
+                                                    </th:block>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="lcont-con">
+                                                <div class="lcont-tit">환불/재결제 금액</div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-sub">환불금액</div>
+                                                    <th:block th:if="${firstList.refund_PRICE} < 1000">
+                                                        <div class="lcont-info-sub"
+                                                             th:text="${firstList.refund_PRICE}+'원'">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </div>
+                                                    </th:block>
+                                                    <th:block th:if="${firstList.refund_PRICE} >= 1000">
+                                                        <div class="lcont-info-sub"
+                                                             th:text="${#numbers.formatInteger(firstList.refund_PRICE,3,'COMMA')}+'원'">
+                                                            4,500원
+                                                        </div>
+                                                    </th:block>
+                                                </div>
+
+                                                <div class="between">
+                                                    <div class="lcont-tit-sub">재결제금액</div>
+                                                    <div class="lcont-info-sub">+ 0원</div>
+                                                </div>
+                                            </div>
+                                            <div></div>
+
+                                            <button
+                                                    type="submit"
+                                                    class="btn-h42-gray"
+                                                    id="closeBtnStr"
+                                                    th:onclick="closeOrderList([[${status.count}]])"
+                                            >
+                                                닫기
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <th:block th:replace="/client/user/Member/myorder-fragment :: myorderFragment"></th:block>
+                </th:block>
+            </div>
+
+            <div class="order_list list-type2" style="display: none;">
+                <th:block th:if="${#strings.equals(firstList.orders_STATUS, '배송준비')}">
+                    <div class="list-wrap">
+                        <div class="list-hd">
+                            <div>
+                                <div class="od-num" th:text="${firstList.orders_IDX}">
+                                    2023010608355933
+                                </div>
+                                <div class="od-date" th:text="${firstList.orders_DATE}">
+                                    2023-01-06 08:35:59
+                                </div>
+                            </div>
+
+                            <button class="btn-h30-black open-layer btn-order-layer"
+                                    th:onclick="showOrderList([[${status.count}]])">
+                                주문정보
+                            </button>
+                            <div th:class="bg+${status.count}">
+                                <div class="window">
+                                    <div class="popup">
+                                        <div class="lhd">
+                                            <div>주문번호</div>
+                                            <div class="ord-num" th:text="${firstList.orders_IDX}">2023010608355933
+                                            </div>
+                                            <button id="closeBtn" th:onclick="closeOrderList([[${status.count}]])">
+                                                <img
+                                                        src="https://image.makeshop.co.kr/mysoho/assets/shop/img/btn/h30_close.png"
+                                                        alt=""
+                                                />
+                                            </button>
+                                        </div>
+                                        <div class="lcont">
+                                            <div class="lcont-con">
+                                                <div class="lcont-tit">주문자 정보</div>
+                                                <div class="lcont-info">
+                                                    <span class="lcont-info"
+                                                          th:text="${firstList.orders_NAME}">박선교</span>
+                                                    <span class="lcont-info"
+                                                          th:text="${firstList.orders_PHONE}">010-4024-6575</span>
+                                                </div>
+                                            </div>
+                                            <div class="lcont-con">
+                                                <div class="lcont-tit">주문자 정보</div>
+                                                <div class="lcont-info" th:text="${firstList.orders_ADDRESS}">
+                                                    (18115) 경기 오산시 경기대로 389 123
+                                                </div>
+                                            </div>
+                                            <div class="lcont-con">
+                                                <div class="lcont-tit">결제정보</div>
+                                                <div class="lcont-info" th:text="${firstList.orders_PAYMENT}">무통장</div>
+                                                <div class="lcont-info" th:text="${firstList.senders_PHONE}">기업은행
+                                                    0106-859-3030119
+                                                </div>
+                                                <div class="lcont-info" th:text="${firstList.senders_NAME}">(예금주:
+                                                    소호나라)
+                                                </div>
+                                            </div>
+                                            <div class="lcont-con">
+                                                <div class="lcont-tit">결제금액</div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-sub">총 상품금액</div>
+                                                    <div class="lcont-info-sub"
+                                                         th:text="${#numbers.formatInteger(firstList.item_PRICE,3,'COMMA')+'원'}">
+                                                        49,000원
+                                                    </div>
+                                                </div>
+                                                <th:block
+                                                        th:if="${#strings.equals(firstList.orders_DELIVERYPAY, '무료')}">
+                                                    <div class="between">
+                                                        <div class="lcont-tit-sub">총 배송비</div>
+                                                        <div class="lcont-info-sub">+ 0원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 기본 배송비</div>
+                                                        <div class="lcont-info-gray">(+)0원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 지역 배송비</div>
+                                                        <div class="lcont-info-gray">(+)0원</div>
+                                                    </div>
+                                                </th:block>
+                                                <th:block
+                                                        th:if="${#strings.equals(firstList.orders_DELIVERYPAY, '일반')}">
+                                                    <div class="between">
+                                                        <div class="lcont-tit-sub">총 배송비</div>
+                                                        <div class="lcont-info-sub">+ 3,000원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 기본 배송비</div>
+                                                        <div class="lcont-info-gray">(+)3,000원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 지역 배송비</div>
+                                                        <div class="lcont-info-gray">(+)0원</div>
+                                                    </div>
+                                                </th:block>
+                                                <th:block
+                                                        th:if="${#strings.equals(firstList.orders_DELIVERYPAY, '특수')}">
+                                                    <div class="between">
+                                                        <div class="lcont-tit-sub">총 배송비</div>
+                                                        <div class="lcont-info-sub">+ 5,000원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 기본 배송비</div>
+                                                        <div class="lcont-info-gray">(+)3,000원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 지역 배송비</div>
+                                                        <div class="lcont-info-gray">(+)2,000원</div>
+                                                    </div>
+                                                </th:block>
+                                                <div class="between">
+                                                    <div class="lcont-tit-sub">
+                                                        총 할인/적립금 사용 금액
+                                                    </div>
+
+
+                                                    <th:block th:if="${firstList.item_DISCOUNT} < 1000">
+                                                        <div class="lcont-info-sub"
+                                                             th:text="${firstList.item_DISCOUNT}+'원'">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </div>
+                                                    </th:block>
+                                                    <th:block th:if="${firstList.item_DISCOUNT} >= 1000">
+                                                        <div class="lcont-info-sub"
+                                                             th:text="${#numbers.formatInteger(firstList.item_DISCOUNT,3,'COMMA')}+'원'">
+                                                            4,500원
+                                                        </div>
+                                                    </th:block>
+
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 상품 할인</div>
+                                                    <div class="lcont-info-gray">(-)
+                                                        <th:block th:if="${firstList.item_DISCOUNT} < 1000">
+                                                            <th:block th:text="${firstList.item_DISCOUNT}+'원'">
+                                                                44,500
+                                                                <span class="final-price-tit"> 원</span>
+                                                            </th:block>
+                                                        </th:block>
+                                                        <th:block th:if="${firstList.item_DISCOUNT} >= 1000">
+                                                            <th:block
+                                                                    th:text="${#numbers.formatInteger(firstList.item_DISCOUNT,3,'COMMA')}+'원'">
+                                                                4,500원
+                                                            </th:block>
+                                                        </th:block>
+                                                    </div>
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 쿠폰</div>
+                                                    <div class="lcont-info-gray">(+)0원</div>
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 프로모션 할인코드</div>
+                                                    <div class="lcont-info-gray">(+)0원</div>
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 적립금 사용</div>
+                                                    <th:block th:if="${firstList.using_MILEAGE} < 1000">
+                                                        <div class="lcont-info-gray"
+                                                             th:text="${firstList.using_MILEAGE}+'원'">
+                                                            (+)0원
+                                                        </div>
+                                                    </th:block>
+                                                    <th:block th:if="${firstList.using_MILEAGE} >= 1000">
+                                                        <div class="lcont-info-gray"
+                                                             th:text="${#numbers.formatInteger(firstList.using_MILEAGE,3,'COMMA')+'원'}">
+                                                            (+)0원
+                                                        </div>
+                                                    </th:block>
+                                                </div>
+
+                                                <div class="between final">
+                                                    <div class="final-price-tit">최종 결제금액</div>
+                                                    <th:block th:if="${firstList.refund_PRICE} == 0">
+                                                        <div class="final-price"
+                                                             th:text="${#numbers.formatInteger(firstList.item_LAST_PRICE,3,'COMMA')+'원'}">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </div>
+                                                    </th:block>
+                                                    <th:block
+                                                            th:if="${firstList.refund_PRICE} == ${firstList.item_LAST_PRICE}">
+                                                        <div class="final-price" th:text="0원">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </div>
+                                                    </th:block>
+                                                    <th:block
+                                                            th:if="${firstList.refund_PRICE} > 0 and ${firstList.refund_PRICE} != ${firstList.item_LAST_PRICE}">
+                                                        <div class="final-price"
+                                                             th:text="${#numbers.formatInteger((firstList.item_LAST_PRICE - firstList.refund_PRICE),3,'COMMA')+'원'}">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </div>
+                                                    </th:block>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="lcont-con">
+                                                <div class="lcont-tit">환불/재결제 금액</div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-sub">환불금액</div>
+                                                    <th:block th:if="${firstList.refund_PRICE} < 1000">
+                                                        <div class="lcont-info-sub"
+                                                             th:text="${firstList.refund_PRICE}+'원'">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </div>
+                                                    </th:block>
+                                                    <th:block th:if="${firstList.refund_PRICE} >= 1000">
+                                                        <div class="lcont-info-sub"
+                                                             th:text="${#numbers.formatInteger(firstList.refund_PRICE,3,'COMMA')}+'원'">
+                                                            4,500원
+                                                        </div>
+                                                    </th:block>
+                                                </div>
+
+                                                <div class="between">
+                                                    <div class="lcont-tit-sub">재결제금액</div>
+                                                    <div class="lcont-info-sub">+ 0원</div>
+                                                </div>
+                                            </div>
+                                            <div></div>
+
+                                            <button
+                                                    type="submit"
+                                                    class="btn-h42-gray"
+                                                    id="closeBtnStr"
+                                                    th:onclick="closeOrderList([[${status.count}]])"
+                                            >
+                                                닫기
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <th:block th:replace="/client/user/Member/myorder-fragment :: myorderFragment"></th:block>
+                </th:block>
+            </div>
+
+            <div class="order_list list-type3" style="display: none;">
+                <th:block th:if="${#strings.equals(firstList.orders_STATUS, '배송중')}">
+                    <div class="list-wrap">
+                        <div class="list-hd">
+                            <div>
+                                <div class="od-num" th:text="${firstList.orders_IDX}">
+                                    2023010608355933
+                                </div>
+                                <div class="od-date" th:text="${firstList.orders_DATE}">
+                                    2023-01-06 08:35:59
+                                </div>
+                            </div>
+
+                            <button class="btn-h30-black open-layer btn-order-layer"
+                                    th:onclick="showOrderList([[${status.count}]])">
+                                주문정보
+                            </button>
+                            <div th:class="bg+${status.count}">
+                                <div class="window">
+                                    <div class="popup">
+                                        <div class="lhd">
+                                            <div>주문번호</div>
+                                            <div class="ord-num" th:text="${firstList.orders_IDX}">2023010608355933
+                                            </div>
+                                            <button id="closeBtn" th:onclick="closeOrderList([[${status.count}]])">
+                                                <img
+                                                        src="https://image.makeshop.co.kr/mysoho/assets/shop/img/btn/h30_close.png"
+                                                        alt=""
+                                                />
+                                            </button>
+                                        </div>
+                                        <div class="lcont">
+                                            <div class="lcont-con">
+                                                <div class="lcont-tit">주문자 정보</div>
+                                                <div class="lcont-info">
+                                                    <span class="lcont-info"
+                                                          th:text="${firstList.orders_NAME}">박선교</span>
+                                                    <span class="lcont-info"
+                                                          th:text="${firstList.orders_PHONE}">010-4024-6575</span>
+                                                </div>
+                                            </div>
+                                            <div class="lcont-con">
+                                                <div class="lcont-tit">주문자 정보</div>
+                                                <div class="lcont-info" th:text="${firstList.orders_ADDRESS}">
+                                                    (18115) 경기 오산시 경기대로 389 123
+                                                </div>
+                                            </div>
+                                            <div class="lcont-con">
+                                                <div class="lcont-tit">결제정보</div>
+                                                <div class="lcont-info" th:text="${firstList.orders_PAYMENT}">무통장</div>
+                                                <div class="lcont-info" th:text="${firstList.senders_PHONE}">기업은행
+                                                    0106-859-3030119
+                                                </div>
+                                                <div class="lcont-info" th:text="${firstList.senders_NAME}">(예금주:
+                                                    소호나라)
+                                                </div>
+                                            </div>
+                                            <div class="lcont-con">
+                                                <div class="lcont-tit">결제금액</div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-sub">총 상품금액</div>
+                                                    <div class="lcont-info-sub"
+                                                         th:text="${#numbers.formatInteger(firstList.item_PRICE,3,'COMMA')+'원'}">
+                                                        49,000원
+                                                    </div>
+                                                </div>
+                                                <th:block
+                                                        th:if="${#strings.equals(firstList.orders_DELIVERYPAY, '무료')}">
+                                                    <div class="between">
+                                                        <div class="lcont-tit-sub">총 배송비</div>
+                                                        <div class="lcont-info-sub">+ 0원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 기본 배송비</div>
+                                                        <div class="lcont-info-gray">(+)0원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 지역 배송비</div>
+                                                        <div class="lcont-info-gray">(+)0원</div>
+                                                    </div>
+                                                </th:block>
+                                                <th:block
+                                                        th:if="${#strings.equals(firstList.orders_DELIVERYPAY, '일반')}">
+                                                    <div class="between">
+                                                        <div class="lcont-tit-sub">총 배송비</div>
+                                                        <div class="lcont-info-sub">+ 3,000원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 기본 배송비</div>
+                                                        <div class="lcont-info-gray">(+)3,000원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 지역 배송비</div>
+                                                        <div class="lcont-info-gray">(+)0원</div>
+                                                    </div>
+                                                </th:block>
+                                                <th:block
+                                                        th:if="${#strings.equals(firstList.orders_DELIVERYPAY, '특수')}">
+                                                    <div class="between">
+                                                        <div class="lcont-tit-sub">총 배송비</div>
+                                                        <div class="lcont-info-sub">+ 5,000원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 기본 배송비</div>
+                                                        <div class="lcont-info-gray">(+)3,000원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 지역 배송비</div>
+                                                        <div class="lcont-info-gray">(+)2,000원</div>
+                                                    </div>
+                                                </th:block>
+                                                <div class="between">
+                                                    <div class="lcont-tit-sub">
+                                                        총 할인/적립금 사용 금액
+                                                    </div>
+
+
+                                                    <th:block th:if="${firstList.item_DISCOUNT} < 1000">
+                                                        <div class="lcont-info-sub"
+                                                             th:text="${firstList.item_DISCOUNT}+'원'">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </div>
+                                                    </th:block>
+                                                    <th:block th:if="${firstList.item_DISCOUNT} >= 1000">
+                                                        <div class="lcont-info-sub"
+                                                             th:text="${#numbers.formatInteger(firstList.item_DISCOUNT,3,'COMMA')}+'원'">
+                                                            4,500원
+                                                        </div>
+                                                    </th:block>
+
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 상품 할인</div>
+                                                    <div class="lcont-info-gray">(-)
+                                                        <th:block th:if="${firstList.item_DISCOUNT} < 1000">
+                                                            <th:block th:text="${firstList.item_DISCOUNT}+'원'">
+                                                                44,500
+                                                                <span class="final-price-tit"> 원</span>
+                                                            </th:block>
+                                                        </th:block>
+                                                        <th:block th:if="${firstList.item_DISCOUNT} >= 1000">
+                                                            <th:block
+                                                                    th:text="${#numbers.formatInteger(firstList.item_DISCOUNT,3,'COMMA')}+'원'">
+                                                                4,500원
+                                                            </th:block>
+                                                        </th:block>
+                                                    </div>
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 쿠폰</div>
+                                                    <div class="lcont-info-gray">(+)0원</div>
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 프로모션 할인코드</div>
+                                                    <div class="lcont-info-gray">(+)0원</div>
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 적립금 사용</div>
+                                                    <th:block th:if="${firstList.using_MILEAGE} < 1000">
+                                                        <div class="lcont-info-gray"
+                                                             th:text="${firstList.using_MILEAGE}+'원'">
+                                                            (+)0원
+                                                        </div>
+                                                    </th:block>
+                                                    <th:block th:if="${firstList.using_MILEAGE} >= 1000">
+                                                        <div class="lcont-info-gray"
+                                                             th:text="${#numbers.formatInteger(firstList.using_MILEAGE,3,'COMMA')+'원'}">
+                                                            (+)0원
+                                                        </div>
+                                                    </th:block>
+                                                </div>
+
+                                                <div class="between final">
+                                                    <div class="final-price-tit">최종 결제금액</div>
+                                                    <th:block th:if="${firstList.refund_PRICE} == 0">
+                                                        <div class="final-price"
+                                                             th:text="${#numbers.formatInteger(firstList.item_LAST_PRICE,3,'COMMA')+'원'}">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </div>
+                                                    </th:block>
+                                                    <th:block
+                                                            th:if="${firstList.refund_PRICE} == ${firstList.item_LAST_PRICE}">
+                                                        <div class="final-price" th:text="0원">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </div>
+                                                    </th:block>
+                                                    <th:block
+                                                            th:if="${firstList.refund_PRICE} > 0 and ${firstList.refund_PRICE} != ${firstList.item_LAST_PRICE}">
+                                                        <div class="final-price"
+                                                             th:text="${#numbers.formatInteger((firstList.item_LAST_PRICE - firstList.refund_PRICE),3,'COMMA')+'원'}">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </div>
+                                                    </th:block>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="lcont-con">
+                                                <div class="lcont-tit">환불/재결제 금액</div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-sub">환불금액</div>
+                                                    <th:block th:if="${firstList.refund_PRICE} < 1000">
+                                                        <div class="lcont-info-sub"
+                                                             th:text="${firstList.refund_PRICE}+'원'">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </div>
+                                                    </th:block>
+                                                    <th:block th:if="${firstList.refund_PRICE} >= 1000">
+                                                        <div class="lcont-info-sub"
+                                                             th:text="${#numbers.formatInteger(firstList.refund_PRICE,3,'COMMA')}+'원'">
+                                                            4,500원
+                                                        </div>
+                                                    </th:block>
+                                                </div>
+
+                                                <div class="between">
+                                                    <div class="lcont-tit-sub">재결제금액</div>
+                                                    <div class="lcont-info-sub">+ 0원</div>
+                                                </div>
+                                            </div>
+                                            <div></div>
+
+                                            <button
+                                                    type="submit"
+                                                    class="btn-h42-gray"
+                                                    id="closeBtnStr"
+                                                    th:onclick="closeOrderList([[${status.count}]])"
+                                            >
+                                                닫기
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <th:block th:replace="/client/user/Member/myorder-fragment :: myorderFragment"></th:block>
+                </th:block>
+            </div>
+
+            <div class="order_list list-type4" style="display: none;">
+                <th:block th:if="${#strings.equals(firstList.orders_STATUS, '배송완료')}">
+                    <div class="list-wrap">
+                        <div class="list-hd">
+                            <div>
+                                <div class="od-num" th:text="${firstList.orders_IDX}">
+                                    2023010608355933
+                                </div>
+                                <div class="od-date" th:text="${firstList.orders_DATE}">
+                                    2023-01-06 08:35:59
+                                </div>
+                            </div>
+
+                            <button class="btn-h30-black open-layer btn-order-layer"
+                                    th:onclick="showOrderList([[${status.count}]])">
+                                주문정보
+                            </button>
+                            <div th:class="bg+${status.count}">
+                                <div class="window">
+                                    <div class="popup">
+                                        <div class="lhd">
+                                            <div>주문번호</div>
+                                            <div class="ord-num" th:text="${firstList.orders_IDX}">2023010608355933
+                                            </div>
+                                            <button id="closeBtn" th:onclick="closeOrderList([[${status.count}]])">
+                                                <img
+                                                        src="https://image.makeshop.co.kr/mysoho/assets/shop/img/btn/h30_close.png"
+                                                        alt=""
+                                                />
+                                            </button>
+                                        </div>
+                                        <div class="lcont">
+                                            <div class="lcont-con">
+                                                <div class="lcont-tit">주문자 정보</div>
+                                                <div class="lcont-info">
+                                                    <span class="lcont-info"
+                                                          th:text="${firstList.orders_NAME}">박선교</span>
+                                                    <span class="lcont-info"
+                                                          th:text="${firstList.orders_PHONE}">010-4024-6575</span>
+                                                </div>
+                                            </div>
+                                            <div class="lcont-con">
+                                                <div class="lcont-tit">주문자 정보</div>
+                                                <div class="lcont-info" th:text="${firstList.orders_ADDRESS}">
+                                                    (18115) 경기 오산시 경기대로 389 123
+                                                </div>
+                                            </div>
+                                            <div class="lcont-con">
+                                                <div class="lcont-tit">결제정보</div>
+                                                <div class="lcont-info" th:text="${firstList.orders_PAYMENT}">무통장</div>
+                                                <div class="lcont-info" th:text="${firstList.senders_PHONE}">기업은행
+                                                    0106-859-3030119
+                                                </div>
+                                                <div class="lcont-info" th:text="${firstList.senders_NAME}">(예금주:
+                                                    소호나라)
+                                                </div>
+                                            </div>
+                                            <div class="lcont-con">
+                                                <div class="lcont-tit">결제금액</div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-sub">총 상품금액</div>
+                                                    <div class="lcont-info-sub"
+                                                         th:text="${#numbers.formatInteger(firstList.item_PRICE,3,'COMMA')+'원'}">
+                                                        49,000원
+                                                    </div>
+                                                </div>
+                                                <th:block
+                                                        th:if="${#strings.equals(firstList.orders_DELIVERYPAY, '무료')}">
+                                                    <div class="between">
+                                                        <div class="lcont-tit-sub">총 배송비</div>
+                                                        <div class="lcont-info-sub">+ 0원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 기본 배송비</div>
+                                                        <div class="lcont-info-gray">(+)0원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 지역 배송비</div>
+                                                        <div class="lcont-info-gray">(+)0원</div>
+                                                    </div>
+                                                </th:block>
+                                                <th:block
+                                                        th:if="${#strings.equals(firstList.orders_DELIVERYPAY, '일반')}">
+                                                    <div class="between">
+                                                        <div class="lcont-tit-sub">총 배송비</div>
+                                                        <div class="lcont-info-sub">+ 3,000원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 기본 배송비</div>
+                                                        <div class="lcont-info-gray">(+)3,000원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 지역 배송비</div>
+                                                        <div class="lcont-info-gray">(+)0원</div>
+                                                    </div>
+                                                </th:block>
+                                                <th:block
+                                                        th:if="${#strings.equals(firstList.orders_DELIVERYPAY, '특수')}">
+                                                    <div class="between">
+                                                        <div class="lcont-tit-sub">총 배송비</div>
+                                                        <div class="lcont-info-sub">+ 5,000원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 기본 배송비</div>
+                                                        <div class="lcont-info-gray">(+)3,000원</div>
+                                                    </div>
+                                                    <div class="between">
+                                                        <div class="lcont-tit-gray">- 지역 배송비</div>
+                                                        <div class="lcont-info-gray">(+)2,000원</div>
+                                                    </div>
+                                                </th:block>
+                                                <div class="between">
+                                                    <div class="lcont-tit-sub">
+                                                        총 할인/적립금 사용 금액
+                                                    </div>
+
+
+                                                    <th:block th:if="${firstList.item_DISCOUNT} < 1000">
+                                                        <div class="lcont-info-sub"
+                                                             th:text="${firstList.item_DISCOUNT}+'원'">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </div>
+                                                    </th:block>
+                                                    <th:block th:if="${firstList.item_DISCOUNT} >= 1000">
+                                                        <div class="lcont-info-sub"
+                                                             th:text="${#numbers.formatInteger(firstList.item_DISCOUNT,3,'COMMA')}+'원'">
+                                                            4,500원
+                                                        </div>
+                                                    </th:block>
+
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 상품 할인</div>
+                                                    <div class="lcont-info-gray">(-)
+                                                        <th:block th:if="${firstList.item_DISCOUNT} < 1000">
+                                                            <th:block th:text="${firstList.item_DISCOUNT}+'원'">
+                                                                44,500
+                                                                <span class="final-price-tit"> 원</span>
+                                                            </th:block>
+                                                        </th:block>
+                                                        <th:block th:if="${firstList.item_DISCOUNT} >= 1000">
+                                                            <th:block
+                                                                    th:text="${#numbers.formatInteger(firstList.item_DISCOUNT,3,'COMMA')}+'원'">
+                                                                4,500원
+                                                            </th:block>
+                                                        </th:block>
+                                                    </div>
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 쿠폰</div>
+                                                    <div class="lcont-info-gray">(+)0원</div>
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 프로모션 할인코드</div>
+                                                    <div class="lcont-info-gray">(+)0원</div>
+                                                </div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-gray">- 적립금 사용</div>
+                                                    <th:block th:if="${firstList.using_MILEAGE} < 1000">
+                                                        <div class="lcont-info-gray"
+                                                             th:text="${firstList.using_MILEAGE}+'원'">
+                                                            (+)0원
+                                                        </div>
+                                                    </th:block>
+                                                    <th:block th:if="${firstList.using_MILEAGE} >= 1000">
+                                                        <div class="lcont-info-gray"
+                                                             th:text="${#numbers.formatInteger(firstList.using_MILEAGE,3,'COMMA')+'원'}">
+                                                            (+)0원
+                                                        </div>
+                                                    </th:block>
+                                                </div>
+
+                                                <div class="between final">
+                                                    <div class="final-price-tit">최종 결제금액</div>
+                                                    <th:block th:if="${firstList.refund_PRICE} == 0">
+                                                        <div class="final-price"
+                                                             th:text="${#numbers.formatInteger(firstList.item_LAST_PRICE,3,'COMMA')+'원'}">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </div>
+                                                    </th:block>
+                                                    <th:block
+                                                            th:if="${firstList.refund_PRICE} == ${firstList.item_LAST_PRICE}">
+                                                        <div class="final-price" th:text="0원">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </div>
+                                                    </th:block>
+                                                    <th:block
+                                                            th:if="${firstList.refund_PRICE} > 0 and ${firstList.refund_PRICE} != ${firstList.item_LAST_PRICE}">
+                                                        <div class="final-price"
+                                                             th:text="${#numbers.formatInteger((firstList.item_LAST_PRICE - firstList.refund_PRICE),3,'COMMA')+'원'}">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </div>
+                                                    </th:block>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="lcont-con">
+                                                <div class="lcont-tit">환불/재결제 금액</div>
+                                                <div class="between">
+                                                    <div class="lcont-tit-sub">환불금액</div>
+                                                    <th:block th:if="${firstList.refund_PRICE} < 1000">
+                                                        <div class="lcont-info-sub"
+                                                             th:text="${firstList.refund_PRICE}+'원'">
+                                                            44,500
+                                                            <span class="final-price-tit"> 원</span>
+                                                        </div>
+                                                    </th:block>
+                                                    <th:block th:if="${firstList.refund_PRICE} >= 1000">
+                                                        <div class="lcont-info-sub"
+                                                             th:text="${#numbers.formatInteger(firstList.refund_PRICE,3,'COMMA')}+'원'">
+                                                            4,500원
+                                                        </div>
+                                                    </th:block>
+                                                </div>
+
+                                                <div class="between">
+                                                    <div class="lcont-tit-sub">재결제금액</div>
+                                                    <div class="lcont-info-sub">+ 0원</div>
+                                                </div>
+                                            </div>
+                                            <div></div>
+
+                                            <button
+                                                    type="submit"
+                                                    class="btn-h42-gray"
+                                                    id="closeBtnStr"
+                                                    th:onclick="closeOrderList([[${status.count}]])"
+                                            >
+                                                닫기
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <th:block th:replace="/client/user/Member/myorder-fragment :: myorderFragment"></th:block>
+                </th:block>
+            </div>
+
+            <div class="order_list list-type5" style="display: none;">
+                <div class="list" th:each="secondList : ${firstList.productInfoList}"
+                     th:if="${#strings.equals(secondList.status, '환불')} or ${#strings.equals(secondList.status, '교환')}">
+                    <th:block th:replace="/client/user/Member/myorder-refund :: myorderRefund"></th:block>
+                </div>
+            </div>
+
         </th:block>
+    </th:block>
+</div>
+<!-- 푸터 -->
+<th:block
+        th:replace="/client/fragments/Clfooter :: footerFragment"
+></th:block>
+<script>
+			//사이드메뉴
+			function openNav() {
+				// document.body.style.backgroundColor = "rgba(0,0,0,0.5)";
+				document.getElementById("mySidenav").style.width = "80%";
+			}
+			function closeNav() {
+				// document.body.style.backgroundColor = "white";
+				document.getElementById("mySidenav").style.width = "0";
+			}
 
-        <th:block th:each="firstList, status : ${list}" style="display: none">
-          <div class="order_list list-type1">
-            <th:block
-              th:if="${#strings.equals(firstList.orders_STATUS, '입금대기')}"
-            >
-              <th:block
-                th:replace="/client/user/Member/myorder-fragment :: myorderFragment"
-              ></th:block>
-            </th:block>
-          </div>
-        </th:block>
 
-        <div
-          class="order_list list-type3"
-          th:each="firstList, status : ${list}"
-          style="display: none"
-        >
-          <div>
-            <th:block
-              th:if="${#strings.equals(firstList.orders_STATUS, '배송중')}"
-            >
-              <th:block
-                th:replace="/client/user/Member/myorder-fragment :: myorderFragment"
-              ></th:block>
-            </th:block>
-          </div>
-        </div>
+</script>
 
-        <div
-          class="order_list list-type2"
-          th:each="firstList, status : ${list}"
-          style="display: none"
-        >
-          <th:block
-            th:if="${#strings.equals(firstList.orders_STATUS, '배송준비')}"
-          >
-            <th:block
-              th:replace="/client/user/Member/myorder-fragment :: myorderFragment"
-            ></th:block>
-          </th:block>
-        </div>
-        <div
-          class="order_list list-type4"
-          th:each="firstList, status : ${list}"
-          style="display: none"
-        >
-          <th:block
-            th:if="${#strings.equals(firstList.orders_STATUS, '배송완료')}"
-          >
-            <th:block
-              th:replace="/client/user/Member/myorder-fragment :: myorderFragment"
-            ></th:block>
-          </th:block>
-        </div>
-        <div
-          class="order_list list-type5"
-          th:each="firstList, status : ${list}"
-          style="display: none"
-        >
-          <div class="list" th:each="secondList : ${firstList.productInfoList}">
-            <th:block
-              th:if="${#strings.equals(secondList.status, '환불')} or ${#strings.equals(secondList.status, '교환')}"
-            >
-              <th:block
-                th:replace="/client/user/Member/myorder-refund :: myorderRefund"
-              ></th:block>
-            </th:block>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- 푸터 -->
-    <th:block
-      th:replace="/client/fragments/Clfooter :: footerFragment"
-    ></th:block>
-    <script>
-      //사이드메뉴
-      function openNav() {
-        // document.body.style.backgroundColor = "rgba(0,0,0,0.5)";
-        document.getElementById("mySidenav").style.width = "80%";
-      }
-      function closeNav() {
-        // document.body.style.backgroundColor = "white";
-        document.getElementById("mySidenav").style.width = "0";
-      }
-    </script>
+<script>
+			//돋보기
+			function openSearch() {
+				document.getElementById("myOverlay").style.display = "block";
+			}
 
-    <script>
-      //돋보기
-      function openSearch() {
-        document.getElementById("myOverlay").style.display = "block";
-      }
+			function closeSearch() {
+				document.getElementById("myOverlay").style.display = "none";
+			}
 
-      function closeSearch() {
-        document.getElementById("myOverlay").style.display = "none";
-      }
-    </script>
-    <script>
-      function show() {
-        document.querySelector(".background").className = "background show";
-      }
+</script>
+<script>
+			function show() {
+				document.querySelector(".background").className = "background show";
+			}
 
-      function close() {
-        document.querySelector(".background").className = "background";
-      }
+			function close() {
+				document.querySelector(".background").className = "background";
+			}
 
-      // document.querySelector("#show").addEventListener("click", show);
-      // document.querySelector("#close").addEventListener("click", close);
-    </script>
-    <script>
-      function openPopup1() {
-        popup = window.open("pop-page1");
-      }
-      function openPopup2() {
-        popup = window.open("pop-page2");
-      }
-      function openPopupsoho1() {
-        popup = window.open("https://mysoho.com/");
-      }
-      function openPopupsoho2() {
-        popup = window.open("https://sohomarket.kr/?shop=sohonara");
-      }
-      function footerbtn() {
-        //
-        if (document.querySelector(".hidden").style.display === "block") {
-          document.querySelector(".hidden").style.display = "none";
-          document.querySelector(".footer-down").style.display = "block";
-          document.querySelector(".footer-up").style.display = "none";
-        } else {
-          document.querySelector(".hidden").style.display = "block";
-          document.querySelector(".footer-down").style.display = "none";
-          document.querySelector(".footer-up").style.display = "block";
-        }
-      }
-      function footerbtn2() {
-        popup = window.open(
-          "https://www.ftc.go.kr/bizCommPop.do?wrkr_no=2068121131&apv_perm_no="
-        );
-      }
-      // Get the button
-      let mybutton = document.getElementById("myBtnfooter");
+			// document.querySelector("#show").addEventListener("click", show);
+			// document.querySelector("#close").addEventListener("click", close);
 
-      // When the user scrolls down 20px from the top of the document, show the button
-      window.onscroll = function () {
-        scrollFunction();
-      };
 
-      function scrollFunction() {
-        if (
-          document.body.scrollTop > 20 ||
-          document.documentElement.scrollTop > 20
-        ) {
-          //mybutton.style.display = "block";
-          mybutton.style.opacity = "1";
-        } else {
-          //mybutton.style.display = "none";
-          mybutton.style.opacity = "0";
-        }
-      }
+</script>
+<script>
+			function openPopup1() {
+				popup = window.open("pop-page1");
+			}
+			function openPopup2() {
+				popup = window.open("pop-page2");
+			}
+			function openPopupsoho1() {
+				popup = window.open("https://mysoho.com/");
+			}
+			function openPopupsoho2() {
+				popup = window.open("https://sohomarket.kr/?shop=sohonara");
+			}
+			function footerbtn() {
+				//
+				if (document.querySelector(".hidden").style.display === "block") {
+					document.querySelector(".hidden").style.display = "none";
+					document.querySelector(".footer-down").style.display = "block";
+					document.querySelector(".footer-up").style.display = "none";
+				} else {
+					document.querySelector(".hidden").style.display = "block";
+					document.querySelector(".footer-down").style.display = "none";
+					document.querySelector(".footer-up").style.display = "block";
+				}
+			}
+			function footerbtn2() {
+				popup = window.open(
+					"https://www.ftc.go.kr/bizCommPop.do?wrkr_no=2068121131&apv_perm_no="
+				);
+			}
+			// Get the button
+			let mybutton = document.getElementById("myBtnfooter");
 
-      // When the user clicks on the button, scroll to the top of the document
-      function topFunction() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-      }
+			// When the user scrolls down 20px from the top of the document, show the button
+			window.onscroll = function () {
+				scrollFunction();
+			};
 
-      function changeRed(n) {
-        growArr = document.querySelectorAll(".grow ");
-        for (let i = 0; i < 6; i++) {
-          growArr[i].classList.remove("red");
-          // document.querySelector(".list-type" + i).style.display = "none";
-          var els = document.querySelectorAll(".list-type" + i);
-          console.log(els);
-          for (var x = 0; x < els.length; x++) {
-            els[x].style.display = "none";
-          }
-        }
 
-        growArr[n].classList.add("red");
-        // document.querySelector(".list-type" + n).style.display = "block";
-        var els = document.querySelectorAll(".list-type" + n);
-        for (var x = 0; x < els.length; x++) {
-          els[x].style.display = "block";
-        }
 
-        if (document.querySelector("#value" + n).innerHTML === "0") {
-          alert("주문정보가 없습니다.");
-        }
-      }
-      // 주문정보 팝업
+			function scrollFunction() {
+				if (
+					document.body.scrollTop > 20 ||
+					document.documentElement.scrollTop > 20
+				) {
+					//mybutton.style.display = "block";
+					mybutton.style.opacity = "1";
+				} else {
+					//mybutton.style.display = "none";
+					mybutton.style.opacity = "0";
+				}
+			}
 
-      function closeOrderList() {
-        document.querySelector(".showOrderList").className = "bg";
-      }
+			// When the user clicks on the button, scroll to the top of the document
+			function topFunction() {
+				document.body.scrollTop = 0;
+				document.documentElement.scrollTop = 0;
+			}
 
-      // document.querySelectorAll(".show-order-list").addEventListener("click", showOrderList);
-      // var els = document.querySelectorAll(".show-order-list");
-      // for(var x = 0; x < els.length; x++) {
-      // 	els[x].addEventListener("click", showOrderList);
-      // }
+        var test = 0;
 
-      // document
-      // 	.querySelector("#closeBtn")
-      // 	.addEventListener("click", closeOrderList);
-      // document
-      // 	.querySelector("#closeBtnStr")
-      // 	.addEventListener("click", closeOrderList);
-      function logout() {
-        alert("로그아웃 되었습니다.");
-        location.href = "home.html";
-      }
+			function changeRed(n) {
+			test = n;
+				growArr = document.querySelectorAll(".grow ");
+				for (let i = 0; i < 6; i++) {
+					growArr[i].classList.remove("red");
+					// document.querySelector(".list-type" + i).style.display = "none";
+					var els = document.querySelectorAll(".list-type" + i)
+					console.log(els);
+					for(var x = 0 ; x < els.length; x++) {
+						els[x].style.display = 'none';
+					}
+				}
 
-      function showOrderList(num) {
-        document.querySelectorAll(".bg")[num - 1].className =
-          "bg showOrderList";
-      }
-    </script>
-  </body>
+				growArr[n].classList.add("red");
+				// document.querySelector(".list-type" + n).style.display = "block";
+				var els = document.querySelectorAll(".list-type" + n);
+				for(var x = 0 ; x < els.length; x++) {
+						els[x].style.display = 'block';
+					}
+
+				if (document.querySelector("#value" + n).innerHTML === "0") {
+					alert("주문정보가 없습니다.");
+				}
+			}
+			// 주문정보 팝업
+
+
+			function closeOrderList(num) {
+				 document.querySelector(".showOrderList").className = "bg"+num;
+                //var els = document.querySelectorAll(".showOrderList");
+                //for(var x = 1; x < 6; x++) {
+                //   els[x].className = "bg"+x;
+                //}
+			}
+
+			// document.querySelectorAll(".show-order-list").addEventListener("click", showOrderList);
+			// var els = document.querySelectorAll(".show-order-list");
+			// for(var x = 0; x < els.length; x++) {
+			// 	els[x].addEventListener("click", showOrderList);
+			// }
+
+			// document
+			// 	.querySelector("#closeBtn")
+			// 	.addEventListener("click", closeOrderList);
+			// document
+			// 	.querySelector("#closeBtnStr")
+			// 	.addEventListener("click", closeOrderList);
+			function logout() {
+				alert("로그아웃 되었습니다.");
+				location.href = "home.html";
+			}
+
+	function showOrderList(num) {
+	    if(test == 0) {
+	        document.querySelectorAll(".bg"+num)[0].className = "showOrderList bg"+num;
+	    } else {
+	        document.querySelectorAll(".bg"+num)[1].className = "showOrderList bg"+num;
+	    }
+
+        
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
 </html>
