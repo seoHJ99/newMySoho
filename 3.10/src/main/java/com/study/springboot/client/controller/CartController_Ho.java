@@ -8,13 +8,21 @@ import com.study.springboot.admin.service.MemberService;
 import com.study.springboot.admin.service.OrderService;
 import com.study.springboot.admin.service.ProductService;
 import com.study.springboot.client.dto.CartInformation;
+import com.study.springboot.client.dto.MemberJoinDto;
+import com.study.springboot.client.dto.MemberLoginDto;
 import com.study.springboot.client.dto.NonmemberResponseDto;
 import com.study.springboot.client.service.CL_OrderService;
 import com.study.springboot.client.service.NonmemberService;
 import com.study.springboot.client.service.OrderDetailSaveDto;
+import com.study.springboot.entity.Member;
+import com.study.springboot.entity.MemberListRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,6 +41,8 @@ public class CartController_Ho {
     private final OrderService orderService2;
     private final MemberService memberService;
     private final NonmemberService nonmemberService;
+    private final MemberListRepository memberListRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @RequestMapping("/cart/nonmember") // 이건 뭐냐
     @ResponseBody
@@ -93,7 +103,10 @@ public class CartController_Ho {
                             @RequestParam("phone1") String phone1,
                             @RequestParam("phone2")String phone2,
                             Model model,
-                            HttpSession session){
+                            HttpSession session,
+                            MemberJoinDto memberDto,
+                            BindingResult bindingResult,
+                            MemberLoginDto loginDto){
         orderSaveDto.setOrders_PHONE(phone1+phone2);
         orderSaveDto.setSenders_PHONE(s_phone1+s_phone2);
         orderSaveDto.setOrders_ADDRESS(address1+","+address2+","+address3);
@@ -150,6 +163,39 @@ public class CartController_Ho {
         }
         OrderResponseDto dto = orderService2.findOrderDto(orderIdx);
         model.addAttribute("order",dto);
+
+        if (session.getAttribute("memberID") == null) {
+            if (bindingResult.hasErrors()) {
+                // DTO에 설정한 message값을 가져온다.
+                String detail = bindingResult.getFieldError().getDefaultMessage();
+                // DTO에 유효성체크를 걸어놓은 어노테이션명을 가져온다.
+                String bindResultCode = bindingResult.getFieldError().getCode();
+                System.out.println(detail + ":" + bindResultCode);
+            }
+
+            String encodedPassword = passwordEncoder.encode(memberDto.getMemberPw());
+            System.out.println( "encodedPassword:" + encodedPassword );
+            memberDto.setMemberPw( encodedPassword );
+            memberDto.setMember_POINT(0);
+            memberDto.setStatus("활동");
+            memberDto.setMember_NAME(orderSaveDto.getSenders_NAME());
+            memberDto.setMember_ADDRESS(orderSaveDto.getOrders_ADDRESS());
+            memberDto.setMember_POST(orderSaveDto.getOrders_POST());
+            memberDto.setMember_PHONE(orderSaveDto.getSenders_PHONE());
+
+            try {
+                Member entity = memberDto.toSaveEntity();
+                memberListRepository.save(entity);
+            } catch (DataIntegrityViolationException e) {
+                e.printStackTrace();
+                bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            }
+            HttpStatus status = HttpStatus.OK;
+            if (status == HttpStatus.OK) System.out.println("회원가입 성공!");
+        }
+
         return "/client/order/order-complete";
     }
 }

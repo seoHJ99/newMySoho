@@ -3,6 +3,7 @@
   lang="ko"
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
   <head>
     <th:block th:replace="/client/fragments/Clhead :: headFragment"></th:block>
@@ -1017,6 +1018,7 @@
 
 
         <!-- 회원가입 -->
+        <input type="hidden" sec:authorize="isAnonymous()" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <div id="userJoinFormDiv" class="receiver-wrap users-join-line">
           <div class="title bold">회원가입 정보</div>
           <div class="users-cont nopd">
@@ -1099,6 +1101,9 @@
             <div class="red check-txt check-txt-pwcheck-not">
               비밀번호가 일치하지 않습니다.
             </div>
+<!--            <input type="hidden" name="member_NAME" value="임시">-->
+<!--            <input type="hidden" name="member_PHONE" value="00000000000">-->
+            <input type="hidden" name="member_ROLE" value="ROLE_USER">
           </div>
         </div>
 
@@ -1216,8 +1221,7 @@
             </li>
           </ul>
         </div>
-          <input type="hidden" name="member_ROLE" value="ROLE_USER">
-          <input type="hidden" name="status" value="활동">
+
         <!-- 구분선 빈박스-->
         <div class="bg-blank none"></div>
       </div>
