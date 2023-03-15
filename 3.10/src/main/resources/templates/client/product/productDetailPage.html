@@ -878,7 +878,7 @@
         </div>
       </div>
       <div class="prd-desc">
-        <div class="price txt-black" th:if="${product.item_DISCOUNT} != '0'">
+        <div class="price txt-black" th:if="${product.item_DISCOUNT} != '0' and ${product.item_AMOUNT} != 0">
           <div class="sale-rate fs-21" th:text="${product.item_DISCOUNT}+'%'">
             9%
           </div>
@@ -896,13 +896,32 @@
             ></b>
           </div>
         </div>
-        <div class="price txt-black" th:if="${product.item_DISCOUNT} == '0'">
+        <div class="price txt-black" th:if="${product.item_DISCOUNT} == '0' and ${product.item_AMOUNT} != 0">
           <div class="fs-21 black">
             <b
               th:text="${#numbers.formatInteger(product.item_PRICE,3,'COMMA')}+'원'"
             >
               44,500</b
             >
+          </div>
+        </div>
+        <div class="price txt-black" th:if="${product.item_AMOUNT} == 0">
+          <div class="fs-21 black">
+            <b>품절</b>
+            <th:block th:if="${product.item_DISCOUNT} != 0">
+              <b class="gray-through"
+                      th:text="${#numbers.formatInteger(product.item_PRICE_DISCOUNT,3,'COMMA')}+'원'"
+              >
+                44,500</b
+              >
+            </th:block>
+            <th:block th:if="${product.item_DISCOUNT} == 0">
+              <b class="gray-through"
+                 th:text="${#numbers.formatInteger(product.item_PRICE,3,'COMMA')}+'원'"
+              >
+                44,500</b
+              >
+            </th:block>
           </div>
         </div>
       </div>
@@ -1046,17 +1065,33 @@
       </div>
       <div class="prd-btn-type2">
         <!-- 장바구니담기버튼 -->
-        <button
-          href=""
-          class="btn-h42-gray2 btn-cart js-add-cart-single"
-          onclick="basketNumCount(this)"
-          th:value="${product.item_idx }"
-        >
-          <img
-            src="https://sohonara.mysoho.com/assets/shop/img/common/bul_h33_basket.png"
-            alt=""
-          />장바구니 담기
-        </button>
+        <th:block th:if="${product.item_AMOUNT} != 0">
+          <button
+            href=""
+            class="btn-h42-gray2 btn-cart js-add-cart-single"
+            onclick="basketNumCount(this)"
+            th:value="${product.item_idx }"
+          >
+
+            <img
+              src="https://sohonara.mysoho.com/assets/shop/img/common/bul_h33_basket.png"
+              alt=""
+            />장바구니 담기
+          </button>
+        </th:block>
+        <th:block th:if="${product.item_AMOUNT} == 0">
+          <button
+                  href=""
+                  class="btn-h42-gray2 btn-cart js-add-cart-single"
+                  th:value="${product.item_idx }"
+          >
+
+            <img
+                    src="https://sohonara.mysoho.com/assets/shop/img/common/bul_h33_basket.png"
+                    alt=""
+            />품절
+          </button>
+        </th:block>
         <!-- 공유하기버튼 -->
         <button class="btn-share-white btn-share" onclick="showShareList()">
           <img
@@ -1982,27 +2017,37 @@
                     >
                   </div>
                 </div>
-                <form action="/cart">
-                  <input
-                    type="hidden"
-                    sec:authorize="isAuthenticated()"
-                    th:name="${_csrf.parameterName}"
-                    th:value="${_csrf.token}"
-                  />
+                <th:block th:if="${product.item_AMOUNT} != 0">
+                  <form action="/cart">
+                    <input
+                      type="hidden"
+                      sec:authorize="isAuthenticated()"
+                      th:name="${_csrf.parameterName}"
+                      th:value="${_csrf.token}"
+                    />
 
-                  <input
-                    type="hidden"
-                    name="item_idx"
-                    th:value="${product.item_idx}"
-                  />
-                  <input type="hidden" name="item_quantity" th:value="1" />
-                  <!--                  <input type="hidden" id="item_IDX" name="item_IDX" />-->
-                  <!--                  <input type="hidden" id="item_QTY" name="item_QTY" />-->
-                  <!--                  <input type="hidden" id="mileage" name="accumulate_MILEAGE" />-->
-                  <button class="js-btnOrder js-mo-tpl btn-h42-gray mt-25">
-                    결제하기
-                  </button>
-                </form>
+                    <input
+                      type="hidden"
+                      name="item_idx"
+                      th:value="${product.item_idx}"
+                    />
+                    <input type="hidden" name="item_quantity" th:value="1" />
+                    <!--                  <input type="hidden" id="item_IDX" name="item_IDX" />-->
+                    <!--                  <input type="hidden" id="item_QTY" name="item_QTY" />-->
+                    <!--                  <input type="hidden" id="mileage" name="accumulate_MILEAGE" />-->
+                    <button class="js-btnOrder js-mo-tpl btn-h42-gray mt-25">
+                      결제하기
+                    </button>
+                  </form>
+                </th:block>
+                <th:block th:if="${product.item_AMOUNT} == 0">
+                  <form>
+                    <!--                  <input type="hidden" id="item_IDX" name="item_IDX" />-->
+                    <!--                  <input type="hidden" id="item_QTY" name="item_QTY" />-->
+                    <!--                  <input type="hidden" id="mileage" name="accumulate_MILEAGE" />-->
+                    <input type="button" class="js-mo-tpl btn-h42-gray mt-25" value="구매불가">
+                  </form>
+                </th:block>
                 <div class="warning-labels-font">
                   <img
                     src="https://image.makeshop.co.kr/mysoho/assets/admin/images/common/m-notice-icon.png"
