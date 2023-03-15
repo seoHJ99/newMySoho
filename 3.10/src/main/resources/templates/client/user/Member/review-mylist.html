@@ -36,7 +36,6 @@
 			.review_score > td {
 				font-weight: bold;
 				padding: 10px;
-				color: rgb(122, 133, 231);
 			}
 			.review_title > td {
 				font-size: large;
@@ -53,6 +52,92 @@
 			}
 			.containerlogin {
 				height: auto;
+			}
+			.review_table {
+				min-width: 640px;
+				border-radius: 20px;
+				margin-top: 15px;
+			}
+			.review_tr > td {
+				font-size: smaller;
+				color: black;
+				padding-left: 10px;
+				padding-right: 10px;
+				max-width: 500px;
+				padding-top: 5px;
+				padding-bottom: 5px;
+			}
+			.starScore {
+				font-weight: bold;
+				color: #ff8844;
+			}
+			.review_title > td {
+				font-size: large;
+				font-weight: bolder;
+				color: black;
+				padding-left: 10px;
+				padding-bottom: 10px;
+			}
+
+			.review_content > td {
+				font-size: medium;
+				padding-left: 10px;
+				padding-top: 5px;
+				padding-bottom: 7px;
+			}
+			.imageBox {
+				display: flex;
+				justify-content: center;
+				padding-bottom: 7px;
+			}
+			.reivewDate {
+				color: #999999;
+				font-size: small;
+			}
+			.optionCont {
+				overflow-y: scroll;
+			}
+			.optionBlue > span {
+				color: #297bcf;
+			}
+			.rating {
+				display: flex;
+				align-items: center;
+				position: relative;
+			}
+			.starcolor {
+				fill: #ff8844;
+			}
+			.star:last-of-type {
+				margin-right: 0;
+			}
+			.overlay {
+				background-color: #000;
+				opacity: 1;
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				z-index: 1;
+				transition: all 0.3s ease-in-out;
+			}
+			@supports (mix-blend-mode: color) {
+				.overlay {
+					mix-blend-mode: color;
+					opacity: unset;
+				}
+			}
+			.star {
+				width: 30px;
+				height: 30px;
+				margin-right: 2px;
+			}
+			.reivewCon {
+				border: 1px solid darkgray;
+				border-radius: 15px;
+			}
+			.reivewDate {
+				color: darkgray;
 			}
 		</style>
 	</head>
@@ -74,52 +159,50 @@
 			</div>
 			<!-- 있을때 -->
 			<div th:if="${review}">
-				<table
-					th:each="review : ${review}"
-					class="review_table"
-				>
-					<tr class="review_tr">
-						<td th:text="${review.review_WRITER}">리뷰 작성자</td>
-					</tr>
-					<tr class="review_tr">
-						<td
-							class=""
-							th:text="${review.review_REGDATE}"
+				<th:block th:each="review : ${review}">
+					<div class="reivewCon">
+						<table class="review_table reviewTable">
+							<tr class="review_tr">
+								<td th:text="${review.review_WRITER}">리뷰 작성자</td>
+							</tr>
+							<tr class="review_score">
+								<td class="starScore">
+									<th:block th:switch="${review.review_SCORE}">
+										<span th:case="1">★</span>
+										<span th:case="2">★★</span>
+										<span th:case="3">★★★</span>
+										<span th:case="4">★★★★</span>
+										<span th:case="5">★★★★★</span>
+									</th:block>
+								</td>
+								<td
+									class="reivewDate"
+									th:text="${review.review_REGDATE}"
+								>
+									리뷰 작성날짜
+								</td>
+							</tr>
+
+							<tr class="review_title">
+								<td th:text="${review.review_TITLE}">리뷰제목</td>
+							</tr>
+							<tr class="review_content">
+								<td th:text="${review.review_CONTENT}">리뷰내용</td>
+							</tr>
+						</table>
+						<div
+							class="imageBox"
+							colspan="2"
+							th:if="${review.review_IMAGE} != '이미지 없음'"
 						>
-							리뷰 작성날짜
-						</td>
-					</tr>
-					<tr class="review_score">
-						<td>
-							<th:block th:switch="${review.review_SCORE}">
-								<span th:case="1">★</span>
-								<span th:case="2">★★</span>
-								<span th:case="3">★★★</span>
-								<span th:case="4">★★★★</span>
-								<span th:case="5">★★★★★</span>
-							</th:block>
-						</td>
-					</tr>
-					<tr class="review_title">
-						<td th:text="${review.review_TITLE}">리뷰제목</td>
-					</tr>
-					<tr class="review_content">
-						<td th:text="${review.review_CONTENT}">리뷰내용</td>
-					</tr>
-					<tr>
-						<td>
 							<img
 								th:src="${review.review_IMAGE}"
 								alt=""
 							/>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a th:href="@{/product(idx=${review.item_IDX})}">상품 보러가기</a>
-						</td>
-					</tr>
-				</table>
+						</div>
+						<div class="bg-blank"></div>
+					</div>
+				</th:block>
 			</div>
 		</div>
 		<!-- 푸터 -->

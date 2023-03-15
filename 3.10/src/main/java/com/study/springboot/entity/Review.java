@@ -30,7 +30,7 @@ public class Review {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate reviewREGDATE = LocalDate.now();
     private String review_REPLY;
-    private String review_STATUS;
+    private String review_STATUS = "공개";
     public void addReply(String reply, String status){
         this.review_REPLY = reply;
         this.review_STATUS =status;

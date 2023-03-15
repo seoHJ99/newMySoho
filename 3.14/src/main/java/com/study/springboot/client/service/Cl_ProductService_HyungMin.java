@@ -36,7 +36,7 @@ public class Cl_ProductService_HyungMin {
         List<ProductResponseDto> dto = new ArrayList<>();
         List<Product> product = productRepository.findByItem_OPTION(item_idx);
         for(Product entity : product) {
-            System.out.println(entity.getItem_idx());
+
             ProductResponseDto productResponseDto2 = new ProductResponseDto(entity);
             int price = productResponseDto2.getItem_PRICE();
             int discount = productResponseDto2.getItem_DISCOUNT();

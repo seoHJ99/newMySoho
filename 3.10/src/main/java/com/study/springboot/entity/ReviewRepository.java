@@ -17,6 +17,7 @@ public interface ReviewRepository extends JpaRepository <Review, Integer> {
 
     List<Review> findByItemIDX ( int item_idx);
 
+
     @Query(value = "SELECT * FROM review WHERE review_TITLE LIKE CONCAT('%',:keyword,'%') OR " +
             "review_WRITER LIKE CONCAT('%',:keyword,'%') OR " +
             "item_IDX LIKE CONCAT('%',:keyword,'%')", nativeQuery = true)

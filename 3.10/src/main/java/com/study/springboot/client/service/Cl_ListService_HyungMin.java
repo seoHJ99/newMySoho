@@ -130,7 +130,7 @@ public class Cl_ListService_HyungMin {
             int item_idx = entityList.get(i).getItem_idx();
             List<ReviewResponseDTO> reviewList = productService.findReviewScore(item_idx);
             for(int j=0; reviewList.size()>j; j++){
-                int score = reviewList.get(i).getReview_SCORE();
+                int score = reviewList.get(j).getReview_SCORE();
                 scoreSum = scoreSum + score;
             }
             if(reviewList.size()==0) {

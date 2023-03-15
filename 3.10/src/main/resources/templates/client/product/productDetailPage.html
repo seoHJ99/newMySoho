@@ -931,6 +931,10 @@
 			.no-text {
 				padding-bottom: 25px;
 				font-size: 15px;
+				max-width: 640px;
+			}
+			.starScore {
+				padding-left: 10px;
 			}
 			/* 문의 */
 			.btnBwrite {
@@ -1158,34 +1162,47 @@
 			}
 			.review_table {
 				min-width: 640px;
-				border: 1px solid #d0d0d0;
 				border-radius: 20px;
 				margin-top: 15px;
+			}
+			.tab {
+				z-index: 1;
 			}
 			.review_tr > td {
 				font-size: smaller;
 				color: black;
 				padding-left: 10px;
 				padding-right: 10px;
+				max-width: 500px;
 				padding-top: 5px;
+				padding-bottom: 5px;
 			}
-			.review_score > td {
+			.starScore {
 				font-weight: bold;
-				padding: 10px;
-				color: rgb(122, 133, 231);
+				color: #ff8844;
 			}
 			.review_title > td {
 				font-size: large;
 				font-weight: bolder;
-				color: rgb(122, 121, 121);
+				color: black;
 				padding-left: 10px;
 				padding-bottom: 10px;
 			}
+
 			.review_content > td {
-				font-size: small;
+				font-size: medium;
 				padding-left: 10px;
-				padding-bottom: 10px;
 				padding-top: 5px;
+				padding-bottom: 7px;
+			}
+			.imageBox {
+				display: flex;
+				justify-content: center;
+				padding-bottom: 7px;
+			}
+			.reivewDate {
+				color: #999999;
+				font-size: small;
 			}
 			.optionCont {
 				overflow-y: scroll;
@@ -1224,6 +1241,10 @@
 				width: 30px;
 				height: 30px;
 				margin-right: 2px;
+			}
+			.reivewCon {
+				border: 1px solid darkgray;
+				border-radius: 15px;
 			}
 			.overlay {
 				background-color: #000;
@@ -1831,50 +1852,56 @@
 									<div class="review-wrap gallary-list js-reviews">
 										<div class="txt-detail non js-reviewsEmpty">
 											<div class="no-text">
-												<table
-													th:each="review : ${review}"
-													class="review_table"
-												>
-													<tr class="review_tr">
-														<td th:text="${review.review_WRITER}">
-															리뷰 작성자
-														</td>
-													</tr>
-													<tr class="review_tr">
-														<td
-															class=""
-															th:text="${review.review_REGDATE}"
+												<th:block th:each="review : ${review}">
+													<div class="reivewCon">
+														<table class="review_table reviewTable">
+															<tr class="review_tr">
+																<td th:text="${review.review_WRITER}">
+																	리뷰 작성자
+																</td>
+															</tr>
+															<tr class="review_score">
+																<td class="starScore">
+																	<th:block th:switch="${review.review_SCORE}">
+																		<span th:case="1">★</span>
+																		<span th:case="2">★★</span>
+																		<span th:case="3">★★★</span>
+																		<span th:case="4">★★★★</span>
+																		<span th:case="5">★★★★★</span>
+																	</th:block>
+																</td>
+																<td
+																	class="reivewDate"
+																	th:text="${review.review_REGDATE}"
+																>
+																	리뷰 작성날짜
+																</td>
+															</tr>
+
+															<tr class="review_title">
+																<td th:text="${review.review_TITLE}">
+																	리뷰제목
+																</td>
+															</tr>
+															<tr class="review_content">
+																<td th:text="${review.review_CONTENT}">
+																	리뷰내용
+																</td>
+															</tr>
+														</table>
+														<div
+															class="imageBox"
+															colspan="2"
+															th:if="${review.review_IMAGE} != '이미지 없음'"
 														>
-															리뷰 작성날짜
-														</td>
-													</tr>
-													<tr class="review_score">
-														<td>
-															<th:block th:switch="${review.review_SCORE}">
-																<span th:case="1">★</span>
-																<span th:case="2">★★</span>
-																<span th:case="3">★★★</span>
-																<span th:case="4">★★★★</span>
-																<span th:case="5">★★★★★</span>
-															</th:block>
-														</td>
-													</tr>
-													<tr class="review_title">
-														<td th:text="${review.review_TITLE}">리뷰제목</td>
-													</tr>
-													<tr class="review_content">
-														<td th:text="${review.review_CONTENT}">리뷰내용</td>
-													</tr>
-													<tr>
-														<td th:if="${review.review_IMAGE} != '이미지 없음'">
-															리뷰 이미지
 															<img
 																th:src="${review.review_IMAGE}"
 																alt=""
 															/>
-														</td>
-													</tr>
-												</table>
+														</div>
+														<div class="bg-blank"></div>
+													</div>
+												</th:block>
 											</div>
 										</div>
 									</div>

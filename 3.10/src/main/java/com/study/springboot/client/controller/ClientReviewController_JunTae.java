@@ -27,7 +27,6 @@ public class ClientReviewController_JunTae {
     private final AwsS3Service awsS3Service;
     private final MainService mainService;
 
-
     @RequestMapping("/review")
     public String test(Model model, int item_idx) {
         ProductResponseDto dto = clientReviewService.findById(item_idx);
@@ -37,12 +36,14 @@ public class ClientReviewController_JunTae {
 
     @RequestMapping("/review/save")
     public String saveReviewAction(ReviewSaveResponsedto reviewSaveResponsedto, // 이미지 등록 수정 완료
-                                 @RequestParam("image") MultipartFile review_IMAGE,
+                                 @RequestParam(value = "image", required = false) MultipartFile review_IMAGE ,
                                  HttpSession session) throws Exception {
-        String url = awsS3Service.upload(review_IMAGE);
+        if(!review_IMAGE.isEmpty()) {
+            String url = awsS3Service.upload(review_IMAGE);
+            new ResponseEntity<>(FileResponse.builder().uploaded(true).url(url).build(), HttpStatus.OK);
+            reviewSaveResponsedto.setReview_IMAGE(url);
+        }
         reviewSaveResponsedto.setReview_WRITER((String) session.getAttribute("memberID"));
-        new ResponseEntity<>(FileResponse.builder().uploaded(true).url(url).build(), HttpStatus.OK);
-        reviewSaveResponsedto.setReview_IMAGE(url);
         clientReviewService.SaveReview(reviewSaveResponsedto);
         return "redirect:/myorder/list";
     }

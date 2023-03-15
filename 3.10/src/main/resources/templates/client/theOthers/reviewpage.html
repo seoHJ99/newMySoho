@@ -182,10 +182,6 @@
 			}
 		</style>
 		<script>
-			function myFunction() {
-				document.getElementById("myDropdown").classList.toggle("show");
-			}
-
 			// Close the dropdown menu if the user clicks outside of it
 			window.onclick = function (event) {
 				if (!event.target.matches(".dropbtn")) {
@@ -224,14 +220,7 @@
 					/>
 					<div class="review_name">
 						<div class="dropdown">
-							<button
-								onclick="myFunction()"
-								class="dropbtn"
-							>
-								<span class="review_nav"
-									>☆ 포토/동영상 첨부 시 추가 적립금 ☆</span
-								>
-							</button>
+							<span class="review_nav">☆ 리뷰 작성 ☆</span>
 							<div
 								id="myDropdown"
 								class="dropdown-content"
@@ -249,12 +238,17 @@
 							/>
 							<span th:text="${dto.item_NAME}">상품 이름</span>
 							<th:block th:if="${dto.item_OPTION} != null">
-								, <span class="name" th:text="${dto.item_OPTION}">퍼프 블라우스 퍼플</span>
+								,
+								<span
+									class="name"
+									th:text="${dto.item_OPTION}"
+									>퍼프 블라우스 퍼플</span
+								>
 							</th:block>
 							<input
 								type="hidden"
 								name="item_IDX"
-								value="1"
+								th:value="${dto.item_idx}"
 							/>
 							<input
 								type="hidden"
@@ -387,7 +381,7 @@
 		<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 
 		<script>
-			function check() {
+			function checkAndMileage() {
 				if (
 					$("#1-star").is(":checked") == false &&
 					$("#2-stars").is(":checked") == false &&
