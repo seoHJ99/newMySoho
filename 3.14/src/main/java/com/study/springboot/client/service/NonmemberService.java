@@ -37,7 +37,7 @@ public class NonmemberService {
     }
         //
     public List<OrderResponseDto> findOrderByNonMemberIDX(int nonMemIDX) {
-        System.out.println(nonMemIDX);
+
         List<Order> entityList = ordersRepository.findOrdersByNonMemberIDX(nonMemIDX);
 
         List<OrderResponseDto> list = new ArrayList<>();

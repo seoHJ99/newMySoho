@@ -87,10 +87,9 @@ public class NoticeController {
     @RequestMapping("/notices/delete")
     @ResponseBody
     public String productListDelete(@RequestParam("reviewNo") String reviewNo){
-        System.out.println(reviewNo);
+
         String[] arrIdx = reviewNo.split(",");
         for (int i=0; i<arrIdx.length; i++) {
-            System.out.println(Integer.valueOf(arrIdx[i]));
             deleteNotice((Integer.valueOf(arrIdx[i])));
         }
         return "1";

@@ -34,7 +34,6 @@ public class Cl_ProductController_HyungMin {
             avg = Math.round ((((float) avg *10 / (dto1.size())) / 10) *10);
         }
         avg = avg/10;
-        System.out.println(avg);
 
         model.addAttribute("product", dto);
         model.addAttribute("review",dto1);

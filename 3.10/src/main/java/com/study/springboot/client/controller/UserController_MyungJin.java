@@ -156,17 +156,13 @@ public class UserController_MyungJin {
     // 마이페이지 by 형민
     @GetMapping("/myorder/list")
     public String userMyOrderList(HttpSession session, Model model) {
-
         int memSession = (int) session.getAttribute("member_IDX");
-
         MemberResponseDTO mem = memberService.findByIDX(memSession);
         List<OrderResponseDto> dtoList = orderService.findOrderByMemberIDX(memSession); // 주문 정보. 해당 사용자가 주문한 모든 내역
         List<CouponResoponseDTO> couponList = couponService.findCouponByMemberIDX(memSession);
         List<OrderDetailTemp> orderTests = orderService.userMyOrderLogic(dtoList,couponList);
         OrdersStatus test = orderService.dtoListLogic(dtoList, orderTests);
-
         int status = dtoList.size();
-
         int refundCnt = 0;
         for(int i =0; i < orderTests.size(); i++) {
             refundCnt = refundCnt + orderTests.get(i).getRefundCnt();
@@ -178,7 +174,6 @@ public class UserController_MyungJin {
         model.addAttribute("order3", test.getOrderingCnt() );
         model.addAttribute("order4", test.getCompleteCnt() );
         model.addAttribute("order5", refundCnt);
-
         model.addAttribute("member", mem);
         model.addAttribute("point", mem.getMember_POINT());
         model.addAttribute("couponCnt", couponList.size());
@@ -248,8 +243,8 @@ public class UserController_MyungJin {
         }
         return "/client/login/find-ID";
     }
-    // 임시 비밀번호 발급
 
+    // 임시 비밀번호 발급
     @PostMapping("/findPW")
     public String sendPasswordMail(@RequestParam("email") String mail, @RequestParam("id")String id) {
         EmailMessage emailMessage = EmailMessage.builder()

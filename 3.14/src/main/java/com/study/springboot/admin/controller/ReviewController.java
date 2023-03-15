@@ -30,7 +30,6 @@ public class ReviewController {
                                  @RequestParam("status")String status){
         reviewService.replyModify(idx, reply, status);
         model.addAttribute("review", reviewService.findReview(idx));
-        System.out.println(reviewService.findReview(idx).getReview_REPLY());
         return "reviewForm";
     }
 
@@ -43,7 +42,6 @@ public class ReviewController {
     @RequestMapping("/reviews/delete")
     @ResponseBody
     public String reviewListDelete(@RequestParam("reviewNo") String reviewNo){
-        System.out.println(reviewNo);
         String[] arrIdx = reviewNo.split(",");
         for (int i=0; i<arrIdx.length; i++) {
             System.out.println(Integer.valueOf(arrIdx[i]));

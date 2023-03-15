@@ -54,7 +54,6 @@ public class QnaController {
         System.out.println(reviewNo);
         String[] arrIdx = reviewNo.split(",");
         for (int i=0; i<arrIdx.length; i++) {
-            System.out.println(Integer.valueOf(arrIdx[i]));
             qnaService.delete(Integer.valueOf(arrIdx[i]));
         }
         return "1";
