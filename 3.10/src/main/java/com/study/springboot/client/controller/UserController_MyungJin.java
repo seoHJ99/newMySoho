@@ -1,21 +1,18 @@
 package com.study.springboot.client.controller;
 
-import com.study.springboot.admin.dto.CouponResoponseDTO;
-import com.study.springboot.admin.dto.MemberResponseDTO;
-import com.study.springboot.admin.dto.OrderResponseDto;
+import com.study.springboot.admin.dto.*;
 import com.study.springboot.admin.dto.ProductResponseDto;
 import com.study.springboot.admin.service.OrderService;
+import com.study.springboot.admin.service.QnaService;
 import com.study.springboot.admin.service.ReviewService;
 import com.study.springboot.client.dto.*;
 import com.study.springboot.client.service.ClientReviewService_JunTae;
 import com.study.springboot.client.service.CouponService;
 import com.study.springboot.client.service.EmailService;
 import com.study.springboot.client.service.NonmemberService;
-import com.study.springboot.entity.Member;
-import com.study.springboot.entity.MemberListRepository;
+import com.study.springboot.entity.*;
 import com.study.springboot.admin.service.MemberService;
 
-import com.study.springboot.entity.OrderDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -43,6 +40,7 @@ public class UserController_MyungJin {
     private final NonmemberService nonmemberService;
     private final ClientReviewService_JunTae reviewService;
     private final EmailService emailService;
+    private final QnaService qnaService;
 
     @RequestMapping("/id-check")
     @ResponseBody
@@ -280,5 +278,31 @@ public class UserController_MyungJin {
             }
         }
         return key.toString();
+    }
+
+    @RequestMapping("/qna/myList/product")
+    public String myQnAList(HttpSession session, Model model){
+        List<QnaResponseDto> qnaResponseDtos = qnaService.findByMemberId((int)session.getAttribute("member_IDX"));
+        List<QnaResponseDto> productQna = new ArrayList<>();
+        for(QnaResponseDto dto : qnaResponseDtos){
+            if(dto.getQna_CATE().equals("상품")){
+                productQna.add(dto);
+            }
+        }
+        model.addAttribute("productQNA", productQna);
+        return "/client/user/Member/myProductQnA";
+    }
+
+    @RequestMapping("/qna/myList")
+    public String myQnAListProduct(HttpSession session, Model model){
+        List<QnaResponseDto> qnaResponseDtos = qnaService.findByMemberId((int)session.getAttribute("member_IDX"));
+        List<QnaResponseDto> allQna = new ArrayList<>();
+        for(QnaResponseDto dto : qnaResponseDtos){
+            if(!dto.getQna_CATE().equals("상품")){
+                allQna.add(dto);
+            }
+        }
+        model.addAttribute("allQNA", allQna);
+        return "/client/user/Member/qna-user";
     }
 }

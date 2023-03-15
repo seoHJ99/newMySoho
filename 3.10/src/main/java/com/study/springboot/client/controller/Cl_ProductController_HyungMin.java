@@ -15,7 +15,8 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
-public class Cl_ProductController_HyungMin {
+public class
+Cl_ProductController_HyungMin {
     private final Cl_ProductService_HyungMin clProductService;
     private final ClientReviewService_JunTae clientReviewService;
 
@@ -31,7 +32,7 @@ public class Cl_ProductController_HyungMin {
         if(dto1.size()>0) {
                 for (int i=0; i<dto1.size(); i++) {
                     ReviewResponseDto reviewResponseDto = dto1.get(i);
-                    if(reviewResponseDto.getReview_STATUS().equals("공개")) {
+                    if(reviewResponseDto != null && reviewResponseDto.getReview_STATUS().equals("공개")) {
                         avg += reviewResponseDto.getReview_SCORE();
                     }else {
                         dto1.remove(i);

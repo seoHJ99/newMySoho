@@ -17,6 +17,9 @@ public interface QnaRepository extends JpaRepository <Qna,Integer> {
     @Query(value = "SELECT * FROM qna WHERE qna_CONTENT AND qna_SECRET =:1 LIKE CONCAT('%', :keyword, '%')", nativeQuery = true)
     Page<Qna> searchQnaContent(@Param(value = "keyword") String keyword, Pageable pageable);
 
+    @Query(value = "SELECT * FROM qna WHERE member_IDX = :idx", nativeQuery = true)
+    List<Qna> findByMemberIDX(@Param(value = "idx") int idx);
+
 
     // 옵션 둘 다 선택했을때
     @Query(value = "SELECT * FROM qna WHERE qna_CATE =:category1 AND qna_SORT =:category2 AND qna_IDX LIKE CONCAT('%',:keyword,'%') OR qna_CATE =:category1 AND qna_SORT =:category2 AND qna_TITLE LIKE CONCAT('%',:keyword,'%')", nativeQuery = true)

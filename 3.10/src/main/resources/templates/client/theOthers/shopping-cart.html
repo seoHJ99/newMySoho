@@ -687,7 +687,7 @@
         <div class="prd-info MSH-prd-info-19520"
              th:value="${itemList.item_IDX}">
           <input type="checkbox" class="check-box-pd" onchange="check(this)" th:value="${itemList.item_PRICE_DISCOUNT}" checked />
-          <span th:text="${itemList.item_IDX}" ></span>
+          <span style="display: none;" th:text="${itemList.item_IDX}" ></span>
           <div class="cart-info">
             <div class="bsk-info">
               <!-- 상품이미지 -->
@@ -1952,12 +1952,13 @@
        for(let i=0; i<$(".prd-info").length ; i++){
           if($(".prd-info").eq(i).children("input").is(":checked")){
               setCookie($(".prd-info").eq(i).children("span").text(),0,-3);
-            goCart();
           }
        }
-       if(document.cookie.split('; ') == ''){
+       if(document.cookie.split(';').length == 1){
         alert('장바구니가 비었습니다. 상품을 담아보세요.');
          location.href = "/main";  
+       }else{
+        goCart();
        }
        check();
       }

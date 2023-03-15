@@ -8,11 +8,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class QnaService {
 
     private final QnaRepository qnaRepository;
+    private final MemberService memberService;
 
     @Transactional(readOnly = true)
     public QnaResponseDto findById (int qna_IDX){
@@ -30,5 +34,16 @@ public class QnaService {
     @Transactional
     public void delete(int id){
         qnaRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<QnaResponseDto> findByMemberId(int id){
+       List <Qna> entities = qnaRepository.findByMemberIDX(id);
+       List<QnaResponseDto> dtoList = new ArrayList<>();
+       for(int i=0; i<entities.size(); i++){
+           QnaResponseDto dto = new QnaResponseDto( entities.get(i));
+           dtoList.add(dto);
+       }
+       return dtoList;
     }
 }
