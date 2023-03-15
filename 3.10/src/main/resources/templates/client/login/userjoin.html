@@ -1,18 +1,16 @@
 <html
-		lang="ko"
-		xmlns:th="http://www.thymeleaf.org"
-		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
-<head>
-	<th:block th:replace="/client/fragments/Clhead :: headFragment"></th:block>
-
-	<style>
+	<head>
+		<th:block th:replace="/client/fragments/Clhead :: headFragment"></th:block>
+		<style>
 			.containerlogin {
 				margin: 0;
-				padding-bottom: 100px;
-				min-height: 440px;
+				padding: 0;
+				height: 800px;
 			}
-
 			.users-title-line-hd {
 				height: 50px;
 				background: #fafafa;
@@ -22,7 +20,6 @@
 				border-right: 0;
 				margin-top: 0;
 			}
-
 			.users-title-line-hd h2 {
 				font-size: 16px;
 				line-height: 52px;
@@ -30,28 +27,19 @@
 				text-align: center;
 				margin: 0;
 			}
-
 			.users-cont {
 				padding: 20px 20px 0;
 			}
-
 			.users-cont form {
 				display: flex;
 				flex-direction: column;
 			}
-
 			.users-cont form input {
 				text-align: left;
 			}
-
 			.mt-10 {
 				margin-top: 10px;
 			}
-
-			.mt-20 {
-				margin-top: 20px;
-			}
-
 			.input-st01 {
 				padding: 0 10px;
 				width: 100%;
@@ -63,7 +51,6 @@
 				box-sizing: border-box;
 				background: #fff;
 			}
-
 			#join,
 			.btn-h42-gray {
 				height: 50px;
@@ -78,46 +65,38 @@
 				justify-content: center;
 				width: 100%;
 			}
-
 			.users-cont-full {
 				margin: 20px -20px 0;
 				padding: 20px;
 				border-top: 1px solid #d0d0d0;
 				background: #f2f3f5;
 			}
-
 			.users-cont-full li,
 			.users-cont-full li div {
 				display: flex;
 				align-items: center;
 			}
-
 			.agree li {
 				justify-content: space-between;
 				margin-top: 12px;
 			}
-
 			.mt-40 {
 				margin-top: 40px;
 			}
-
 			.mb-30 {
 				margin-bottom: 30px;
 			}
-
 			.cbx-content {
 				margin-left: 15px;
 				font-size: 14px;
 				display: flex;
 				align-items: center;
 			}
-
 			.btn-agree {
 				border: 1px solid #808080;
 				font-size: 11px;
 				padding: 3px 8px;
 			}
-
 			input[type="checkbox"] {
 				-webkit-appearance: none;
 				-moz-appearance: none;
@@ -129,7 +108,6 @@
 				outline: 0;
 				width: 20px;
 			}
-
 			input[type="checkbox"]::after {
 				border: solid #fff;
 				border-width: 0 1px 1px 0;
@@ -142,23 +120,18 @@
 				transform: rotate(45deg);
 				width: 30%;
 			}
-
 			input[type="checkbox"]:checked {
 				background: #333;
 			}
-
 			input[type="checkbox"]:checked::after {
 				display: block;
 			}
-
 			.containerlogin {
 				border-bottom: 1px solid #dedede;
 			}
-
 			.red {
 				color: #ef2525;
 			}
-
 			.blue {
 				color: #3c89f2;
 			}
@@ -166,55 +139,70 @@
 				font-size: 12px;
 				display: none;
 			}
-			.open-layer-addr {
-				position: relative;
+			.input-id {
+				width: 84%;
 			}
-			.open-layer-addr img {
-				position: absolute;
-				right: 10px;
-				top: 20px;
+			.checkBtn {
+				height: 42px;
 			}
 		</style>
-<!--	<meta name="_csrf" th:content="${_csrf.token}"/>-->
-<!--	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
-</head>
-<body id="bodytest">
-<th:block
-		th:replace="/client/fragments/Clheader :: headerFragment"
-></th:block>
-<!-- 회원가입 -->
-<div class="containerlogin">
-	<div class="users-title-line-hd">
-		<h2>회원가입</h2>
-	</div>
-	<div class="users-cont">
-		<form
-				action="/joinAction"
-				method="post"
-		>
-			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-			<!--     <input type="hidden" name="member_ROLE" th:value="${ member.member_ }" />-->
-			<!-- action="/user/loginProcess" -->
-			<div>
-				<input
-						class="input-st01 users-login-input input-id"
-						type="text"
-						name="memberID"
-						placeholder="아이디(5자~20자 이내)"
-						value=""
-						onBlur="checkTxt('id', this.value)"
-						onchange="checkUserinfo('id', this.value)"
-				/>
-				<div class="red check-txt check-txt-id">아이디를 입력해주세요</div>
-				<div class="red check-txt check-txt-id2">
-					아이디는 영문 또는 영문, 숫자를 포함하여 5자~20자 내로 입력
-					가능합니다. (-,_를 제외한 특수 문자 입력 불가)
-				</div>
-				<div class="blue check-txt check-txt-id3">
-					사용가능한 아이디입니다.
-				</div>
-
-				<input
+		<meta
+			name="_csrf"
+			th:content="${_csrf.token}"
+		/>
+		<meta
+			name="_csrf_header"
+			th:content="${_csrf.headerName}"
+		/>
+	</head>
+	<body id="bodytest">
+		<th:block
+			th:replace="/client/fragments/Clheader :: headerFragment"
+		></th:block>
+		<!-- 회원가입 -->
+		<div class="containerlogin">
+			<div class="users-title-line-hd">
+				<h2>회원가입</h2>
+			</div>
+			<div class="users-cont">
+				<form
+					action="/joinAction"
+					method="post"
+				>
+					<!--     <input type="hidden" name="member_ROLE" th:value="${ member.member_ }" />-->
+					<!-- action="/user/loginProcess" -->
+					<div>
+						<input
+							class="input-st01 users-login-input input-id"
+							type="text"
+							name="memberID"
+							placeholder="아이디(5자~20자 이내)"
+							value=""
+							onBlur="checkTxt('id', this.value)"
+							onchange="checkUserinfo('id', this.value)"
+						/>
+						<input
+							type="hidden"
+							th:name="${_csrf.parameterName}"
+							th:value="${_csrf.token}"
+						/>
+						<button
+							type="button"
+							onclick="checkDuplicateID()"
+							class="checkBtn btn btn-secondary"
+						>
+							중복확인
+						</button>
+					</div>
+					<div class="red check-txt check-txt-id">아이디를 입력해주세요</div>
+					<div class="red check-txt check-txt-id2">
+						아이디는 영문 또는 영문, 숫자를 포함하여 5자~20자 내로 입력
+						가능합니다. (-,_를 제외한 특수 문자 입력 불가)
+					</div>
+					<div class="blue check-txt check-txt-id3">
+						사용가능한 아이디입니다.
+					</div>
+					<input
 						id="check-txt-pw"
 						class="input-st01 users-login-input mt-10"
 						type="password"
@@ -222,17 +210,17 @@
 						placeholder="비밀번호 (영문,숫자,특수문자 조합 8자리 이상)"
 						value=""
 						onchange="checkUserinfo('pw', this.value)"
-				/>
-				<div class="red check-txt check-txt-pw">
-					올바른 비밀번호 형식이 아닙니다.
-				</div>
-				<div class="red check-txt check-txt-pw2">
-					올바른 비밀번호 형식이 아닙니다.
-				</div>
-				<div class="blue check-txt check-txt-pw3">
-					사용가능한 비밀번호 입니다.
-				</div>
-				<input
+					/>
+					<div class="red check-txt check-txt-pw">
+						올바른 비밀번호 형식이 아닙니다.
+					</div>
+					<div class="red check-txt check-txt-pw2">
+						올바른 비밀번호 형식이 아닙니다.
+					</div>
+					<div class="blue check-txt check-txt-pw3">
+						사용가능한 비밀번호 입니다.
+					</div>
+					<input
 						id="check-txt-pwcheck"
 						class="input-st01 users-login-input mt-10"
 						type="password"
@@ -240,261 +228,196 @@
 						value=""
 						onBlur="checkPW(this.value)"
 						onchange="checkTxt('pw', this.value)"
-				/>
-				<div class="blue check-txt check-txt-pwcheck-same">
-					비밀번호가 일치합니다.
-				</div>
-				<div class="red check-txt check-txt-pwcheck-not">
-					비밀번호가 일치하지 않습니다.
-				</div>
-				<input
+					/>
+					<div class="blue check-txt check-txt-pwcheck-same">
+						비밀번호가 일치합니다.
+					</div>
+					<div class="red check-txt check-txt-pwcheck-not">
+						비밀번호가 일치하지 않습니다.
+					</div>
+					<input
 						class="input-st01 users-login-input mt-10"
 						type="text"
 						name="member_NAME"
 						placeholder="이름"
 						onBlur="checkTxt('name', this.value)"
 						onchange="checkUserinfo('name', this.value)"
-				/>
-				<div class="red check-txt check-txt-name">이름을 입력해주세요</div>
-				<div class="red check-txt check-txt-name2">
-					2~5 길이의 한글로 입력해주세요.
-				</div>
-				<div class="blue check-txt check-txt-name3">가입 가능합니다.</div>
-				<input
+					/>
+					<div class="red check-txt check-txt-name">이름을 입력해주세요</div>
+					<div class="red check-txt check-txt-name2">
+						2~5 길이의 한글로 입력해주세요.
+					</div>
+					<div class="blue check-txt check-txt-name3">가입 가능합니다.</div>
+					<input
 						class="input-st01 users-login-input mt-10"
 						type="email"
 						name="member_MAIL"
-						placeholder="이메일(비밀번호 찾기 시 이메일로 발송됩니다"
+						placeholder="이메일: 비밀번호 찾기 시 이메일로 발송됩니다"
 						value=""
 						onBlur="checkTxt('email', this.value)"
 						onchange="checkUserinfo('email', this.value)"
-				/>
-				<div class="red check-txt check-txt-email">
-					이메일 주소를 입력하세요.
-				</div>
-				<div class="red check-txt check-txt-email2">
-					이메일 형식을 확인 해주세요.
-				</div>
-				<div class="blue check-txt check-txt-email3">
-					가입 가능한 이메일입니다.
-				</div>
-				<input
+					/>
+					<div class="red check-txt check-txt-email">
+						이메일 주소를 입력하세요.
+					</div>
+					<div class="red check-txt check-txt-email2">
+						이메일 형식을 확인 해주세요.
+					</div>
+					<div class="blue check-txt check-txt-email3">
+						가입 가능한 이메일입니다.
+					</div>
+					<input
 						class="input-st01 users-login-input mt-10"
 						type="text"
 						name="member_PHONE"
 						placeholder="휴대폰번호"
 						onBlur="checkTxt('phone', this.value)"
 						onchange="checkUserinfo('phone', this.value)"
-				/>
-				<div class="red check-txt check-txt-phone">
-					전화번호를 입력 해주세요
-				</div>
-				<div class="red check-txt check-txt-phone2">
-					전화번호 형식을 확인 해주세요.
-				</div>
-				<div class="blue check-txt check-txt-phone3">
-					사용가능한 전화번호입니다.
-				</div>
-				<div class="receiver-wrap same js-useDeliveryOff same2">
-					<div class="mt-40">
-						<strong> 주소</strong>
+					/>
+					<div class="red check-txt check-txt-phone">
+						전화번호를 입력 해주세요
 					</div>
-					<ul>
-						<li class="box open-layer-addr mt-none">
-							<input
-									class="input-st01 mt-10"
-									id="sample6_postcode"
-									type="text"
-									name="member_POST"
-									placeholder="우편번호"
-									value
-									readonly
-									onclick="sample6_execDaumPostcode()"
-							/>
-							<!-- 돋보기 이미지 -->
-
-							<img
-									src="https://image.makeshop.co.kr/mysoho/assets/shop/img/btn/h24_search.png"
-									alt=""
-							/>
-						</li>
-						<li class="delivery-address1">
-							<input
-									class="input-st01 mt-10"
-									id="sample6_address"
-									type="text"
-									name="member_ADDRESS"
-									placeholder="기본주소"
-									value
-									maxlength="100"
-							/>
-						</li>
-						<li class="delivery-address2">
-							<input
-									class="input-st01 mt-10"
-									id="sample6_extraAddress"
-									type="text"
-									name="delivery_address2"
-									placeholder="참고항목"
-									value
-									maxlength="100"
-							/>
-						</li>
-						<li class="delivery-address2">
-							<input
-									class="input-st01 mt-10"
-									id="sample6_detailAddress"
-									type="text"
-									name="delivery_address2"
-									placeholder="나머지주소"
-									value
-									maxlength="100"
-							/>
-						</li>
-					</ul>
-				</div>
-				<input type="hidden" name="member_ROLE" value="ROLE_USER">
-				<input type="hidden" name="member_POINT" value="0">
-				<input type="hidden" name="status" value="활동">
-				<div>
-					<!-- 이용약관 -->
-					<ul class="users-cont-full">
-						<li>
-							<div>
-								<input
+					<div class="red check-txt check-txt-phone2">
+						전화번호 형식을 확인 해주세요.
+					</div>
+					<div class="blue check-txt check-txt-phone3">
+						사용가능한 전화번호입니다.
+					</div>
+					<input
+						type="hidden"
+						name="member_ROLE"
+						value="ROLE_USER"
+					/>
+					<div>
+						<!-- 이용약관 -->
+						<ul class="users-cont-full">
+							<li>
+								<div>
+									<input
 										name="ckeck1"
 										type="checkbox"
 										id="agreeAllBtn"
 										onclick="onclickAgree()"
-								/>
-								<label></label>
-								<div class="cbx-content"><b>전체 동의</b></div>
-							</div>
-						</li>
-						<div class="agree">
-							<li>
-								<div>
-									<input
-											name="ckeck1"
-											type="checkbox"
-											class="necessary"
 									/>
 									<label></label>
-									<div class="cbx-content cbx-content-li">
-										이용약관 동의 (필수)
-									</div>
+									<div class="cbx-content"><b>전체 동의</b></div>
 								</div>
-								<a
+							</li>
+							<div class="agree">
+								<li>
+									<div>
+										<input
+											name="ckeck1"
+											type="checkbox"
+										/>
+										<label></label>
+										<div class="cbx-content cbx-content-li">
+											이용약관 동의 (필수)
+										</div>
+									</div>
+									<a
 										href="javascript:openPopup3()"
 										class="btn-agree"
-								>
-									보기
-								</a>
-							</li>
-							<li>
-								<div>
-									<input
+									>
+										보기
+									</a>
+								</li>
+								<li>
+									<div>
+										<input
 											name="ckeck1"
 											type="checkbox"
-											class="necessary"
-									/>
-									<label></label>
-									<div class="cbx-content cbx-content-li">
-										개인정보 수집ㆍ이용 동의 (필수)
+										/>
+										<label></label>
+										<div class="cbx-content cbx-content-li">
+											개인정보 수집ㆍ이용 동의 (필수)
+										</div>
 									</div>
-								</div>
-								<a
+									<a
 										href="javascript:openPopup4()"
 										class="btn-agree"
-								>
-									보기
-								</a>
-							</li>
-							<li>
-								<div>
-									<input
+									>
+										보기
+									</a>
+								</li>
+								<li>
+									<div>
+										<input
 											name="ckeck1"
 											type="checkbox"
-									/>
-									<label></label>
-									<div class="cbx-content cbx-content-li">
-										개인정보 수집ㆍ이용 동의 (선택)
+										/>
+										<label></label>
+										<div class="cbx-content cbx-content-li">
+											개인정보 수집ㆍ이용 동의 (선택)
+										</div>
 									</div>
-								</div>
-								<a
+									<a
 										href="javascript:openPopup4()"
 										class="btn-agree"
-								>
-									보기
-								</a>
-							</li>
-						</div>
-						<button
+									>
+										보기
+									</a>
+								</li>
+							</div>
+							<input
+								type="hidden"
+								th:name="${_csrf.parameterName}"
+								th:value="${_csrf.token}"
+							/>
+							<button
 								class="mt-40 btn-h42-gray mt-10"
+								type="submit"
 								id="join"
-						>
-							<!-- class="btn-h42-gray mt-10" -->
-							가입하기
-						</button>
-					</ul>
-				</div>
+							>
+								<!-- class="btn-h42-gray mt-10" -->
+								가입하기
+							</button>
+						</ul>
+					</div>
+				</form>
 			</div>
-		</form>
-	</div>
-</div>
-<!-- 푸터 -->
-<th:block
-		th:replace="/client/fragments/Clfooter :: footerFragment"
-></th:block>
-
-<script>
+		</div>
+		<!-- 푸터 -->
+		<th:block
+			th:replace="/client/fragments/Clfooter :: footerFragment"
+		></th:block>
+		<script>
 			//사이드메뉴
-
 			function openNav() {
 				// document.body.style.backgroundColor = "rgba(0,0,0,0.5)";
 				document.getElementById("mySidenav").style.width = "80%";
 			}
-
 			function closeNav() {
 				// document.body.style.backgroundColor = "white";
 				document.getElementById("mySidenav").style.width = "0";
 			}
 		</script>
-
-<script>
+		<script>
 			//돋보기
 			function openSearch() {
 				document.getElementById("myOverlay").style.display = "block";
 			}
-
 			function closeSearch() {
 				document.getElementById("myOverlay").style.display = "none";
 			}
-
-      function openPopup1() {
-        popup = window.open("agreement2");
-      }
-
-      function openPopup2() {
-        popup = window.open("agreement3");
-      }
-
+			function openPopup1() {
+				popup = window.open("pop-page1.html");
+			}
+			function openPopup2() {
+				popup = window.open("pop-page2.html");
+			}
 			function openPopup3() {
 				popup = window.open("pop-page3.html");
 			}
-
 			function openPopup4() {
 				popup = window.open("pop-page4.html");
 			}
-
 			function openPopupsoho1() {
 				popup = window.open("https://mysoho.com/");
 			}
-
 			function openPopupsoho2() {
 				popup = window.open("https://sohomarket.kr/?shop=sohonara");
 			}
-
 			function footerbtn() {
 				//
 				if (document.querySelector(".hidden").style.display === "block") {
@@ -507,21 +430,17 @@
 					document.querySelector(".footer-up").style.display = "block";
 				}
 			}
-
 			function footerbtn2() {
 				popup = window.open(
 					"https://www.ftc.go.kr/bizCommPop.do?wrkr_no=2068121131&apv_perm_no="
 				);
 			}
-
 			// Get the button
 			let mybutton = document.getElementById("myBtnfooter");
-
 			// When the user scrolls down 20px from the top of the document, show the button
 			window.onscroll = function () {
 				scrollFunction();
 			};
-
 			function scrollFunction() {
 				if (
 					document.body.scrollTop > 20 ||
@@ -534,16 +453,13 @@
 					mybutton.style.opacity = "0";
 				}
 			}
-
 			// When the user clicks on the button, scroll to the top of the document
 			function topFunction() {
 				document.body.scrollTop = 0;
 				document.documentElement.scrollTop = 0;
 			}
-
 			let agree = document.querySelectorAll(".agree input");
 			let agreeAllBtn = document.querySelector("#agreeAllBtn");
-
 			function onclickAgree() {
 				if (agreeAllBtn.checked === true) {
 					for (let tag of agree) {
@@ -555,7 +471,6 @@
 					}
 				}
 			}
-
 			// 회원가입 정보 미입력 시 멘트
 			function checkTxt(type, val) {
 				// 입력값이 공백일 때
@@ -569,7 +484,6 @@
 					document.querySelector(".check-txt-" + type).style.display = "none";
 				}
 			}
-
 			function checkPW(val) {
 				// 비밀번호 확인
 				if (val === document.querySelector("#check-txt-pw").value) {
@@ -584,10 +498,8 @@
 						"block";
 				}
 			}
-
 			function checkUserinfo(type, val) {
 				let mode = "";
-
 				var ckeckId = /^[a-zA-z0-9]{4,12}$/; //아이디 유효성 검사
 				var ckeckPW = /(?=.*[0-9])(?=.*[a-z])(?=.*\W)(?=\S+$).{8,20}/; //비밀번호 유효성 검사
 				var ckeckName = /^[가-힣]{2,5}$/; //이름 유효성 검사
@@ -604,7 +516,6 @@
 				} else if (type === "phone") {
 					mode = ckeckPhone;
 				}
-
 				if (!mode.test(val)) {
 					document.querySelector(".check-txt-" + type).style.display = "none";
 					document.querySelector(".check-txt-" + type + "2").style.display =
@@ -616,86 +527,24 @@
 					document.querySelector(".check-txt-" + type).style.display = "none";
 					document.querySelector(".check-txt-" + type + "2").style.display =
 						"none";
-					document.querySelector(".check-txt-" + type + "3").style.display =
-						"block";
-				}
-			}
-		</script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script>
-			function sample6_execDaumPostcode() {
-				new daum.Postcode({
-					oncomplete: function (data) {
-						// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-						// 각 주소의 노출 규칙에 따라 주소를 조합한다.
-						// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-						var addr = ""; // 주소 변수
-						var extraAddr = ""; // 참고항목 변수
-
-						//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-						if (data.userSelectedType === "R") {
-							// 사용자가 도로명 주소를 선택했을 경우
-							addr = data.roadAddress;
-						} else {
-							// 사용자가 지번 주소를 선택했을 경우(J)
-							addr = data.jibunAddress;
-						}
-
-						// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-						if (data.userSelectedType === "R") {
-							// 법정동명이 있을 경우 추가한다. (법정리는 제외)
-							// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-							if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
-								extraAddr += data.bname;
-							}
-							// 건물명이 있고, 공동주택일 경우 추가한다.
-							if (data.buildingName !== "" && data.apartment === "Y") {
-								extraAddr +=
-									extraAddr !== ""
-										? ", " + data.buildingName
-										: data.buildingName;
-							}
-							// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-							if (extraAddr !== "") {
-								extraAddr = " (" + extraAddr + ")";
-							}
-							// 조합된 참고항목을 해당 필드에 넣는다.
-							document.getElementById("sample6_extraAddress").value = extraAddr;
-						} else {
-							document.getElementById("sample6_extraAddress").value = "";
-						}
-
-						// 우편번호와 주소 정보를 해당 필드에 넣는다.
-						document.getElementById("sample6_postcode").value = data.zonecode;
-						document.getElementById("sample6_address").value = addr;
-						// 커서를 상세주소 필드로 이동한다.
-						document.getElementById("sample6_detailAddress").focus();
-					},
-				}).open();
-			}
-
-			function submitJoin() {
-				for (let agreeBox of $(".necessary")) {
-					if (!$(agreeBox).is(":checked")) {
-						alert("필수 약관 동의 박스에 체크해주세요!");
-						return false;
+					if (type != "id") {
+						document.querySelector(".check-txt-" + type + "3").style.display =
+							"block";
 					}
 				}
-				// return true;
 			}
-
 			function checkDuplicateID() {
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
 				let id = $(".input-id").val();
 				if ($(".check-txt-id2").css("display") == "none") {
 					$.ajax({
 						url: "/id-check",
 						type: "POST",
 						traditional: true,
-						beforeSend : function(xhr)
-						 {
-						 xhr.setRequestHeader(header, token);
-						  },
+						beforeSend: function (xhr) {
+							xhr.setRequestHeader(header, token);
+						},
 						data: {
 							id: id,
 						},
@@ -711,11 +560,10 @@
 					});
 				}
 			}
-
 			// function join() {
 			// 	alert("축하합니다 회원가입하셨습니다.");
 			// 	location.href = "userlogin.html";
 			// }
 		</script>
-</body>
+	</body>
 </html>
