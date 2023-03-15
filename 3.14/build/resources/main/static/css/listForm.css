@@ -1,0 +1,152 @@
+
+* {
+    box-sizing: border-box;
+}
+table {
+    border: 1px solid black;
+}
+.div {
+    display: flex;
+}
+
+.all {
+    display: flex;
+    min-width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.head_table {
+    margin-top: 10px;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+.head_title {
+    text-align: center;
+    width: 100px;
+    height: 30px;
+    background-color: #d0d0d0;
+    border: 1px solid black;
+}
+.head_con {
+    text-align: center;
+    width: 200px;
+    height: 30px;
+    border: 1px solid black;
+}
+.nav_one {
+    border: 1px solid black;
+}
+.nav_one:hover {
+    background-color: #f8f8f8;
+}
+.nav_table {
+    border-collapse: collapse;
+    margin-top: 30px;
+}
+
+.nav_one {
+    text-align: center;
+    width: 220px;
+}
+
+.search {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    height: 50px;
+    width: 900px;
+    background-color: #f8f8f8;
+}
+.search_con {
+    height: 30px;
+}
+.search_con:nth-child(2) {
+    width: 300px;
+    padding: 3px 0;
+    padding-left: 5px;
+}
+
+.no {
+    background-color: #d0d0d0;
+}
+.main_con, .main {
+    display: flex;
+    justify-content: center;
+}
+.main td {
+    height: 40px;
+}
+.main1 {
+    width: 800px;
+    text-align: center;
+}
+h3 {
+    color: black;
+}
+.nav_one > a {
+    text-decoration: none;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    width: 800px;
+}
+.footer1 {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    padding-top: 5px;
+}
+td {
+    border: 1px solid black;
+}
+
+.no > td {
+    border: 1px solid black;
+}
+
+.content > td {
+    border: 1px solid black;
+}
+
+.no > td:nth-child(1) {
+    width: 20px;
+}
+.no > td:nth-child(2) {
+    width: 30px;
+}
+.no > td:nth-child(3) {
+    width: 60px;
+}
+.no > td:nth-child(4) {
+    width: 60px;
+}
+.no > td:nth-child(5) {
+    width: 120px;
+}
+.no > td:nth-child(6) {
+    width: 50px;
+}
+.no > td:nth-child(7) {
+    width: 50px;
+}
+.no > td:nth-child(8) {
+    width: 50px;
+}
+.no > td:nth-child(9) {
+    width: 35px;
+}
+td {
+    border: 1px solid rgb(240, 240, 240);
+}
+.delete_btn {
+    margin-left: 45px;
+    height: 30px;
+    border: 1px solid black;
+    position: relative;
+    left: 20%;
+}
