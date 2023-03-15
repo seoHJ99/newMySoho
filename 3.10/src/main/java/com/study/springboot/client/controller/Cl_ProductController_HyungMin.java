@@ -1,4 +1,4 @@
-package com.study.springboot.client.controller;
+ package com.study.springboot.client.controller;
 
 import com.study.springboot.admin.dto.ProductResponseDto;
 import com.study.springboot.admin.dto.QnaResponseDto;

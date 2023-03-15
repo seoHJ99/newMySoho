@@ -246,6 +246,8 @@ public class UserController_MyungJin {
     }
 
     // 임시 비밀번호 발급
+    
+
     @PostMapping("/findPW")
     public String sendPasswordMail(@RequestParam("email") String mail, @RequestParam("id")String id) {
         EmailMessage emailMessage = EmailMessage.builder()

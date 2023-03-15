@@ -98,8 +98,8 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding-left: 300px;
-          padding-right: 10px;
+          padding-left: 5px;
+          padding-right: 5px;
         }
         a {
           text-decoration: none;
@@ -313,7 +313,7 @@
                         th:value="${_csrf.token}"
                       />
                       <input type="number" id="order" />
-                      <button onclick="submit">발주</button>
+                      <button type="button">발주</button>
                     </form>
                   </td>
                 </tr>
@@ -349,17 +349,18 @@
                 <tr class="footer_tr">
                   <td colspan="4">
                     <div class="center_right">
-                      <div class="center">
-                        <button onclick="deletePD()">삭제</button>
-                        <button onclick="modify()">수정</button>
-                      </div>
+                      <div>
 
-                      <div class="right">
                         <button>이전</button>
                         <button onclick="location.href='/admin/list/product'">
                           목록
                         </button>
                         <button>다음</button>
+                      </div>
+
+                      <div class="right">
+                        <button onclick="modify()">수정</button>
+                        <button onclick="deletePD()">삭제</button>
                       </div>
                     </div>
                   </td>
