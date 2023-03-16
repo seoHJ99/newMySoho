@@ -145,9 +145,8 @@
             <li class="js-inquiryArea" th:each="list:${list}" th:if="${list.item_IDX == 0}">
                 <!--					비밀글-->
                 <a
-                        href=""
+                        th:href="@{/qna/answer-check(idx=${list.qna_IDX})}"
                         class="js-qnasArea qna-board-list"
-                        onclick="alert('작성자만 확인할 수 있습니다.')"
                         th:if="${list.qna_SECRET == 0}"
                 >
                     <span class="qa-list-icon" th:text="${list.qna_ANSWERED}">
@@ -195,9 +194,8 @@
                 </th:block>
                 <!--					공개글-->
                 <a
-                        href=""
+                        th:href="@{/qna/answer-check(idx=${list.qna_IDX})}"
                         class="js-qnasArea qna-board-list"
-                        onclick="alert('공개글입니다.')"
                         th:if="${list.qna_SECRET == 1}"
                 >
                     <span class="qa-list-icon" th:text="${list.qna_ANSWERED} ">

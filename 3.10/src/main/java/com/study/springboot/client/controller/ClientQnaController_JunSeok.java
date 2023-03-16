@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -208,6 +209,28 @@ public class ClientQnaController_JunSeok {
         int itemIdx = qnaResponseDto.getItem_IDX();
         clientQnaService_junSeok.delete(idx);
         return "redirect:/product?idx=" + itemIdx;
+    }
+
+    @RequestMapping("/qna/answer-check")
+    @ResponseBody
+    public String checkAnswer(int idx, HttpSession session){
+        QnaResponseDto qnaResponseDto = qnaService.findById(idx);
+        if( qnaResponseDto.getQna_SECRET() == 0) { // 비밀글 조회
+            if (session.getAttribute("member_IDX") == null || (int)session.getAttribute("member_IDX") != qnaResponseDto.getMember_IDX()) {
+                return "<script>alert('비밀글은 작성자만 확인 가능합니다.'); history.back();</script>";
+            }else {
+                return "<script>location.href='/qna/answer?idx=" + idx + "';</script>";
+            }
+        }else { // 비밀글이 아니면 다 보임
+            return "<script>location.href='/qna/answer?idx=" + idx + "';</script>";
+        }
+    }
+
+    @RequestMapping("/qna/answer")
+    public String ClientQnaAnswer(int idx, Model model){
+        QnaResponseDto qnaResponseDto = qnaService.findById(idx);
+        model.addAttribute("dto",qnaResponseDto);
+        return "/client/theOthers/qnaView";
     }
 }
 
