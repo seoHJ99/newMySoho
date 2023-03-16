@@ -12,6 +12,13 @@
           rel="stylesheet"
           href="/css/QnA-write.css"
   />
+  <style>
+    			.chheck-title{
+				display: flex;
+    		justify-content: space-between;
+    		padding-top: 5px;
+			}
+  </style>
 </head>
 
 <body id="bodytest">
@@ -32,7 +39,7 @@
     /></a>
   </div>
   <th:block sec:authorize="isAnonymous()" th:if="${qna.item_IDX == 0}">
-    <form id="searchForm" action="/client/qna/list/modify/save" method="post">
+    <form id="searchForm" onsubmit="return checkCon();" action="/client/qna/list/modify/save" method="post">
       	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
       <div class="qa-write-wrap" >
         <div class="qa-write">
@@ -79,7 +86,7 @@
                   placeholder="문의 내용을 입력해주세요.(1,000자 이내)"
                   maxlength="1000"
                   style="width: 100%"
-                  class="mt-10"
+                  class="mt-10 qna_CONTENT"
                   th:text="${qna.qna_CONTENT}"
           ></textarea>
           <div>
@@ -499,8 +506,13 @@
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
   }
+
+  			function checkCon(){
+				if($('.qna_CONTENT').val()==''){
+					alert('질문 내용을 적어주세요!');
+					return false;
+				}
+			}
 </script>
 </body>
 </html>
-message.txt
-9KB

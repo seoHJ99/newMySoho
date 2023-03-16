@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/joinAction").permitAll()
                 .antMatchers("/main").permitAll()
                 .antMatchers("/templates/**").permitAll()
-                .antMatchers("/admin/**").hasAnyRole()
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 //.anyRequest().permitAll()
                 .and()
                 .formLogin() //인증은 formLogin방식으로 하겠다.
