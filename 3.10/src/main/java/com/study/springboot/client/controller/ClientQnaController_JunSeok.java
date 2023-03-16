@@ -215,10 +215,13 @@ public class ClientQnaController_JunSeok {
     @ResponseBody
     public String checkAnswer(int idx, HttpSession session){
         QnaResponseDto qnaResponseDto = qnaService.findById(idx);
-        if( qnaResponseDto.getQna_SECRET() == 0) { // 비밀글 조회
+        if( qnaResponseDto.getQna_SECRET() == 0) {
+            if(qnaResponseDto.getMember_IDX() == null){//비밀글이고 비회원 글일때
+                return "<script>location.href='/open/qna/pw?idx="+idx+"'</script>";
+            } // 비밀글이고 접근자의 글이 아닐때
             if (session.getAttribute("member_IDX") == null || (int)session.getAttribute("member_IDX") != qnaResponseDto.getMember_IDX()) {
                 return "<script>alert('비밀글은 작성자만 확인 가능합니다.'); history.back();</script>";
-            }else {
+            }else { // 비회원이 아니고 자기글일때
                 return "<script>location.href='/qna/answer?idx=" + idx + "';</script>";
             }
         }else { // 비밀글이 아니면 다 보임
@@ -226,11 +229,36 @@ public class ClientQnaController_JunSeok {
         }
     }
 
+    @RequestMapping("/open/qna/pw")
+    public String nonMemQnACheck(int idx, Model model){
+        model.addAttribute("qnaIDX", idx);
+        return "/client/theOthers/qnaPWcheck";
+    }
+    @RequestMapping("/check/qna/pw")
+    @ResponseBody
+    public String qnacheckPW(@RequestParam("idx") int idx, @RequestParam("Pw")String pw){
+        QnaResponseDto dto = qnaService.findById(idx);
+        if(dto.getQna_PW().equals(pw)){
+           return "<script>location.href='/qna/answer?idx=" + idx + "&Pw=" + pw +"';</script>";
+        }else {
+            return "<script>alert('비밀번호가 틀립니다.'); history.back();</script>";
+        }
+    }
+
     @RequestMapping("/qna/answer")
-    public String ClientQnaAnswer(int idx, Model model){
+    public String ClientQnaAnswer(int idx, Model model, @RequestParam(value = "Pw", required = false) String pw){
         QnaResponseDto qnaResponseDto = qnaService.findById(idx);
-        model.addAttribute("dto",qnaResponseDto);
-        return "/client/theOthers/qnaView";
+        if(qnaResponseDto.getMember_IDX() != null) {
+            model.addAttribute("dto", qnaResponseDto);
+            return "/client/theOthers/qnaView";
+        }else {
+            if(qnaResponseDto.getQna_PW().equals(pw)){
+                model.addAttribute("dto", qnaResponseDto);
+                return "/client/theOthers/qnaView";
+            }else {
+                return "";
+            }
+        }
     }
 }
 
