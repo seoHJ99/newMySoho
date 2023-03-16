@@ -490,14 +490,6 @@
             </tbody>
         </table>
         <div class="delete_button" style="width: 26%; text-align: end;">
-            <button
-                    class="btn btn-sm"
-                    type="button"
-                    style="background-color: #d0d0d0"
-                    onclick="deleteValue()"
-            >
-                삭제
-            </button>
         </div>
     </div>
 </th:block>
@@ -548,7 +540,7 @@
 <script>
 
 
-     function deleteValue(){
+    function deleteValue(){
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		var name = $("#userName").val();
@@ -561,8 +553,11 @@
      alert("삭제할 대상을 선택하세요.");
      return false;
      }
+     reviewNo = reviewNo.replace('selectAll,','');
 
-     if( $("input[name='RowCheck']:checked")[0].className == 'product'){ // 끝
+
+
+     if( $("input[name='RowCheck']:checked")[$("input[name='RowCheck']:checked").length-1].className == 'product'){ // 끝
      $.ajax({
             url : '/admin/products/delete',
             type : 'POST',
@@ -586,7 +581,7 @@
         });
         }
 
-        if( $("input[name='RowCheck']:checked")[0].className == 'notice'){
+        if( $("input[name='RowCheck']:checked")[$("input[name='RowCheck']:checked").length-1].className == 'notice'){
      $.ajax({
             url : '/admin/notices/delete',
             type : 'POST',
@@ -609,7 +604,7 @@
             }
         });
         }
-        if( $("input[name='RowCheck']:checked")[0].className == 'qna'){
+        if( $("input[name='RowCheck']:checked")[$("input[name='RowCheck']:checked").length-1].className == 'qna'){
      $.ajax({
             url : '/admin/qnas/delete',
             type : 'POST',
@@ -624,7 +619,7 @@
             success: function(jdata){
               if(jdata = 1){
                 alert("삭제 성공");
-                location.replace("/admin/list/qna")
+                location.replace("/admin/list/QnA")
               }
               else{
                 alert("삭제 실패")
@@ -633,7 +628,7 @@
         });
         }
 
-        if( $("input[name='RowCheck']:checked")[0].className == 'review'){ // 끝
+        if( $("input[name='RowCheck']:checked")[$("input[name='RowCheck']:checked").length-1].className == 'review'){ // 끝
      $.ajax({
             url : '/admin/reviews/delete',
             type : 'POST',
