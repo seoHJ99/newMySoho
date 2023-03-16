@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -49,16 +50,9 @@ public class Cl_ListController_HyungMin {
         model.addAttribute("price", listService.pdOrderByPrice());
         model.addAttribute("review", listService.pdOrderByReview());
         model.addAttribute("score", listService.pdOrderByScore());
-//        noticeService.findRecentNotice().ifPresentOrElse((a) ->{
-//            NoticeResponseDTO dto = a;
-//            model.addAttribute("dto",dto);
-//        }, ()->{
-//            NoticeResponseDTO dto = new NoticeResponseDTO();
-//            model.addAttribute("dto",dto);
-//        });
-        NoticeResponseDTO dto = noticeService.findRecentNotice();
-        model.addAttribute("dto",dto);
-
+        if(noticeService.findRecentNotice() != null) {
+            model.addAttribute("dto", noticeService.findRecentNotice());
+        }
         return "client/theOthers/home";
     }
 

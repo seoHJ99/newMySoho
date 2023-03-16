@@ -35,9 +35,14 @@ public class ClientNoticeService {
         return dtoList;
     }
     public NoticeResponseDTO findRecentNotice() {
-        NoticeResponseDTO noticeResponseDTO;
-        noticeResponseDTO = new NoticeResponseDTO(Optional.of(noticeListRepository.findRecentNotice()).get());
-        return noticeResponseDTO;
+       Notice notice = noticeListRepository.findRecentNotice();
+        NoticeResponseDTO dto = null;
+       try {
+         dto = new NoticeResponseDTO(notice);
+       }catch (Exception e){
+           System.out.println(e);
+       }
+       return dto;
     }
 }
 

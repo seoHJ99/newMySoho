@@ -35,7 +35,6 @@ public class ClientQnaController_JunSeok {
 
     private final Cl_ProductService_HyungMin clProductService;
 
-//    -------------------------------------------- 거의 다 수정
 
     @RequestMapping("/client/qna/write")
     public String qnaWrite() {
@@ -45,7 +44,6 @@ public class ClientQnaController_JunSeok {
     @RequestMapping("/client/qna/write2")
     public String qnaWrite2(Model model, @RequestParam("idx") int item_idx) {
         ProductResponseDto dto = clProductService.findById(item_idx);
-
 
         model.addAttribute("product", dto);
         return "/client/theOthers/QnA-write2";
