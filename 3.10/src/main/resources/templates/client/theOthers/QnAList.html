@@ -113,8 +113,10 @@
     <div class="users-title-line-hd">
         <h2>Q&A 게시판</h2>
     </div>
-      	<input type="hidden" sec:authorize="isAuthenticated()" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-        <div class="qa-search-wrap">
+    <input type="hidden" sec:authorize="isAuthenticated()" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <form id="searchForm" name="searchForm" th:action="@{/client/qna/list/search}" method="post">
+
+    <div class="qa-search-wrap">
             <div class="qa-search">
                 <input
                         type="text"
@@ -132,6 +134,7 @@
             </div>
         </div>
     </form>
+
     <div class="btnBwrite js-btnMoveWritePage">
         <a href="/client/qna/write"
         ><img
@@ -251,6 +254,7 @@
             </li>
         </ul>
     </div>
+
 </div>
 <div class="footer1">
     <div class="footer">
