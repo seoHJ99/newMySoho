@@ -56,7 +56,7 @@ public class Cl_ListController_HyungMin {
 //            NoticeResponseDTO dto = new NoticeResponseDTO();
 //            model.addAttribute("dto",dto);
 //        });
-        NoticeResponseDTO dto = noticeService.findRecentNotice().get();
+        NoticeResponseDTO dto = noticeService.findRecentNotice();
         model.addAttribute("dto",dto);
 
         return "client/theOthers/home";

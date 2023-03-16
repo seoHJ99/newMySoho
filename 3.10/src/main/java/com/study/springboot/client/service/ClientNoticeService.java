@@ -34,16 +34,11 @@ public class ClientNoticeService {
         }
         return dtoList;
     }
-    public Optional< NoticeResponseDTO> findRecentNotice() {
-        Notice notice = noticeListRepository.findRecentNotice();
-        Optional<NoticeResponseDTO> noticeResponseDTO;
-        if(notice != null) {
-            noticeResponseDTO = Optional.of(new NoticeResponseDTO(notice));
-        }else {
-            noticeResponseDTO = null;
-        }
-            return noticeResponseDTO;
-        }
+    public NoticeResponseDTO findRecentNotice() {
+        NoticeResponseDTO noticeResponseDTO;
+        noticeResponseDTO = new NoticeResponseDTO(Optional.of(noticeListRepository.findRecentNotice()).get());
+        return noticeResponseDTO;
     }
+}
 
 

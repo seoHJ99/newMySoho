@@ -500,7 +500,7 @@
 			}
 			function checkUserinfo(type, val) {
 				let mode = "";
-				var ckeckId = /^[a-zA-z0-9]{4,12}$/; //아이디 유효성 검사
+				var ckeckId = /^[a-zA-z0-9]{5,20}$/; //아이디 유효성 검사
 				var ckeckPW = /(?=.*[0-9])(?=.*[a-z])(?=.*\W)(?=\S+$).{8,20}/; //비밀번호 유효성 검사
 				var ckeckName = /^[가-힣]{2,5}$/; //이름 유효성 검사
 				var ckeckEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+$/; //이메일 유효성 검사
@@ -537,8 +537,9 @@
 				var token = $("meta[name='_csrf']").attr("content");
 				var header = $("meta[name='_csrf_header']").attr("content");
 				let id = $(".input-id").val();
-				console.log(id.test(/^[a-zA-z0-9]{4,12}$/));
-				if (id.test(/^[a-zA-z0-9]{4,12}$/)) {
+				let val = /^[a-zA-z0-9]{5,20}$/;
+				console.log(val.test(id));
+				if (val.test(id)) {
 					$.ajax({
 						url: "/id-check",
 						type: "POST",
