@@ -40,19 +40,19 @@ public interface QnaRepository extends JpaRepository <Qna,Integer> {
     //옵션 2번만 선택했을때
 
 
-    @Query(value = "SELECT * FROM qna WHERE qna_SORT = '배송문의' AND qna_IDX LIKE CONCAT('%',:keyword,'%') OR qna_SORT = '배송' AND qna_CONTENT LIKE CONCAT('%',:keyword,'%')", nativeQuery = true)
+    @Query(value = "SELECT * FROM qna WHERE qna_SORT = '배송문의' AND qna_IDX LIKE CONCAT('%',:keyword,'%') OR qna_SORT = '배송문의' AND qna_CONTENT LIKE CONCAT('%',:keyword,'%')", nativeQuery = true)
     Page<Qna> searchWithCate2 (@Param(value = "keyword") String keyword,
                                Pageable pageable);
-    @Query(value = "SELECT * FROM qna WHERE qna_SORT = '교환문의' AND qna_IDX LIKE CONCAT('%',:keyword,'%') OR qna_SORT = '교환' AND qna_CONTENT LIKE CONCAT('%',:keyword,'%')", nativeQuery = true)
+    @Query(value = "SELECT * FROM qna WHERE qna_SORT = '교환문의' AND qna_IDX LIKE CONCAT('%',:keyword,'%') OR qna_SORT = '교환문의' AND qna_CONTENT LIKE CONCAT('%',:keyword,'%')", nativeQuery = true)
     Page<Qna> searchWithCate3 (@Param(value = "keyword") String keyword,
                                Pageable pageable);
-    @Query(value = "SELECT * FROM qna WHERE qna_SORT = '환불문의' AND qna_IDX LIKE CONCAT('%',:keyword,'%') OR qna_SORT = '환불' AND qna_CONTENT LIKE CONCAT('%',:keyword,'%')", nativeQuery = true)
+    @Query(value = "SELECT * FROM qna WHERE qna_SORT = '환불문의' AND qna_IDX LIKE CONCAT('%',:keyword,'%') OR qna_SORT = '환불문의' AND qna_CONTENT LIKE CONCAT('%',:keyword,'%')", nativeQuery = true)
     Page<Qna> searchWithCate4 (@Param(value = "keyword") String keyword,
                                Pageable pageable);
-    @Query(value = "SELECT * FROM qna WHERE qna_SORT = '상품문의' AND qna_IDX LIKE CONCAT('%',:keyword,'%') OR qna_SORT = '상품' AND qna_CONTENT LIKE CONCAT('%',:keyword,'%')", nativeQuery = true)
+    @Query(value = "SELECT * FROM qna WHERE qna_SORT = '상품문의' AND qna_IDX LIKE CONCAT('%',:keyword,'%') OR qna_SORT = '상품문의' AND qna_CONTENT LIKE CONCAT('%',:keyword,'%')", nativeQuery = true)
     Page<Qna> searchWithCate5 (@Param(value = "keyword") String keyword,
                                Pageable pageable);
-    @Query(value = "SELECT * FROM qna WHERE qna_SORT = '기타문의' AND qna_IDX LIKE CONCAT('%',:keyword,'%') OR qna_SORT = '기타' AND qna_CONTENT LIKE CONCAT('%',:keyword,'%')", nativeQuery = true)
+    @Query(value = "SELECT * FROM qna WHERE qna_SORT = '기타문의' AND qna_IDX LIKE CONCAT('%',:keyword,'%') OR qna_SORT = '기타문의' AND qna_CONTENT LIKE CONCAT('%',:keyword,'%')", nativeQuery = true)
     Page<Qna> searchWithCate6 (@Param(value = "keyword") String keyword,
                                Pageable pageable);
 
