@@ -36,7 +36,12 @@ public class ClientNoticeService {
     }
     public Optional< NoticeResponseDTO> findRecentNotice() {
         Notice notice = noticeListRepository.findRecentNotice();
-            Optional< NoticeResponseDTO> noticeResponseDTO = Optional.of( new NoticeResponseDTO(notice));
+        Optional<NoticeResponseDTO> noticeResponseDTO;
+        if(notice != null) {
+            noticeResponseDTO = Optional.of(new NoticeResponseDTO(notice));
+        }else {
+            noticeResponseDTO = null;
+        }
             return noticeResponseDTO;
         }
     }
