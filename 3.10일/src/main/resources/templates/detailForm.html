@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+
+    <th:block th:replace="fragments/head :: headFragment"></th:block>
+
+    <style>
+    .total {
+      display: flex;
+      justify-content: center;
+    }
+    .part {
+      width: 800px;
+    }
+
+    .head_table {
+      margin-top: 10px;
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    .head_title {
+      text-align: center;
+      width: 100px;
+      height: 30px;
+      background-color: #d0d0d0;
+      border: 1px solid black;
+    }
+    .head_con {
+      text-align: center;
+      width: 200px;
+      height: 30px;
+      border: 1px solid black;
+    }
+    .nav_one {
+      border: 1px solid black;
+    }
+    .nav_one:hover {
+      background-color: #f8f8f8;
+    }
+    .nav_table {
+      border-collapse: collapse;
+      margin-top: 30px;
+    }
+
+    .nav_one {
+      text-align: center;
+      width: 220px;
+    }
+
+    .main_name td {
+      border: solid 1px rgb(240, 240, 240);
+      height: 50px;
+      text-align: right;
+    }
+
+    .main_name .content {
+      text-align: left;
+    }
+
+    .main_tr > td:nth-child(1) {
+      width: 150px;
+      padding: 10px;
+      background-color: #d0d0d0;
+    }
+    .main_tr > td:nth-child(2) {
+      width: 650px;
+      padding: 10px;
+    }
+    .info_bottom {
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+
+</head>
+<body>
+
+<header th:replace="fragments/header :: headerFragment"></header>
+
+
+<th:block th:if="${type}=='memDetail'">
+    <div class="main">
+        <div id="title">■ 회원 정보</div>
+        <div class="main">
+            <table class="main_name">
+                <tr class="main_tr">
+                    <td>이름</td>
+                    <td class="content" th:text="${ member.member_NAME }"></td>
+                </tr>
+                <tr class="main_tr">
+                    <td>ID</td>
+                    <td class="content" th:text="${ member.member_ID }"></td>
+                </tr>
+                <tr class="main_tr">
+                    <td>PW</td>
+                    <td class="content" th:text="${ member.memberPw }"></td>
+                </tr>
+                <tr class="main_tr">
+                    <td>회원번호</td>
+                    <td class="content" th:text="${ member.member_IDX }"></td>
+                </tr>
+                <tr class="main_tr">
+                    <td>전화번호</td>
+                    <td class="content" th:text="${ member.member_PHONE }"></td>
+                </tr>
+                <tr class="main_tr">
+                    <td>주소</td>
+                    <td class="content" th:text="${ member.member_ADDRESS }"></td>
+                </tr>
+                <tr class="main_tr">
+                    <td>마일리지</td>
+                    <td class="content" th:text="${ member.member_POINT }"></td>
+                </tr>
+                <tr class="main_tr">
+                    <td>쿠폰</td>
+                    <td class="content" th:text="${ member.member_NAME }"></td>
+                </tr>
+                <tr class="main_tr">
+                    <td>장바구니</td>
+                    <td class="content" th:text="${ member.member_NAME }"></td>
+                </tr>
+                <tr class="main_tr">
+                    <td>회원상태</td>
+                    <!--            <td th:text="${ member.status }" ></td>-->
+                    <td class="content">
+              <span th:switch="${member.status}">
+                <span th:case="0">기본</span>
+                <span th:case="1">탈퇴</span>
+                <span th:case="2">정지</span>
+              </span>
+                        <select name="status" style="display: none">
+                            <option value="0">기본</option>
+                            <option value="1">탈퇴</option>
+                            <option value="2">정지</option>
+                        </select>
+                        <button>회원 상태 변경</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="info_bottom">
+            <div class="left_bottom">
+                <button>저장</button>
+                <button>삭제</button>
+            </div>
+            <div class="right_bottom">
+                <input type="button" onclick="history.back();" value="취소" />
+            </div>
+        </div>
+    </div>
+</th:block>
+
+</body>
+</html>

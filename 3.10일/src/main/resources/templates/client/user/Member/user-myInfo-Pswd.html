@@ -1,0 +1,205 @@
+<html
+	lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+	<head>
+		<th:block th:replace="/client/fragments/Clhead :: headFragment"></th:block>
+
+		<link
+			rel="stylesheet"
+			href="/css/login.css"
+		/>
+		<style>
+			.users-cont-header {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-direction: column;
+			}
+			.users-cont-header-tit {
+				font-size: 20px;
+				font-weight: bold;
+				letter-spacing: -0.8px;
+			}
+			.users-cont-header-con {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-direction: column;
+				font-size: 14px;
+				margin: 20px 0;
+				line-height: 1.6;
+				letter-spacing: -0.8px;
+			}
+			input::placeholder {
+				font-size: 13px;
+			}
+			#cancel {
+				background-color: #666;
+			}
+		</style>
+	</head>
+	<body id="bodytest">
+		<th:block
+			th:replace="/client/fragments/Clheader :: headerFragment"
+		></th:block>
+		<!-- 로그인 -->
+		<div class="containerlogin">
+			<div class="users-title-line-hd">
+				<h2>정보관리</h2>
+			</div>
+			<div class="users-cont">
+				<div class="users-cont-header">
+					<div class="users-cont-header-tit">비밀번호 확인</div>
+					<div class="users-cont-header-con">
+						<div>회원님의 정보를 안전하게 보호하기 위해</div>
+						<div>비밀번호를 다시 한번 확인합니다.</div>
+					</div>
+				</div>
+				<form
+					th:action="@{/checkPw}"
+					method="post"
+				>
+					<input
+						type="hidden"
+						sec:authorize="isAuthenticated()"
+						th:name="${_csrf.parameterName}"
+						th:value="${_csrf.token}"
+					/>
+					<input
+						type="hidden"
+						name="memberId"
+						th:value="${session.memberId}"
+					/>
+					<input
+						class="input-st01 users-login-input mt-10"
+						type="password"
+						name="memberPw"
+						placeholder="비밀번호를 입력해 주세요."
+					/>
+					<button
+						type="submit"
+						class="btn-h42-gray mt-10"
+					>
+						확인
+					</button>
+					<a
+						th:href="@{/myorder/list}"
+						id="cancel"
+						type="submit"
+						class="btn-h42-gray mt-10"
+					>
+						취소
+					</a>
+				</form>
+			</div>
+		</div>
+		<!-- 푸터 -->
+		<th:block
+			th:replace="/client/fragments/Clfooter :: footerFragment"
+		></th:block>
+
+		<script>
+			//사이드메뉴
+			function openNav() {
+				// document.body.style.backgroundColor = "rgba(0,0,0,0.5)";
+				document.getElementById("mySidenav").style.width = "80%";
+			}
+			function closeNav() {
+				// document.body.style.backgroundColor = "white";
+				document.getElementById("mySidenav").style.width = "0";
+			}
+		</script>
+
+		<script>
+			//돋보기
+			function openSearch() {
+				document.getElementById("myOverlay").style.display = "block";
+			}
+
+			function closeSearch() {
+				document.getElementById("myOverlay").style.display = "none";
+			}
+		</script>
+		<script>
+			function show() {
+				document.querySelector(".background").className = "background show";
+			}
+
+			function close() {
+				document.querySelector(".background").className = "background";
+			}
+
+			// document.querySelector("#show").addEventListener("click", show);
+			// document.querySelector("#close").addEventListener("click", close);
+		</script>
+		<script>
+			function show2() {
+				document.querySelector(".background2").className = "background2 show2";
+			}
+
+			function close2() {
+				document.querySelector(".background2").className = "background2";
+			}
+
+			// document.querySelector("#show2").addEventListener("click", show2);
+			// document.querySelector("#close2").addEventListener("click", close2);
+			function openPopup1() {
+				popup = window.open("agreement2");
+			}
+			function openPopup2() {
+				popup = window.open("agreement3");
+			}
+			function openPopupsoho1() {
+				popup = window.open("https://mysoho.com/");
+			}
+			function openPopupsoho2() {
+				popup = window.open("https://sohomarket.kr/?shop=sohonara");
+			}
+			function footerbtn() {
+				//
+				if (document.querySelector(".hidden").style.display === "block") {
+					document.querySelector(".hidden").style.display = "none";
+					document.querySelector(".footer-down").style.display = "block";
+					document.querySelector(".footer-up").style.display = "none";
+				} else {
+					document.querySelector(".hidden").style.display = "block";
+					document.querySelector(".footer-down").style.display = "none";
+					document.querySelector(".footer-up").style.display = "block";
+				}
+			}
+			function footerbtn2() {
+				popup = window.open(
+					"https://www.ftc.go.kr/bizCommPop.do?wrkr_no=2068121131&apv_perm_no="
+				);
+			}
+			// Get the button
+			let mybutton = document.getElementById("myBtnfooter");
+
+			// When the user scrolls down 20px from the top of the document, show the button
+			window.onscroll = function () {
+				scrollFunction();
+			};
+
+			function scrollFunction() {
+				if (
+					document.body.scrollTop > 20 ||
+					document.documentElement.scrollTop > 20
+				) {
+					//mybutton.style.display = "block";
+					mybutton.style.opacity = "1";
+				} else {
+					//mybutton.style.display = "none";
+					mybutton.style.opacity = "0";
+				}
+			}
+
+			// When the user clicks on the button, scroll to the top of the document
+			function topFunction() {
+				document.body.scrollTop = 0;
+				document.documentElement.scrollTop = 0;
+			}
+		</script>
+	</body>
+</html>

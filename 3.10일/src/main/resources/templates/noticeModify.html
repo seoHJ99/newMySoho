@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>공지사항 생성</title>
+
+  <th:block th:replace="fragments/head :: headFragment"></th:block>
+
+  <style>
+.total{
+display : flex;
+justify-content: center;
+
+}
+.title{
+padding-bottom : 5px;
+}
+.square_box {
+        display: flex;
+        margin-left: 3px;
+        margin-top: 7px;
+        margin-right: 10px;
+        width: 10px;
+        height: 10px;
+        background-color: black;
+      }
+.part {
+display: flex;
+justify-content: center;
+width : 900px;
+}
+td{
+border : 1px solid rgb(240, 240, 240);
+}
+.notice_tr > td:nth-child(1){
+height : 50px;
+background-color : #d0d0d0;
+border:1px solid black;
+}
+.notice_tr > td:nth-child(2){
+border:1px solid black;
+}
+.notice_content > td:nth-child(1){
+background-color : #d0d0d0;
+height: 300px;
+border:1px solid black;
+}
+.notice_content > td:nth-child(2){
+border-bottom:1px solid black;
+border-right:1px solid black;
+}
+.notice_content{
+border : 1px solid black;
+}
+.notice_button{
+display : flex;
+justify-content : space-between;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+.title{
+display:flex;
+flex-direction: row;
+padding-top: 10px;
+}
+.notice_TITLE {
+border : 0px solid white;
+}
+textarea{
+border : 0px solid white;
+}
+.editor{
+margin-bottom: 210px;
+}
+
+
+    </style>
+
+      <meta name="_csrf" th:content="${_csrf.token}" />
+      <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+
+<header th:replace="fragments/header :: headerFragment"></header>
+
+<div class="total">
+  <div class="part">
+    <form action="/admin/notice/modify" method="post">
+        			<input type="hidden" sec:authorize="isAuthenticated()" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+      <div class="wrap">
+        <!--수정인 : 준태-->
+        <div class="title">
+          <div class="square_box"></div>
+          <div>공지사항</div>
+          <!--수정인 : 준태-->
+        </div>
+
+        <table width="900px">
+          <tr class="notice_tr">
+            <td>번호</td>
+            <td>
+              <span th:text="${notice.notice_IDX}"></span>
+              <input class="notice_TITLE" name="notice_IDX" type="hidden" id="notice_IDX" th:value="${notice.notice_IDX}">
+            </td>
+          </tr>
+          </th:block>
+          <tr class="notice_tr">
+            <td>제목</td>
+            <td class="notice_title_td">
+              <input class="notice_TITLE" name="notice_TITLE" type="text" th:value="${notice.notice_TITLE}">
+            </td>
+          </tr>
+          <tr class="notice_tr">
+            <td>노출</td>
+            <td>
+              <input th:checked="${notice.notice_CATE eq '일반'}" type="radio" class="looknotice" name="notice_REGTYPE" value="일반">즉시노출
+              <input th:checked="${notice.notice_CATE eq '예약'}" type="radio" class="looknotice" name="notice_REGTYPE" value="예약">예약노출
+              (
+              <input th:value="${date}" class="radio_detail" name="date" type="date">
+              <input th:value="${time}" class="radio_detail" name="time" type="time">
+              )
+
+            </td>
+          </tr>
+          <tr class="notice_tr">
+            <td>공지사항 연동</td>
+            <td>
+              <input th:checked="${notice.notice_REGTYPE eq '일반'}" type="radio" name="notice_CATE" value="일반">일반공지
+              <input th:checked="${notice.notice_REGTYPE eq '이벤트'}" type="radio" name="notice_CATE" value="이벤트">이벤트 공지
+            </td>
+          </tr>
+          <tr class="notice_content">
+            <td id="notice_content">내용</td>
+
+            <td>
+              <div class="editor">
+              <script src="https://cdn.ckeditor.com/ckeditor5/36.0.0/classic/ckeditor.js"></script>
+              <script src="https://cdn.ckeditor.com/ckeditor5/36.0.0/classic/translations/ko.js"></script>
+              <textarea id="editor" th:text="${notice.notice_CONTENT}" name="notice_CONTENT" cols="67" rows="8"></textarea>
+      </div>
+            </td>
+          </tr>
+          <tr class="button_tr">
+            <td id="button_td" colspan="2">
+              <div class="notice_button">
+                <a href="http://localhost:8080/admin/list/notice"><input type="button" value="목록"></a>
+
+                <input type="submit" value="확인">
+
+                  <input type="button" onclick="deleteNot()" value="삭제">
+
+                </div>
+            </td>
+          </tr>
+        </table>
+
+      </div>
+    </form>
+  </div>
+  <script th:inline="javascript">
+  $('.looknotice').on('click',function(){
+  var valueCheck = $('.looknotice:checked').val();
+  if( valueCheck == '예약'){
+  $('.radio_detail').attr('disabled',false);
+  $('.radio_detail').focus();
+  }else{
+  $('.radio_detail').attr('disabled',true);
+  $('.radio_detail').val('');
+
+  }
+  });
+
+    let editor;
+    let a = [[${_csrf.token}]];
+    let b = [[${_csrf.parameterName}]];
+    console.log(a);
+    console.log(b);
+    ClassicEditor.create(document.querySelector("#editor"), {
+      language: "ko",
+      ckfinder: {
+        uploadUrl:"/admin/imgUpload?"+ b + "=" + a,
+      },
+    })
+      .then((newEditor) => {
+        editor = newEditor;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  </script>
+  <script>
+        function deleteNot() {
+          var token = $("meta[name='_csrf']").attr("content");
+          var header = $("meta[name='_csrf_header']").attr("content");
+          console.log('%cnoticeModify.html line:164 object', 'color: #007acc;', $("#notice_IDX").val());
+
+       if(confirm('정말로 삭제하시겠습니까?')){
+         $.ajax({
+			  	url: "/admin/notice/delete",
+			  	type: "POST",
+          beforeSend : function(xhr){
+           xhr.setRequestHeader(header, token);
+         },
+			  	data: {
+					notice_idx : $("#notice_IDX").val()
+				},
+				  success: function (response) {
+					alert("삭제 성공");
+					location.href='/admin/list/notice';
+
+				},
+			});
+    }
+
+    }
+  </script>
+</div>
+</body>
+</html>
