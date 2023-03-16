@@ -198,7 +198,7 @@
         <li class="type3" th:if="${type} == 'SALE'" th:each="list : ${item}">
           <div class="between">
             <div class="prd-img">
-              <a href="" class="focusTag"
+              <a th:href="@{/product(idx=${list.item_idx})}" class="focusTag"
               ><img
                       th:src="${list.item_IMAGE}"
                       alt=""
@@ -206,7 +206,7 @@
               </a>
             </div>
             <div class="tbl-cell">
-              <p class="txt"><a href="" th:text="${list.item_NAME}">브라운 사각 bag</a></p>
+              <p class="txt"><a th:href="@{/product(idx=${list.item_idx})}" th:text="${list.item_NAME}">브라운 사각 bag</a></p>
               <p class="price-info" th:if="${list.item_DISCOUNT} != '0'">
                 <span class="sale-rate" th:text="${list.item_DISCOUNT}+'%'">9%</span>
                 <span class="price" th:text="${#numbers.formatInteger(list.item_PRICE_DISCOUNT,3,'COMMA')}+'원'"></span>
@@ -217,7 +217,8 @@
               </p>
             </div>
           </div>
-          <a href="" class="btn-cart-type1"
+          <a 								onclick="basketNumCount(this)"
+								th:value="${list.item_idx}" class="btn-cart-type1"
           ><img
                   src="https://image.makeshop.co.kr/mysoho/assets/shop/img/common/ico_cart_type1.png"
                   alt=""
@@ -228,7 +229,7 @@
         <li class="type3" th:if="${type} == 'TOP'" th:each="list : ${item}">
           <div class="between">
             <div class="prd-img">
-              <a href="" class="focusTag"
+              <a th:href="@{/product(idx=${list.item_idx})}" class="focusTag"
               ><img
                       th:src="${list.item_IMAGE}"
                       alt=""
@@ -236,7 +237,7 @@
               </a>
             </div>
             <div class="tbl-cell">
-              <p class="txt"><a href="" th:text="${list.item_NAME}">브라운 사각 bag</a></p>
+              <p class="txt"><a th:href="@{/product(idx=${list.item_idx})}" th:text="${list.item_NAME}">브라운 사각 bag</a></p>
               <p class="price-info" th:if="${list.item_DISCOUNT} != '0'">
                 <span class="sale-rate" th:text="${list.item_DISCOUNT}+'%'">9%</span>
                 <span class="price" th:text="${#numbers.formatInteger(list.item_PRICE_DISCOUNT,3,'COMMA')}+'원'"></span>
@@ -247,7 +248,8 @@
               </p>
             </div>
           </div>
-          <a href="" class="btn-cart-type1"
+          <a 		onclick="basketNumCount(this)"
+								th:value="${list.item_idx}" class="btn-cart-type1"
           ><img
                   src="https://image.makeshop.co.kr/mysoho/assets/shop/img/common/ico_cart_type1.png"
                   alt=""
@@ -258,7 +260,7 @@
         <li class="type3" th:if="${type} == 'BOTTOM'" th:each="list : ${item}">
           <div class="between">
             <div class="prd-img">
-              <a href="" class="focusTag"
+              <a th:href="@{/product(idx=${list.item_idx})}" class="focusTag"
               ><img
                       th:src="${list.item_IMAGE}"
                       alt=""
@@ -266,7 +268,7 @@
               </a>
             </div>
             <div class="tbl-cell">
-              <p class="txt"><a href="" th:text="${list.item_NAME}">브라운 사각 bag</a></p>
+              <p class="txt"><a th:href="@{/product(idx=${list.item_idx})}" th:text="${list.item_NAME}">브라운 사각 bag</a></p>
               <p class="price-info" th:if="${list.item_DISCOUNT} != '0'">
                 <span class="sale-rate" th:text="${list.item_DISCOUNT}+'%'">9%</span>
                 <span class="price" th:text="${#numbers.formatInteger(list.item_PRICE_DISCOUNT,3,'COMMA')}+'원'"></span>
@@ -277,7 +279,8 @@
               </p>
             </div>
           </div>
-          <a href="" class="btn-cart-type1"
+          <a onclick="basketNumCount(this)"
+								th:value="${list.item_idx}" class="btn-cart-type1"
           ><img
                   src="https://image.makeshop.co.kr/mysoho/assets/shop/img/common/ico_cart_type1.png"
                   alt=""
@@ -288,7 +291,7 @@
         <li class="type3" th:if="${type} == 'ONE-PIECE'" th:each="list : ${item}">
           <div class="between">
             <div class="prd-img">
-              <a href="" class="focusTag"
+              <a th:href="@{/product(idx=${list.item_idx})}" class="focusTag"
               ><img
                       th:src="${list.item_IMAGE}"
                       alt=""
@@ -296,7 +299,7 @@
               </a>
             </div>
             <div class="tbl-cell">
-              <p class="txt"><a href="" th:text="${list.item_NAME}">브라운 사각 bag</a></p>
+              <p class="txt"><a th:href="@{/product(idx=${list.item_idx})}" th:text="${list.item_NAME}">브라운 사각 bag</a></p>
               <p class="price-info" th:if="${list.item_DISCOUNT} != '0'">
                 <span class="sale-rate" th:text="${list.item_DISCOUNT}+'%'">9%</span>
                 <span class="price" th:text="${#numbers.formatInteger(list.item_PRICE_DISCOUNT,3,'COMMA')}+'원'"></span>
@@ -307,7 +310,8 @@
               </p>
             </div>
           </div>
-          <a href="" class="btn-cart-type1"
+          <a onclick="basketNumCount(this)"
+								th:value="${list.item_idx}" class="btn-cart-type1"
           ><img
                   src="https://image.makeshop.co.kr/mysoho/assets/shop/img/common/ico_cart_type1.png"
                   alt=""
@@ -318,7 +322,7 @@
         <li class="type3" th:if="${type} == 'ACC'" th:each="list : ${item}">
           <div class="between">
             <div class="prd-img">
-              <a href="" class="focusTag"
+              <a th:href="@{/product(idx=${list.item_idx})}" class="focusTag"
               ><img
                       th:src="${list.item_IMAGE}"
                       alt=""
@@ -326,7 +330,7 @@
               </a>
             </div>
             <div class="tbl-cell">
-              <p class="txt"><a href="" th:text="${list.item_NAME}">브라운 사각 bag</a></p>
+              <p class="txt"><a href="@{/product(idx=${list.item_idx})}" th:text="${list.item_NAME}">브라운 사각 bag</a></p>
               <p class="price-info" th:if="${list.item_DISCOUNT} != '0'">
                 <span class="sale-rate" th:text="${list.item_DISCOUNT}+'%'">9%</span>
                 <span class="price" th:text="${#numbers.formatInteger(list.item_PRICE_DISCOUNT,3,'COMMA')}+'원'"></span>
@@ -337,7 +341,8 @@
               </p>
             </div>
           </div>
-          <a href="" class="btn-cart-type1"
+          <a onclick="basketNumCount(this)"
+								th:value="${list.item_idx}" class="btn-cart-type1"
           ><img
                   src="https://image.makeshop.co.kr/mysoho/assets/shop/img/common/ico_cart_type1.png"
                   alt=""
@@ -364,7 +369,9 @@
               />
             </p>
           </a>
+          <a th:href="@{/product(idx=${list.item_idx})}">
           <p class="txt"  th:text="${list.item_NAME}">브라운 사각 bag</p>
+          </a>
           <p class="price-info" th:if="${list.item_DISCOUNT} != '0'  and ${list.item_AMOUNT} != 0">
             <span class="sale-rate" th:text="${list.item_DISCOUNT}+'%'">9%</span>
             <span class="price" th:text="${#numbers.formatInteger(list.item_PRICE_DISCOUNT,3,'COMMA')}+'원'"></span>
@@ -420,7 +427,9 @@
               />
             </p>
           </a>
+          <a th:href="@{/product(idx=${list.item_idx})}"></a>
           <p class="txt"  th:text="${list.item_NAME}">브라운 사각 bag</p>
+          </a>
           <p class="price-info" th:if="${list.item_DISCOUNT} != '0'  and ${list.item_AMOUNT} != 0">
             <span class="sale-rate" th:text="${list.item_DISCOUNT}+'%'">9%</span>
             <span class="price" th:text="${#numbers.formatInteger(list.item_PRICE_DISCOUNT,3,'COMMA')}+'원'"></span>
@@ -448,7 +457,9 @@
               />
             </p>
           </a>
+          <a th:href="@{/product(idx=${list.item_idx})}">
           <p class="txt"  th:text="${list.item_NAME}">브라운 사각 bag</p>
+          </a>
           <p class="price-info" th:if="${list.item_DISCOUNT} != '0'  and ${list.item_AMOUNT} != 0">
             <span class="sale-rate" th:text="${list.item_DISCOUNT}+'%'">9%</span>
             <span class="price" th:text="${#numbers.formatInteger(list.item_PRICE_DISCOUNT,3,'COMMA')}+'원'"></span>
@@ -476,7 +487,9 @@
               />
             </p>
           </a>
+          <a th:href="@{/product(idx=${list.item_idx})}">
           <p class="txt"  th:text="${list.item_NAME}">브라운 사각 bag</p>
+          </a>
           <p class="price-info" th:if="${list.item_DISCOUNT} != '0'  and ${list.item_AMOUNT} != 0">
             <span class="sale-rate" th:text="${list.item_DISCOUNT}+'%'">9%</span>
             <span class="price" th:text="${#numbers.formatInteger(list.item_PRICE_DISCOUNT,3,'COMMA')}+'원'"></span>
@@ -607,6 +620,31 @@
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
       }
+
+      let basketNum = document.querySelector(".basket-num").innerHTML;
+$(".option-total-price").text($("#option-price").text());
+      function basketNumCount(a) {
+	if($(a).attr("hasOption")!=null){
+		location.href="/product?idx="+$(a).attr("value");
+	}else{
+		basketNum++;
+		let item_idx = $(a).attr("value");
+		let item_quantity = 0;
+		document.querySelector(".basket-num").innerHTML = basketNum;
+		if(getCookie( item_idx) == null){
+			setCookie( item_idx, item_quantity+1);
+		}else{
+			item_quantity = getCookie(+ item_idx);
+			setCookie(item_idx,Number(item_quantity)+1);
+		}
+		alert('장바구니 담기 성공!');
+	}
+}
+
+var getCookie = function(name) {
+		 var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+		 return value? value[2] : null;
+		};
     </script>
 
 </body>
