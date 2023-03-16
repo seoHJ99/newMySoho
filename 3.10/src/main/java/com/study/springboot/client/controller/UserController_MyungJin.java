@@ -202,6 +202,9 @@ public class UserController_MyungJin {
         String phone2 = request.getParameter("phone2");
         String phone = phone1 + phone2;
         NonmemberResponseDto nonmember = nonmemberService.findNonmember(name, phone);
+        if(nonmember == null){
+            return "회원정보 없음 페이지";
+        }
         List<OrderResponseDto> orderDto = nonmemberService.findOrderByNonMemberIDX(nonmember.getIdx());
         List<OrderDetailTemp> orderTests = nonmemberService.userMyOrderLogic(orderDto);
         OrdersStatus test = orderService.dtoListLogic(orderDto, orderTests);

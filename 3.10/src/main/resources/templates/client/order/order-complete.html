@@ -156,7 +156,13 @@
 			</div>
 			<div class="btn-wrap">
 				<a
-					href="myorder.html"
+				sec:authorize="isAuthenticated()"
+					href="/myorder/list"
+					class="btn-h43-gray2"
+					>구매내역보기</a
+				><a
+				sec:authorize="isAnonymous()"
+					href="/myorder"
 					class="btn-h43-gray2"
 					>구매내역보기</a
 				>

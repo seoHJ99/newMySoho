@@ -27,7 +27,6 @@ public class NonmemberService {
     @Transactional(readOnly = true)
     public NonmemberResponseDto findNonmember(String name, String phone) {
         Nonmember nonmemdb = nonmemberRepository.findNonmemberBynameAndPhone(name, phone);
-                // nonmemdb가 null일 경우 추가 (3.10)
         if (nonmemdb == null) {
             return null;
         } else {
