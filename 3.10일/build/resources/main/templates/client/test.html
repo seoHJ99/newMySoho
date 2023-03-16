@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			http-equiv="X-UA-Compatible"
+			content="IE=edge"
+		/>
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>Document</title>
+	</head>
+	<body>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<a
+			onclick="basketNumCount(this)"
+			value="3"
+			class="btn-cart-type1"
+			><img
+				src="https://image.makeshop.co.kr/mysoho/assets/shop/img/common/ico_cart_type1.png"
+				alt=""
+			/>
+		</a>
+		<script>
+			function basketNumCount(b) {
+				console.log($(b).attr("value"));
+			}
+		</script>
+	</body>
+</html>

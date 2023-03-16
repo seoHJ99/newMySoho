@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html
+	lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+>
+	<head>
+		<th:block th:replace="fragments/head :: headFragment"></th:block>
+		<meta charset="UTF-8" />
+		<meta
+			http-equiv="X-UA-Compatible"
+			content="IE=edge"
+		/>
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>Document</title>
+		<style>
+			.all1 {
+				display: flex;
+				justify-content: center;
+			}
+			.all {
+				width: 800px;
+			}
+			.head_table {
+				margin-top: 10px;
+				border: 1px solid black;
+				border-collapse: collapse;
+			}
+			.head_title {
+				text-align: center;
+				width: 100px;
+				height: 30px;
+				background-color: #d0d0d0;
+				border: 1px solid black;
+			}
+			.head_con {
+				text-align: center;
+				width: 200px;
+				height: 30px;
+				border: 1px solid black;
+			}
+			.nav_one {
+				border: 1px solid black;
+			}
+			.nav_one:hover {
+				background-color: #f8f8f8;
+			}
+			.nav_table {
+				display: flex;
+				justify-content: center;
+				border-collapse: collapse;
+				margin-top: 30px;
+			}
+			a {
+				text-decoration: none;
+				color: black;
+			}
+			.main {
+				display: flex;
+				justify-content: center;
+			}
+
+			.nav_one {
+				text-align: center;
+				width: 220px;
+			}
+			.main_table {
+				border: 1px solid black;
+				text-align: right;
+			}
+			.main_tr > td {
+				border: 1px solid black;
+			}
+			.main_tr > td:nth-child(1) {
+				width: 270px;
+				height: 50px;
+				background-color: #f8f8f8;
+				padding: 10px;
+			}
+			.main_tr > td:nth-child(2) {
+				width: 780px;
+			}
+			.main_tr1 > td:nth-child(1) {
+				width: 20px;
+				height: 300px;
+				background-color: #f8f8f8;
+				border: 1px solid black;
+				padding: 10px;
+			}
+			.main_tr1 > td:nth-child(2) {
+				border: 1px solid black;
+			}
+			.table_button > td:nth-child(1) {
+				display: flex;
+				justify-content: center;
+			}
+			.product {
+				padding-top: 10px;
+				padding-bottom: 10px;
+				margin-left: 15px;
+			}
+			.main_tr2 > td {
+				height: 100px;
+				border: 1px solid black;
+				background-color: #f8f8f8;
+				padding: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<header th:replace="fragments/header :: headerFragment"></header>
+		<div class="all1">
+			<div class="all">
+				<div class="product">■ 상품 등록</div>
+
+				<form
+					action="/admin/product/saveAction"
+					method="post"
+				>
+					<input
+						type="hidden"
+						sec:authorize="isAuthenticated()"
+						th:name="${_csrf.parameterName}"
+						th:value="${_csrf.token}"
+					/>
+					<div class="main">
+						<table class="main_table">
+							<tr class="main_tr">
+								<td>* 카테고리</td>
+								<td class="ctg">
+									<select name="item_CATEGORY1">
+										<option value="">카테고리 1</option>
+										<option value="상의">상의</option>
+										<option value="하의">하의</option>
+										<option value="악세서리">악세서리</option>
+										<option value="원피스">원피스</option>
+									</select>
+									<select name="item_CATEGORY2">
+										<option value="">카테고리 2</option>
+										<option value="행사">행사</option>
+										<option value="할인">할인</option>
+									</select>
+								</td>
+							</tr>
+							<tr class="main_tr">
+								<td>* 제품명</td>
+								<td>
+									<input
+										name="item_NAME"
+										type="text"
+										required
+									/>
+								</td>
+							</tr>
+							<tr class="main_tr">
+								<td>* 가격</td>
+								<td>
+									<input
+										name="item_PRICE"
+										type="number"
+										required
+									/>
+								</td>
+							</tr>
+							<tr class="main_tr">
+								<td>* 할인율</td>
+								<td>
+									<input
+										name="item_DISCOUNT"
+										type="number"
+										required
+									/>
+								</td>
+							</tr>
+							<tr class="main_tr2">
+								<td>* 원본 상품(존재시 입력)</td>
+								<td>
+									<input
+										name="item_ORIGINAL"
+										type="text"
+									/>
+									<button>저장</button>
+								</td>
+							</tr>
+							<tr class="main_tr">
+								<td>* 메인 사진</td>
+								<td>
+									<input
+										name="item_IMAGE"
+										type="text"
+										required
+									/>
+									<button>찾아보기</button>
+								</td>
+							</tr>
+							<tr class="main_tr1">
+								<td>* 상품 및 설명</td>
+								<td>
+									<textarea
+										name="item_DETAIL"
+										id=""
+										cols="30"
+										rows="10"
+										required
+									></textarea>
+								</td>
+							</tr>
+							<tr class="main_button">
+								<td><button onclick="submit">저장</button></td>
+							</tr>
+						</table>
+					</div>
+				</form>
+				<div>
+					<button th:onclick="|location.href='@{product}'|">목록</button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
