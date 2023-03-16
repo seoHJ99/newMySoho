@@ -1,0 +1,197 @@
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+  <head>
+    <th:block th:replace="/client/fragments/Clhead :: headFragment"></th:block>
+
+    <style>
+      .containerlogin {
+        margin: 0;
+        padding: 0;
+        height: 680px;
+        border-bottom: 1px solid #d6d6d6;
+        min-width: 640px;
+      }
+      .users-title-line-hd {
+        height: 50px;
+        background: #fafafa;
+        text-align: center;
+        border-bottom: 1px solid #d6d6d6;
+        border-left: 0;
+        border-right: 0;
+        margin-top: 0;
+      }
+      .users-title-line-hd h2 {
+        font-size: 16px;
+        line-height: 52px;
+        font-weight: bold;
+        text-align: center;
+        margin: 0;
+      }
+      .all {
+        display: flex;
+        justify-content: center;
+      }
+      .notice_header {
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid #d0d0d0;
+        width: 540px;
+        padding: 10px;
+        margin-top: 15px;
+      }
+      .notice_header1 {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .notice_content {
+        display: flex;
+        justify-content: center;
+        width: 560px;
+        margin-top: 20px;
+      }
+      .notice_content1 {
+        display: flex;
+        justify-content: center;
+        min-width: 640px;
+      }
+      .notice_content2 {
+        width: 540px;
+        border: 1px solid #d0d0d0;
+        padding: 10px;
+      }
+      .textarea {
+        max-width: 520px;
+        min-height: 450px;
+        background-color: #f8f8f8;
+        border: 1px solid #d0d0d0;
+        padding: 10px;
+      }
+      select {
+        border: 1px solid #d0d0d0;
+      }
+      .noticeCate {
+        color: #d0d0d0;
+      }
+    </style>
+  </head>
+  <body id="bodytest">
+    <th:block
+      th:replace="/client/fragments/Clheader :: headerFragment"
+    ></th:block>
+
+    <div class="all">
+      <div class="containerlogin">
+        <div class="users-title-line-hd">
+          <h2>공지사항</h2>
+        </div>
+
+        <div class="notice_header1">
+          <div class="notice_header">
+            <span>
+              <span class="noticeCate" th:text="${notice.notice_CATE}"
+                >공지 카테고리</span
+              >
+              <span th:text="${notice.notice_TITLE}">공지제목 작성칸</span>
+            </span>
+            <span th:text="${time}">공지 작성날짜</span>
+          </div>
+        </div>
+        <div class="notice_content1">
+          <div class="notice_content">
+            <div class="notice_content2">
+              <div class="textarea" th:text="${notice.notice_CONTENT}">
+                공지 입력칸
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <th:block
+      th:replace="/client/fragments/Clfooter :: footerFragment"
+    ></th:block>
+
+    <script>
+      //사이드메뉴
+      function openNav() {
+        // document.body.style.backgroundColor = "rgba(0,0,0,0.5)";
+        document.getElementById("mySidenav").style.width = "80%";
+      }
+      function closeNav() {
+        // document.body.style.backgroundColor = "white";
+        document.getElementById("mySidenav").style.width = "0";
+      }
+    </script>
+
+    <script>
+      //돋보기
+      function openSearch() {
+        document.getElementById("myOverlay").style.display = "block";
+      }
+
+      function closeSearch() {
+        document.getElementById("myOverlay").style.display = "none";
+      }
+      function openPopup1() {
+        popup = window.open("agreement2");
+      }
+      function openPopup2() {
+        popup = window.open("agreement3");
+      }
+      function openPopupsoho1() {
+        popup = window.open("https://mysoho.com/");
+      }
+      function openPopupsoho2() {
+        popup = window.open("https://sohomarket.kr/?shop=sohonara");
+      }
+      function footerbtn() {
+        //
+        if (document.querySelector(".hidden").style.display === "block") {
+          document.querySelector(".hidden").style.display = "none";
+          document.querySelector(".footer-down").style.display = "block";
+          document.querySelector(".footer-up").style.display = "none";
+        } else {
+          document.querySelector(".hidden").style.display = "block";
+          document.querySelector(".footer-down").style.display = "none";
+          document.querySelector(".footer-up").style.display = "block";
+        }
+      }
+      function footerbtn2() {
+        popup = window.open(
+          "https://www.ftc.go.kr/bizCommPop.do?wrkr_no=2068121131&apv_perm_no="
+        );
+      }
+      // Get the button
+      let mybutton = document.getElementById("myBtnfooter");
+
+      // When the user scrolls down 20px from the top of the document, show the button
+      window.onscroll = function () {
+        scrollFunction();
+      };
+
+      function scrollFunction() {
+        if (
+          document.body.scrollTop > 20 ||
+          document.documentElement.scrollTop > 20
+        ) {
+          //mybutton.style.display = "block";
+          mybutton.style.opacity = "1";
+        } else {
+          //mybutton.style.display = "none";
+          mybutton.style.opacity = "0";
+        }
+      }
+
+      // When the user clicks on the button, scroll to the top of the document
+      function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }
+    </script>
+  </body>
+</html>

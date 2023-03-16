@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+  <head>
+    <th:block th:replace="fragments/head :: headFragment"></th:block>
+
+    <title>관리자 페이지</title>
+    <style>
+      .main {
+        display: flex;
+        justify-content: center;
+      }
+      a {
+        text-align: center;
+      }
+      .imgcon {
+        display: flex;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header th:replace="fragments/header :: headerFragment"></header>
+
+    <div class="contain_all">
+      <h1>관리자 페이지</h1>
+
+      <div class="main">
+        <div class="members imgcon">
+          <a href="/admin/list/member"
+            ><img
+              src="https://cdn-icons-png.flaticon.com/512/615/615075.png"
+              alt=""
+            />회원 관리</a
+          >
+        </div>
+        <div class="products imgcon">
+          <a href="/admin/list/product">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/863/863684.png"
+              alt=""
+            />
+            상품 관리</a
+          >
+        </div>
+        <div class="site imgcon">
+          <a href="/admin/list/order"
+            ><img
+              src="https://cdn-icons-png.flaticon.com/512/2652/2652218.png"
+              alt=""
+            />주문 관리</a
+          >
+        </div>
+        <div class="sales imgcon">
+          <a href="/admin/list/QnA">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/707/707675.png"
+              alt=""
+            />QnA 관리</a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -156,6 +156,30 @@
       padding-bottom: 50px;
       border-bottom: 1px solid rgb(214, 214, 214);
     }
+#display-type-steps2 li p .btn-cart-type1{
+    position: absolute;
+    top: auto;
+    left: auto;
+    bottom: 7.5px;
+    right: 7.5px;
+    width: 45px;
+    height: 180px;
+    z-index: auto;
+    background: no-repeat center / 45px auto;
+}
+.btn-cart-type5{
+position: absolute;
+width: 25px;
+height: 25px;
+margin-top:245px;
+margin-left: 95px;
+}
+.btn-cart-type5 > img{
+width:45px;
+height:45px;
+}
+
+
   </style>
 <body id="bodytest">
 <th:block
@@ -235,6 +259,10 @@
                       alt=""
               />
               </a>
+              <p>
+                <a href="#" class="btn-cart-type1 js-cart-add" data-prd-id="19520"></a>
+              </p>
+
             </div>
             <div class="tbl-cell">
               <p class="txt"><a th:href="@{/product(idx=${list.item_idx})}" th:text="${list.item_NAME}">브라운 사각 bag</a></p>
@@ -391,6 +419,9 @@
                   src="https://sohonara.mysoho.com/assets/shop/img/common/ico_cart_type1.png"
                   alt=""
           /></a>
+          <a href="#" class="btn-cart-type5">
+          <img src="https://sohonara.mysoho.com/assets/shop/img/common/ico_cart_type1.png"></a>
+
           <a th:href="@{/product(idx=${list.item_idx})}">
             <p class="img">
               <img
@@ -429,7 +460,6 @@
           </a>
           <a th:href="@{/product(idx=${list.item_idx})}"></a>
           <p class="txt"  th:text="${list.item_NAME}">브라운 사각 bag</p>
-          </a>
           <p class="price-info" th:if="${list.item_DISCOUNT} != '0'  and ${list.item_AMOUNT} != 0">
             <span class="sale-rate" th:text="${list.item_DISCOUNT}+'%'">9%</span>
             <span class="price" th:text="${#numbers.formatInteger(list.item_PRICE_DISCOUNT,3,'COMMA')}+'원'"></span>

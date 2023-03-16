@@ -177,7 +177,6 @@
 			<div class="total">
 				<div class="part">
 					<header th:replace="fragments/header :: headerFragment"></header>
-
 					<!--  -->
 					<div class="all">
 						<div class="product_box">
@@ -332,17 +331,17 @@
 											>
 											</textarea>
 											<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+											<div class="explain">상품 사진 및 설명</div>
 										</td>
 									</tr>
 									<tr class="footer_tr">
-										<td
-											colspan="4"
-											style="border: 0"
-										>
+										<td colspan="4">
 											<div class="center_right">
 												<div class="center">
 													<button onclick="location.href='/admin/list/product'">
-														목록
+														<a href="http://localhost:8080/admin/list/product"
+															>목록</a
+														>
 													</button>
 												</div>
 												<div class="right">
