@@ -1,4 +1,4 @@
-package com.study.springboot.other.config;
+package com.study.springboot.other.security;
 
 import com.study.springboot.admin.service.SecurityService;
 import com.study.springboot.entity.Member;

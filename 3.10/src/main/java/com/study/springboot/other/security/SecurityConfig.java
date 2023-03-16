@@ -1,6 +1,5 @@
-package com.study.springboot.other.config;
+package com.study.springboot.other.security;
 
-import com.study.springboot.admin.service.SecurityService;
 import com.study.springboot.entity.Member;
 import com.study.springboot.entity.MemberListRepository;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/joinAction").permitAll()
                 .antMatchers("/main").permitAll()
                 .antMatchers("/templates/**").permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/admin/**").hasAnyRole()
                 //.anyRequest().permitAll()
                 .and()
                 .formLogin() //인증은 formLogin방식으로 하겠다.

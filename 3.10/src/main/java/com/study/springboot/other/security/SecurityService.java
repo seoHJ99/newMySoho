@@ -1,4 +1,4 @@
-package com.study.springboot.admin.service;
+package com.study.springboot.other.security;
 
 import com.study.springboot.entity.Member;
 import com.study.springboot.entity.MemberListRepository;
