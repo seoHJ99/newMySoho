@@ -59,12 +59,19 @@
             <!--        검색페이지에 들어간 후 검색 실행하고 난 후에 nav바에 있는 항목으로 이동이 안됨.(뒤돌아가기) -->
             <select
                     class="search_con"
-                    name="option"
+                    name="option1"
             >
                 <option value="전체">전체</option>
                 <option th:each="a:${cate1}" th:text="${a}"></option>
-                <option th:each="b:${cate2}" th:text="${b}"></option>
 
+
+            </select>
+            <select
+                    class="search_con"
+                    name="option2"
+            >
+                <option value="전체">전체</option>
+                <option th:each="b:${cate2}" th:text="${b}"></option>
             </select>
             <input
                     class="search_con2"
@@ -155,12 +162,19 @@
             <!--        검색페이지에 들어간 후 검색 실행하고 난 후에 nav바에 있는 항목으로 이동이 안됨.(뒤돌아가기) -->
             <select
                     class="search_con"
-                    name="option"
+                    name="option1"
             >
                 <option value="전체">전체</option>
                 <option th:each="a:${qnaCate1}" th:text="${a}"></option>
-                <option th:each="b:${qnaCate2}" th:text="${b}"></option>
 
+
+            </select>
+            <select
+                    class="search_con"
+                    name="option2"
+            >
+                <option value="전체">전체</option>
+                <option th:each="b:${qnaCate2}" th:text="${b}"></option>
             </select>
             <input
                     class="search_con2"
@@ -451,7 +465,7 @@
                 <td scope="col">주문상태</td>
                 <td scope="col">주문금액</td>
                 <td scope="col">주문자 이름</td>
-                <td scope="col">회원여부</td>
+                <td scope="col">결제방식</td>
                 <td scope="col">주문 날짜</td>
             </tr>
             </thead>

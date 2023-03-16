@@ -123,7 +123,7 @@ public class SearchService {
     @Transactional(readOnly = true)
     public Page<Qna> findSearchQna(String category1, String category2, String keyword, int page){
         List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("qna_TITLE"));
+        sorts.add(Sort.Order.desc("qna_CONTENT"));
         Pageable pageable = PageRequest.of(page, 12, Sort.by(sorts));
 
         Page<Qna> a = null;
@@ -131,13 +131,36 @@ public class SearchService {
             a = qnaRepository.searchAll(keyword, pageable);
             return a;// 둘다 전체일때
         } else if (!category1.equals("전체") && category2.equals("전체")) {
-            a = qnaRepository.searchWithCate1( category1, keyword ,pageable);
+            if(category1.equals("답변")){
+               a = qnaRepository.searchWithCate1(keyword,pageable);
+               return a;
+            } else if (category1.equals("미답변")) {
+                a = qnaRepository.searchWithCate(keyword, pageable);
+                return a;
+            }
+            a = qnaRepository.searchWithCate1(  keyword ,pageable);
             return a;// 1만 선택되었을때
         } else if (!category2.equals("전체") && category1.equals("전체")) {
-            a = qnaRepository.searchWithCate2(category2, keyword, pageable);
+            System.out.println(category2);
+            a = qnaRepository.searchWithCate2(category2,  pageable);
+            if(category2.equals("배송문의")){
+                a = qnaRepository.searchWithCate2(keyword,pageable);
+            } else if (category2.equals("교환문의")) {
+                a = qnaRepository.searchWithCate3(keyword,pageable);
+            }
+            else if (category2.equals("환불문의")) {
+                a = qnaRepository.searchWithCate4(keyword,pageable);
+            }
+            else if (category2.equals("상품문의")) {
+                a = qnaRepository.searchWithCate5(keyword,pageable);
+            }
+            else if (category2.equals("기타문의")) {
+                a = qnaRepository.searchWithCate6(keyword,pageable);
+            }
+
             return a;// 2만 선택되었을때
         } else if (!category1.equals("전체") && !category2.equals("전체")) {
-            a = qnaRepository.searchWithCate1AndCate2(category1, category2, keyword, pageable);
+            a = qnaRepository.searchWithCate1AndCate2(category2, keyword, pageable);
             return a;// 둘다 옵션 선택했을때
         }
         return a;
@@ -147,11 +170,11 @@ public class SearchService {
         if(!cateMap.containsKey("qnaCate1") && !cateMap.containsKey("qnaCate2")) {
             cateMap.add("qnaCate1", "답변");
             cateMap.add("qnaCate1", "미답변");
-            cateMap.add("qnaCate2", "배송");
-            cateMap.add("qnaCate2", "교환");
-            cateMap.add("qnaCate2", "환불");
-            cateMap.add("qnaCate2", "상품");
-            cateMap.add("qnaCate2", "기타");
+            cateMap.add("qnaCate2", "배송문의");
+            cateMap.add("qnaCate2", "교환문의");
+            cateMap.add("qnaCate2", "환불문의");
+            cateMap.add("qnaCate2", "상품문의");
+            cateMap.add("qnaCate2", "기타문의");
         }
     }
 

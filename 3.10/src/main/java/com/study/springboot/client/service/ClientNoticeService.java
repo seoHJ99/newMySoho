@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,10 +34,16 @@ public class ClientNoticeService {
         }
         return dtoList;
     }
-    public NoticeResponseDTO findRecentNotice(){
-        Notice notice = noticeListRepository.findRecentNotice();
-        NoticeResponseDTO noticeResponseDTO = new NoticeResponseDTO(notice);
-        return noticeResponseDTO;
+    public NoticeResponseDTO findRecentNotice() {
+       Notice notice = noticeListRepository.findRecentNotice();
+        NoticeResponseDTO dto = null;
+       try {
+         dto = new NoticeResponseDTO(notice);
+       }catch (Exception e){
+           System.out.println(e);
+       }
+       return dto;
     }
-
 }
+
+

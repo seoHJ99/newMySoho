@@ -977,8 +977,6 @@
               const memberInfo = [[${member}]]
               $("input[name=senders_NAME]").val(memberInfo.member_NAME);
               $("input[name=sender_phone2]").val(memberInfo.member_PHONE.substr(3));
-              console.log(memberInfo.member_PHONE.substr(3));
-              console.log($("input[name=sender_phone2]").val());
               for(let i=0; i<6; i++){
                 if(memberInfo.member_PHONE.substr(0,3) == $("#phoneSelect option:eq(" + i + ")").val()){
                   $("#phoneSelect option:eq(" + i + ")").prop("selected",true);

@@ -11,7 +11,7 @@
             class="list"
             th:each="secondList : ${firstList.productInfoList}"
     >
-        <a href="product-top1.html">
+        <a th:href="@{/product(idx=${secondList.item_IDX})}">
             <img
                     th:src="${secondList.item_IMAGE}"
                     alt=""

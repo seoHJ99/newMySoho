@@ -471,12 +471,124 @@
 			th:replace="/client/fragments/Clfooter :: footerFragment"
 		></th:block>
 
-		<script>
-			//사이드메뉴
-			function openNav() {
-				// document.body.style.backgroundColor = "rgba(0,0,0,0.5)";
-				document.getElementById("mySidenav").style.width = "80%";
-			}
+            <div class="receiver-wrap same js-useDeliveryOff same2">
+                <div class="mt-40">
+                    <strong> 주소</strong>
+                </div>
+                <ul>
+                    <li class="box open-layer-addr mt-none">
+                        <input
+                                class="input-st01 mt-10"
+                                id="sample6_postcode"
+                                type="text"
+                                name="member_POST"
+                                placeholder="우편번호"
+                                value
+                                readonly
+                                onclick="sample6_execDaumPostcode()"
+                        />
+                        <!-- 돋보기 이미지 -->
+                        <img
+                                src="https://image.makeshop.co.kr/mysoho/assets/shop/img/btn/h24_search.png"
+                                alt=""
+                        />
+                    </li>
+                    <li class="delivery-address1">
+                        <input
+                                class="input-st01 mt-10"
+                                id="sample6_address"
+                                type="text"
+                                name="member_ADDRESS"
+                                placeholder="기본주소"
+                                value
+                                maxlength="100"
+                        />
+                    </li>
+                    <li class="delivery-address2">
+                        <input
+                                class="input-st01 mt-10"
+                                id="sample6_extraAddress"
+                                type="text"
+                                name="delivery_address2"
+                                placeholder="참고항목"
+                                value
+                                maxlength="100"
+                        />
+                    </li>
+                    <li class="delivery-address2">
+                        <input
+                                class="input-st01 mt-10"
+                                id="sample6_detailAddress"
+                                type="text"
+                                name="delivery_address2"
+                                placeholder="나머지주소"
+                                value
+                                maxlength="100"
+                        />
+                    </li>
+                    <input type="hidden" name="member_IDX" th:value="${session.member_IDX}">
+                    <input type="hidden" name="member_ROLE" value="ROLE_USER">
+                    <input type="hidden" name="status" value="0">
+                </ul>
+            </div>
+            <div>
+                <!-- 개인정보 수집 이용동의 -->
+                <ul class="users-cont-full">
+                    <li>
+                        <div>
+                            <input
+                                    name="ckeck1"
+                                    type="checkbox"
+                                    id="agreeAllBtn"
+                                    checked
+                            />
+                            <label for="check1"></label>
+                            <div class="cbx-content">
+                                개인정보 수집 이용동의(선택) <br/>(쇼핑/할인소식 SMS수신)
+                            </div>
+                            <button
+                                    type="button"
+                                    class="btn-view"
+                                    onclick="openPopup4()"
+                            >
+                                보기
+                            </button>
+                        </div>
+                    </li>
+                    <div class="btn-box">
+                        <a
+                                href="myorder-list-user.html"
+                                type="button"
+                                id="join"
+                                class="btn-h42-gray width30"
+                        >
+                            취소
+                        </a>
+                        <button
+                                type="submit"
+                                id="join"
+                                class="btn-h42-gray width70"
+                        >
+                            <!--								onclick="alert('변경되었습니다.')"-->
+                            변경하기
+                        </button>
+                    </div>
+                </ul>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- 푸터 -->
+<th:block
+        th:replace="/client/fragments/Clfooter :: footerFragment"
+></th:block>
+
+<script>
+	//사이드메뉴
+	function openNav() {
+		// document.body.style.backgroundColor = "rgba(0,0,0,0.5)";
+		document.getElementById("mySidenav").style.width = "80%";
+	}
 
 			function closeNav() {
 				// document.body.style.backgroundColor = "white";
@@ -515,9 +627,9 @@
 				popup = window.open("pop-page4.html");
 			}
 
-			function openPopupsoho1() {
-				popup = window.open("https://mysoho.com/");
-			}
+    function openPopup4() {
+        popup = window.open("agreement3");
+    }
 
 			function openPopupsoho2() {
 				popup = window.open("https://sohomarket.kr/?shop=sohonara");
@@ -704,15 +816,24 @@
 				}).open();
 			}
 
-			function trash() {
-				alert("장바구니가 비었습니다. 관심있는 상품을 담아보세요");
-				location.href = "home.html";
-			}
-		</script>
-		<script>
-			function openPopup4() {
-				popup = window.open("pop-page4.html");
-			}
-		</script>
-	</body>
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById("sample6_postcode").value = data.zonecode;
+                document.getElementById("sample6_address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("sample6_detailAddress").focus();
+            },
+        }).open();
+    }
+
+    function trash() {
+        alert("장바구니가 비었습니다. 관심있는 상품을 담아보세요");
+        location.href = "home.html";
+    }
+</script>
+<script>
+    function openPopup4() {
+        popup = window.open("agreement3");
+    }
+</script>
+</body>
 </html>
