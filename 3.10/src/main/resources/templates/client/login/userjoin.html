@@ -495,7 +495,7 @@
 					document.querySelector(".check-txt-pwcheck-same").style.display =
 						"none";
 					document.querySelector(".check-txt-pwcheck-not").style.display =
-						"block";+
+						"block";
 				}
 			}
 			function checkUserinfo(type, val) {
@@ -537,7 +537,7 @@
 				var token = $("meta[name='_csrf']").attr("content");
 				var header = $("meta[name='_csrf_header']").attr("content");
 				let id = $(".input-id").val();
-			  console.log(id.test(/^[a-zA-z0-9]{4,12}$/));
+				console.log(id.test(/^[a-zA-z0-9]{4,12}$/));
 				if (id.test(/^[a-zA-z0-9]{4,12}$/)) {
 					$.ajax({
 						url: "/id-check",
