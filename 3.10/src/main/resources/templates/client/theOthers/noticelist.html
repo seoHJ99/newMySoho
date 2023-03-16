@@ -14,10 +14,7 @@
 				border-bottom: 1px solid #d6d6d6;
 				min-width: 640px;
 			}
-			.list_top .main_list {
-				display: flex;
-				justify-content: space-between;
-			}
+
 			.main_list {
 				border-bottom: 1px solid #f8f8f8;
 			}
@@ -93,7 +90,6 @@
 				text-align: center;
 			}
 			td {
-				border: 1px solid #d0d0d0;
 				border-radius: 10px;
 			}
 
@@ -104,21 +100,36 @@
 				text-decoration: none;
 				color: black;
 			}
-			.list_top {
+			/* .list_top {
 				display: flex;
 				justify-content: space-around;
 				flex-direction: row;
 				border-bottom: 1px solid #f8f8f8;
 				padding: 20px;
 				font-weight: bold;
+			} */
+
+			.list_top{
+				border-bottom: 1px solid #f8f8f8;
 			}
-			.main_list {
-				display: flex;
-				justify-content: space-around;
-				padding: 20px;
-			}
+
 			.span.list {
 				width: 160px;
+				text-align: center;
+			}
+			.notice_list{
+				margin-top: 20px;
+				padding: 10px;
+				width: 100%;
+				justify-content: center;
+			}
+			.main_list{
+				padding-top: 10px;
+			}
+			td{
+				padding: 10px;
+			}
+			.span_list{
 				text-align: center;
 			}
 		</style>
@@ -133,47 +144,45 @@
 				<div class="users-title-line-hd">
 					<h2>공지사항</h2>
 				</div>
-				<div class="notice_list">
-					<div class="notice_list">
-						<div class="list_top">
-							<div class="span_list">카테고리</div>
-							<div class="span_list">작성자</div>
-							<div class="span_list">글 제목</div>
-							<div class="span_list">작성 날짜</div>
-						</div>
-						<div
+				<table class="notice_list">
+						<tr class="list_top">
+							<th style="padding-bottom: 15px;" class="span_list">카테고리</th>
+							<th style="padding-bottom: 15px;" class="span_list">작성자</td>
+							<th style="padding-bottom: 15px;" class="span_list">글 제목</td>
+							<th style="padding-bottom: 15px;" class="span_list">작성 날짜</td>
+							</tr>
+						<tr
 							class="main_list"
 							th:each="list:${list}"
 						>
-							<div
+							<td
 								class="span_list"
 								th:text="${list.notice_CATE}"
 							>
 								[일반]
-							</div>
-							<div
+							</td>
+							<td
 								class="span_list"
 								th:text="${list.notice_WRITER}"
 							>
 								관리자
-							</div>
-							<div class="span_list">
+							</td>
+							<td class="span_list">
 								<a
 									th:href="@{/notice(idx=${list.notice_IDX})}"
 									th:text="${list.notice_TITLE}"
 									>상품관련 공지</a
 								>
-							</div>
-							<div
-								class="span_list"
+							</td>
+							<td
+								class="span_list noticeDATE"
 								id="noticeDATE"
 								th:text="${list.noticeREGDATE}"
 							>
 								2022-02-22
-							</div>
-						</div>
-					</div>
-				</div>
+							</td>
+						</tr>
+				</table>
 			</div>
 		</div>
 
@@ -182,6 +191,10 @@
 		></th:block>
 
 		<script>
+			$(".noticeDATE").length;
+			for (let value of $(".noticeDATE")) {
+				$(value).text($(value).text().substr(0, 10));
+			}
 			$("#noticeDATE").text($("#noticeDATE").text().substr(0, 10));
 			//사이드메뉴
 			function openNav() {

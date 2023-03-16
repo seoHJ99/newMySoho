@@ -61,17 +61,17 @@ public class ProductController {
         model.addAttribute("dto", dto);
         return "product";
     }
-    @RequestMapping("/productAction")
-    @ResponseBody
-    public String productAction( @RequestParam("item_price") int item_price,
-                                 @RequestParam("item_idx") int item_idx){
-        ProductResponseDto dto = productService.findById(item_idx);
-        dto.setItem_PRICE(item_price);
-        Product product = new Product();
-        product.toSaveEntity(dto);
-        productService.save(product);
-        return "";
-    }
+//    @RequestMapping("/productAction")
+//    @ResponseBody
+//    public String productAction( @RequestParam("item_price") int item_price,
+//                                 @RequestParam("item_idx") int item_idx){
+//        ProductResponseDto dto = productService.findById(item_idx);
+//        dto.setItem_PRICE(item_price);
+//        Product product = new Product();
+//        product.toSaveEntity(dto);
+//        productService.save(product);
+//        return "";
+//    }
 
 
     @RequestMapping("/product/delete")
