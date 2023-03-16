@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+	<head>
+		<th:block th:replace="fragments/head :: headFragment"></th:block>
+
+		<title>맴버 상세 페이지</title>
+		<style>
+			.total {
+				display: flex;
+				justify-content: center;
+			}
+
+			.part {
+				width: 900px;
+			}
+
+
+			.head_table {
+				margin-top: 10px;
+				border: 1px solid black;
+				border-collapse: collapse;
+			}
+
+			.head_title {
+				text-align: center;
+				width: 100px;
+				height: 30px;
+				background-color: #d0d0d0;
+				border: 1px solid black;
+			}
+
+			.head_con {
+				text-align: center;
+				width: 200px;
+				height: 30px;
+				border: 1px solid black;
+			}
+
+			.nav_one {
+				border: 1px solid black;
+			}
+
+			.nav_one:hover {
+				background-color: #f8f8f8;
+			}
+
+			.nav_table {
+				border-collapse: collapse;
+				margin-top: 30px;
+			}
+
+			.nav_one {
+				text-align: center;
+				width: 220px;
+			}
+
+			.main_table {
+				border: 1px solid black;
+				text-align: right;
+			}
+			.main > tr {
+				width: 800px;
+				height: 50px;
+			}
+			.main_name {
+				border: 1px solid black;
+				width: 150px;
+				height: 50px;
+			}
+			.main_content {
+				border: 1px solid black;
+				width: 650px;
+				height: 50px;
+			}
+
+			.main_name {
+				background-color: #d0d0d0;
+			}
+
+			textarea {
+				width: 650px;
+				border: none;
+				min-height: 200px;
+				max-height: 200px;
+			}
+
+			.btn-right {
+				display: flex;
+				flex-direction: row-reverse;
+			}
+			button{
+			border : 1px solid #d0d0d0;
+			}
+			form{
+			display:flex;
+			justify-content:center;
+			}
+
+		</style>
+	</head>
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+	<body>
+		<div class="total">
+			<div class="part">
+				<header th:replace="fragments/header :: headerFragment"></header>
+				<form
+					action="/admin/review/reply"
+					method="post"
+				>
+					<input
+						type="hidden"
+						sec:authorize="isAuthenticated()"
+						th:name="${_csrf.parameterName}"
+						th:value="${_csrf.token}"
+					/>
+
+					<table class="main">
+						<tr>
+							<td class="main_name">리뷰 제목</td>
+							<td
+								class="main_content"
+								th:text="${review.review_TITLE}"
+							></td>
+							<input
+								type="hidden"
+								name="idx"
+								th:value="${review.review_IDX}"
+							/>
+						</tr>
+						<tr>
+							<td class="main_name">리뷰 공개여부</td>
+							<td class="main_content">
+								<span th:text="${review.review_STATUS}"></span>
+								<select name="status">
+									<option value="공개">공개</option>
+									<option value="비공개">비공개</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="main_name">리뷰 작성자</td>
+							<td
+								class="main_content"
+								th:text="${review.review_WRITER}"
+							></td>
+						</tr>
+						<tr>
+							<td class="main_name">주문 번호</td>
+							<td
+								class="main_content"
+								th:text="${review.orders_IDX}"
+							></td>
+						</tr>
+						<tr>
+							<td class="main_name">관련 아이템</td>
+							<td
+								class="main_content"
+								th:text="${review.item_IDX}"
+							></td>
+						</tr>
+						<tr>
+							<td class="main_name">리뷰 내용</td>
+							<td
+								class="main_content"
+								th:text="${review.review_CONTENT}"
+							></td>
+						</tr>
+						<tr>
+							<td class="main_name">리뷰 사진</td>
+							<td class="main_content">
+								<img
+									th:src="${review.review_IMAGE}"
+									alt=""
+								/>
+							</td>
+						</tr>
+						<tr>
+							<td class="main_name">리뷰 답변</td>
+							<td class="main_content">
+								<textarea
+									name="reply"
+									th:text="${review.review_REPLY}"
+								>
+								</textarea>
+							</td>
+						</tr>
+						<tr>
+
+							<td class="btn-left">
+								<button onclick="location.href='/admin/list/review'">
+									<a href="http://localhost:8080/admin/list/review">목록</a>
+								</button>
+
+							</td>
+							<td class="btn-right">
+								<button onclick="submit">답변 등록</button>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
