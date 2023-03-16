@@ -3,12 +3,14 @@ package com.study.springboot.admin.dto;
 
 import com.study.springboot.entity.Notice;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Setter
 @Getter
+@NoArgsConstructor
 public class NoticeResponseDTO {
 
     private int notice_IDX;

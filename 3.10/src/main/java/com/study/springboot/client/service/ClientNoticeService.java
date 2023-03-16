@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,10 +34,11 @@ public class ClientNoticeService {
         }
         return dtoList;
     }
-    public NoticeResponseDTO findRecentNotice(){
+    public Optional< NoticeResponseDTO> findRecentNotice() {
         Notice notice = noticeListRepository.findRecentNotice();
-        NoticeResponseDTO noticeResponseDTO = new NoticeResponseDTO(notice);
-        return noticeResponseDTO;
+            Optional< NoticeResponseDTO> noticeResponseDTO = Optional.of( new NoticeResponseDTO(notice));
+            return noticeResponseDTO;
+        }
     }
 
-}
+

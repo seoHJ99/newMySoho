@@ -49,8 +49,14 @@ public class Cl_ListController_HyungMin {
         model.addAttribute("price", listService.pdOrderByPrice());
         model.addAttribute("review", listService.pdOrderByReview());
         model.addAttribute("score", listService.pdOrderByScore());
-        NoticeResponseDTO dto = noticeService.findRecentNotice();
-        model.addAttribute("dto",dto);
+        noticeService.findRecentNotice().ifPresentOrElse((a) ->{
+            NoticeResponseDTO dto = a;
+            model.addAttribute("dto",dto);
+        }, ()->{
+            NoticeResponseDTO dto = new NoticeResponseDTO();
+            model.addAttribute("dto",dto);
+        });
+
         return "client/theOthers/home";
     }
 
