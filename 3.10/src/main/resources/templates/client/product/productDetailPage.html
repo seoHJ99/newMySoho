@@ -3474,11 +3474,13 @@
 		<script th:inline="javascript">
 					 /*<![CDATA[*/
      const optionCon = /*[[${options}]]*/;
+		 if(optionCon != null){
 					 if(optionCon[0].item_OPTION == 'S' || optionCon[0].item_OPTION == 'M' || optionCon[0].item_OPTION == 'L'){
 						$(".optionTXT").text('사이즈');
 					 }else{
 						$(".optionTXT").text('색상');
 					 }
+					}
 			function cartBtn(a) {
 						document.querySelector(".bg-option").className = "bg-option";
 						let count = 0;
