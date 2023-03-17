@@ -258,4 +258,10 @@ public class UserController_MyungJin {
         model.addAttribute("allQNA", allQna);
         return "/client/user/Member/qna-user";
     }
+
+    @RequestMapping("/denied")
+    @ResponseBody
+    public String denied(){
+        return "<script>alert('정지된 이용자입니다.'); location.href='/logoutAction'</script>";
+    }
 }

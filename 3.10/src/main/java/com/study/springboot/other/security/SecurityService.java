@@ -31,8 +31,10 @@ public class SecurityService implements UserDetailsService {
         }
         Member member = _optMember.get();
         List<GrantedAuthority> authorities = new ArrayList<>();
-        if ("admin".equals(username)) {
+        if (member.getMember_ROLE().equals("ROLE_ADMIN")){
             authorities.add(new SimpleGrantedAuthority(UserRole.ADMIN.getValue()));
+        }else if(member.getMember_ROLE().equals("ROLE_DENIED")){
+            System.out.println("거부된 사용자");
         } else {
             authorities.add(new SimpleGrantedAuthority(UserRole.USER.getValue()));
         }

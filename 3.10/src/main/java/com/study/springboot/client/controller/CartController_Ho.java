@@ -1,5 +1,6 @@
 package com.study.springboot.client.controller;
 
+import com.study.springboot.Test;
 import com.study.springboot.admin.dto.MemberResponseDTO;
 import com.study.springboot.admin.dto.OrderResponseDto;
 import com.study.springboot.admin.dto.OrderSaveDto;
@@ -11,10 +12,7 @@ import com.study.springboot.client.dto.CartInformation;
 import com.study.springboot.client.dto.MemberJoinDto;
 import com.study.springboot.client.dto.MemberLoginDto;
 import com.study.springboot.client.dto.NonmemberResponseDto;
-import com.study.springboot.client.service.CL_OrderService;
-import com.study.springboot.client.service.CartService_Ho;
-import com.study.springboot.client.service.NonmemberService;
-import com.study.springboot.client.service.OrderDetailSaveDto;
+import com.study.springboot.client.service.*;
 import com.study.springboot.entity.Member;
 import com.study.springboot.entity.MemberListRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.net.http.HttpRequest;
 import java.util.ArrayList;
@@ -43,23 +42,9 @@ public class CartController_Ho {
     private final MemberService memberService;
     private final NonmemberService nonmemberService;
     private final MemberListRepository memberListRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final Cl_MemberService clMemberService;
     private final CartService_Ho cartService;
 
-    @RequestMapping("/cart/nonmember") // 이건 뭐냐
-    @ResponseBody
-    public String nonmemberCart(@RequestParam("item") int item [][]){
-        int item_idx [] = new int[item.length];
-        List<ProductResponseDto> list = new ArrayList<>();
-        int item_quantity [] = new int[item.length];
-        for(int i =0; i<item_idx.length; i++) {
-                item_idx[i] = item[i][0];
-                item_quantity[i] = item[i][1];
-             list.add( productService.findById(item_idx[i]));
-        }
-        System.out.println(list.get(0).getItem_NAME());
-        return "i";
-    }
 
     @RequestMapping("/cart") // 장바구니 구현
     public String cartView(Model model, @RequestParam("item_idx") int item_list[],
@@ -79,67 +64,33 @@ public class CartController_Ho {
     public String saveOrder(OrderSaveDto orderSaveDto,
                             int [] item_QTY,
                             int [] item_IDX,
-                            @RequestParam("delivery_address1") String address1,
-                            @RequestParam("delivery_address2") String address2,
-                            @RequestParam("delivery_address3") String address3,
-                            @RequestParam("sender_phone1") String s_phone1,
-                            @RequestParam("sender_phone2") String s_phone2, // 호준
-                            @RequestParam("phone1") String phone1,
-                            @RequestParam("phone2")String phone2,
+                            HttpServletRequest request,
                             Model model,
                             HttpSession session,
                             MemberJoinDto memberDto,
-                            BindingResult bindingResult,
-                            MemberLoginDto loginDto){
-        orderSaveDto.setOrders_PHONE(phone1+phone2);
-        orderSaveDto.setSenders_PHONE(s_phone1+s_phone2);
-        orderSaveDto.setOrders_ADDRESS(address1+","+address2+","+address3);
-        if(orderSaveDto.getOrders_PAYMENT().equals("무통장결제")){
-            orderSaveDto.setOrders_STATUS("입금대기");
-        }else {
-            orderSaveDto.setOrders_STATUS("배송준비");
-        }
+                            BindingResult bindingResult){
+        orderSaveDto = cartService.setCartInfoToOrderDto(orderSaveDto, request);
         int nonmemberIdx = 0;
         int orderIdx =0;
         OrderDetailSaveDto orderDetailSaveDto = new OrderDetailSaveDto();
         if(session.getAttribute("member_IDX") == null){
+            // 첫 주문인 비회원
             if(nonmemberService.findNonmember(orderSaveDto.getOrders_NAME(), orderSaveDto.getOrders_PHONE()) == null) {
                 orderSaveDto.setAccumulate_MILEAGE(0);
-                nonmemberIdx = orderService.saveNonmember(orderSaveDto.getOrders_NAME(), orderSaveDto.getOrders_PHONE());
+                int nonmemberIDX = cartService.saveNonmember(orderSaveDto);
                 orderSaveDto.setNonmember_IDX(nonmemberIdx);
                 orderIdx = orderService.orderSave(orderSaveDto);
-                for (int i = 0; i < item_QTY.length; i++) {
-                    orderDetailSaveDto.setOdetail_QTY(item_QTY[i]);
-                    orderDetailSaveDto.setItem_IDX(item_IDX[i]);
-                    orderDetailSaveDto.setOdetail_STATUS("기본");
-                    orderDetailSaveDto.setOrdersIDX(orderIdx);
-                    productService.plusSell(item_IDX[i], item_QTY[i]);
-                    orderService.orderDetailSave(orderDetailSaveDto);
-                }
-            }else {
+                cartService.orderDetailSave(orderIdx,item_IDX,item_QTY);
+            }else { // 첫 주문이 아닌 비회원
                 NonmemberResponseDto NonMemDto = nonmemberService.findNonmember(orderSaveDto.getOrders_NAME(), orderSaveDto.getOrders_PHONE());
                 orderSaveDto.setNonmember_IDX(NonMemDto.getIdx());
                 orderIdx = orderService.orderSave(orderSaveDto);
-                for (int i = 0; i < item_QTY.length; i++) {
-                    orderDetailSaveDto.setOdetail_QTY(item_QTY[i]);
-                    orderDetailSaveDto.setItem_IDX(item_IDX[i]);
-                    orderDetailSaveDto.setOdetail_STATUS("기본");
-                    orderDetailSaveDto.setOrdersIDX(orderIdx);
-                    productService.plusSell(item_IDX[i], item_QTY[i]);
-                    orderService.orderDetailSave(orderDetailSaveDto);
-                }
+                cartService.orderDetailSave(orderIdx,item_IDX,item_QTY);
             }
-        }else{
+        }else{ // 회원이 주문할때
             orderSaveDto.setMember_IDX((int)session.getAttribute("member_IDX"));
             orderIdx = orderService.orderSave(orderSaveDto);
-            for(int i=0; i < item_QTY.length; i++){
-                orderDetailSaveDto.setItem_IDX(item_IDX[i]);
-                orderDetailSaveDto.setOdetail_QTY(item_QTY[i]);
-                orderDetailSaveDto.setOdetail_STATUS("기본");
-                orderDetailSaveDto.setOrdersIDX(orderIdx);
-                productService.plusSell(item_IDX[i], item_QTY[i]);
-                orderService.orderDetailSave(orderDetailSaveDto);
-            }
+            cartService.orderDetailSave(orderIdx,item_IDX,item_QTY);
             MemberResponseDTO memberResponseDTO = memberService.findByIDX(((int)session.getAttribute("member_IDX")));
             int mileage = orderSaveDto.getAccumulate_MILEAGE() - orderSaveDto.getUsing_MILEAGE();
             memberResponseDTO.setMember_POINT(memberResponseDTO.getMember_POINT() + mileage);
@@ -149,33 +100,8 @@ public class CartController_Ho {
         model.addAttribute("order",dto);
 
         if (session.getAttribute("memberID") == null) {
-            if (bindingResult.hasErrors()) {
-                // DTO에 설정한 message값을 가져온다.
-                String detail = bindingResult.getFieldError().getDefaultMessage();
-                // DTO에 유효성체크를 걸어놓은 어노테이션명을 가져온다.
-                String bindResultCode = bindingResult.getFieldError().getCode();
-                System.out.println(detail + ":" + bindResultCode);
-            }
-
-            String encodedPassword = passwordEncoder.encode(memberDto.getMemberPw());
-            System.out.println( "encodedPassword:" + encodedPassword );
-            memberDto.setMemberPw( encodedPassword );
-            memberDto.setMember_POINT(0);
-            memberDto.setStatus("활동");
-            memberDto.setMember_NAME(orderSaveDto.getSenders_NAME());
-            memberDto.setMember_ADDRESS(orderSaveDto.getOrders_ADDRESS());
-            memberDto.setMember_POST(orderSaveDto.getOrders_POST());
-            memberDto.setMember_PHONE(orderSaveDto.getSenders_PHONE());
-
-            try {
-                Member entity = memberDto.toSaveEntity();
-                memberListRepository.save(entity);
-            } catch (DataIntegrityViolationException e) {
-                e.printStackTrace();
-                bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            }
+            memberDto =  clMemberService.setJoinInfoFromOrder(orderSaveDto);
+            clMemberService.userSave(memberDto, bindingResult);
             HttpStatus status = HttpStatus.OK;
             if (status == HttpStatus.OK) System.out.println("회원가입 성공!");
         }

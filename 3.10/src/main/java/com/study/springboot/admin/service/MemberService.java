@@ -21,8 +21,7 @@ public class MemberService {
         return dto;
     }
 
-    @Transactional(readOnly = true)
-
+    @Transactional
     public void changeMemberInfo(MemberResponseDTO dto){
         memberRepository.save( dto.toUpdateEntity());
     }

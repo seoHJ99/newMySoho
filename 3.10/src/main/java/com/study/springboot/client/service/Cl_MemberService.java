@@ -1,6 +1,7 @@
 package com.study.springboot.client.service;
 
 import com.study.springboot.admin.dto.MemberResponseDTO;
+import com.study.springboot.admin.dto.OrderSaveDto;
 import com.study.springboot.client.dto.MemberJoinDto;
 import com.study.springboot.entity.Member;
 import com.study.springboot.entity.MemberListRepository;
@@ -20,14 +21,21 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class Cl_MemberService {
     private final PasswordEncoder passwordEncoder;
-    private MemberListRepository memberListRepository;
+    private final MemberListRepository memberListRepository;
 
     @Transactional
     public int userSave(MemberJoinDto dto, BindingResult bindingResult){
-        String encodedPassword = passwordEncoder.encode(dto.getMemberPw());
-        dto.setMemberPw( encodedPassword );
+            String encodedPassword = passwordEncoder.encode(dto.getMemberPw());
+            dto.setMemberPw(encodedPassword);
         dto.setMember_POINT(0);
         dto.setStatus("활동");
+        if (bindingResult.hasErrors()) {
+            // DTO에 설정한 message값을 가져온다.
+            String detail = bindingResult.getFieldError().getDefaultMessage();
+            // DTO에 유효성체크를 걸어놓은 어노테이션명을 가져온다.
+            String bindResultCode = bindingResult.getFieldError().getCode();
+            System.out.println(detail + ":" + bindResultCode);
+        }
         try {
             Member entity = dto.toSaveEntity();
             memberListRepository.save(entity);
@@ -79,4 +87,16 @@ public class Cl_MemberService {
         }
         return key.toString();
     }
+
+    public MemberJoinDto setJoinInfoFromOrder(OrderSaveDto orderSaveDto){
+        MemberJoinDto memberDto = new MemberJoinDto();
+        memberDto.setMember_POINT(0);
+        memberDto.setStatus("활동");
+        memberDto.setMember_NAME(orderSaveDto.getSenders_NAME());
+        memberDto.setMember_ADDRESS(orderSaveDto.getOrders_ADDRESS());
+        memberDto.setMember_POST(orderSaveDto.getOrders_POST());
+        memberDto.setMember_PHONE(orderSaveDto.getSenders_PHONE());
+        return memberDto;
+    }
+
 }

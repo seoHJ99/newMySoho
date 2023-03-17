@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -40,6 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/joinAction").permitAll()
                 .antMatchers("/main").permitAll()
                 .antMatchers("/templates/**").permitAll()
+                .antMatchers("/myorder/list").hasAnyRole("USER","ADMIN")
+                .antMatchers("/user/**").hasAnyRole("USER","ADMIN")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 //.anyRequest().permitAll()
                 .and()
@@ -51,7 +54,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("memberPw")
                 //인증성공 후 별도의 처리가 필요한경우 커스텀 핸들러를 생성하여 등록할 수 있습니다.
                 .successHandler((request, response, authentication) -> {
-                    response.sendRedirect("/main");
+                    System.out.println("상태:"+authentication.getAuthorities());
+                    if(!authentication.getAuthorities().equals("ROLE_USER") && !authentication.getAuthorities().equals("ROLE_ADMIN")){
+                        response.sendRedirect("/denied");
+                    }else {
+                        response.sendRedirect("/main");
+                    }
                     List<Member> list = memberListRepository.findByUserLoginId(request.getParameter("memberID"));
                     Member entity = list.get(0);
                     request.getSession().setAttribute("memberEntity", entity);
@@ -69,7 +77,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logoutAction"))
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true)
-                .logoutSuccessUrl("/main");
+                .logoutSuccessUrl("/main")
+             .and()
+                .exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler());
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        CustomAccessDeniedHandler accessDeniedHandler = new CustomAccessDeniedHandler();
+        accessDeniedHandler.setErrorPage("/denied");
+        return accessDeniedHandler;
     }
 
     //BCrypt 암호화 엔코더 빈 생성
