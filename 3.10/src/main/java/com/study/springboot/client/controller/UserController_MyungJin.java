@@ -287,13 +287,14 @@ public class UserController_MyungJin {
     @RequestMapping("/qna/myList/product")
     public String myQnAList(HttpSession session, Model model){
         List<QnaResponseDto> qnaResponseDtos = qnaService.findByMemberId((int)session.getAttribute("member_IDX"));
-        List<QnaResponseDto> productQna = new ArrayList<>();
+        List<ProductQnaDto> productQnaDtos = new ArrayList<>();
         for(QnaResponseDto dto : qnaResponseDtos){
             if(dto.getQna_CATE().equals("상품")){
-                productQna.add(dto);
+                ProductQnaDto dto2 = new ProductQnaDto(qnaService.findProductConnected(dto.getItem_IDX()), dto);
+                productQnaDtos.add(dto2);
             }
         }
-        model.addAttribute("productQNA", productQna);
+        model.addAttribute("dto", productQnaDtos);
         return "/client/user/Member/myProductQnA";
     }
 
