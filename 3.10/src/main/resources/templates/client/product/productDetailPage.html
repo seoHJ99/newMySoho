@@ -142,8 +142,7 @@
 				color: black;
 			}
 			.bg-blank {
-				height: 9px;
-				border-top: 1px solid #d0d0d0;
+				height: 1px;
 				background: rgb(242, 243, 245);
 			}
 			.tab {
@@ -1165,21 +1164,20 @@
       }
       .review_table {
         min-width: 640px;
-        border: 1px solid #d0d0d0;
+        border: 0px solid #d0d0d0;
         border-radius: 20px;
-        margin-top: 15px;
+        margin-top: 10px;
       }
 			.tab {
 				z-index: 1;
 			}
       .review_tr > td {
         font-size: smaller;
-        color: black;
+        color: slategray;
         padding-left: 10px;
         padding-right: 10px;
-				max-width: 500px;
-				padding-top: 5px;
-				padding-bottom: 5px;
+        padding-bottom:10px;
+        min-height:35px;
       }
 			.starScore {
 				font-weight: bold;
@@ -1187,18 +1185,17 @@
 			}
       .review_score > td {
         font-weight: bold;
-        padding: 10px;
-        color: rgb(122, 133, 231);
+        padding-left: 10px;
+        color: #ff8844;
       }
       .review_title > td {
-        font-size: large;
-        font-weight: bolder;
-        color: rgb(122, 121, 121);
+        font-size: 15px;
+        color: slategray;
         padding-left: 10px;
         padding-bottom: 10px;
       }
       .review_content > td {
-        font-size: small;
+        font-size: 15px;
         padding-left: 10px;
         padding-bottom: 10px;
         padding-top: 5px;
@@ -1252,19 +1249,26 @@
         transition: all 0.3s ease-in-out;
       }
 			.review_content > td {
-				font-size: medium;
 				padding-left: 10px;
-				padding-top: 5px;
 				padding-bottom: 7px;
+				padding-top: 0px;
 			}
 			.imageBox {
 				display: flex;
 				justify-content: center;
 				padding-bottom: 7px;
+				padding-bottom: 10px;
 			}
-			.reivewDate {
+			.imageBox > img {
+			max-width : 620px;
+			max-height : 620px;
+			}
+			.reviewDate {
 				color: #999999;
 				font-size: small;
+				min-width: 100px;
+				max-width: 100px;
+
 			}
 			.optionCont {
 				overflow-y: scroll;
@@ -1307,6 +1311,7 @@
 			.reivewCon {
 				border: 1px solid darkgray;
 				border-radius: 15px;
+				margin-top:10px;
 			}
 			.overlay {
 				background-color: #000;
@@ -1917,11 +1922,6 @@
 												<th:block th:each="review : ${review}">
 													<div class="reivewCon">
 														<table class="review_table reviewTable">
-															<tr class="review_tr">
-																<td th:text="${review.review_WRITER}">
-																	리뷰 작성자
-																</td>
-															</tr>
 															<tr class="review_score">
 																<td class="starScore">
 																	<th:block th:switch="${review.review_SCORE}">
@@ -1932,16 +1932,18 @@
 																		<span th:case="5">★★★★★</span>
 																	</th:block>
 																</td>
-																<td
-																	class="reivewDate"
-																	th:text="${review.review_REGDATE}"
-																>
-																	리뷰 작성날짜
+															</tr>
+															<tr class="review_tr">
+																<td >
+																	<span th:text="${review.review_WRITER}"></span>
+																	<span th:text="${review.review_REGDATE}"></span>
 																</td>
+
 															</tr>
 
+
 															<tr class="review_title">
-																<td th:text="${review.review_TITLE}">
+																<td th:text="${product.item_NAME}">
 																	리뷰제목
 																</td>
 															</tr>
