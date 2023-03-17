@@ -1511,7 +1511,7 @@
 											<a
 												href="javascript:sizeTap('size')"
 												class="size-tap tap"
-												><div class="bold">사이즈</div>
+												><div class="bold optionTXT">사이즈</div>
 												<!--  -->
 												<img
 													class="btn-up btn-up-size"
@@ -3486,6 +3486,14 @@
 
 		<script th:inline="javascript">
 					 /*<![CDATA[*/
+     const optionCon = /*[[${options}]]*/;
+		 if(optionCon != null){
+					 if(optionCon[0].item_OPTION == 'S' || optionCon[0].item_OPTION == 'M' || optionCon[0].item_OPTION == 'L'){
+						$(".optionTXT").text('사이즈');
+					 }else{
+						$(".optionTXT").text('색상');
+					 }
+					}
 			function cartBtn(a) {
 						document.querySelector(".bg-option").className = "bg-option";
 						let count = 0;
@@ -3498,7 +3506,7 @@
 						}
 						basketNum = Number(basketNum) + Number(count);
 						document.querySelector(".basket-num").innerHTML = basketNum;
-						const optionCon = /*[[${options}]]*/;
+						
 						for(let i=0; i< optionCon.length; i++){
 							if($(".final-size").eq(i).text() == optionCon[i].item_OPTION && $(".hidden-option-tap").eq(i).css("display") != "none"){
 								let count = $(".MSH-sto-stock").eq(i).val();
