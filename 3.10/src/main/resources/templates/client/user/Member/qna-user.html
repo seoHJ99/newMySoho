@@ -384,6 +384,23 @@
 			}
 		</script>
 		<script>
+		 // 명진 수정----------------
+    function sortSelect(idx) {
+        if (document.querySelector("#select" + idx).style.display === "block") {
+            document.querySelector("#select" + idx).style.display = "none";
+        } else {
+            document.querySelector("#select" + idx).style.display = "block";
+        }
+    }
+
+    function modifySelect(idx) {
+        if (document.querySelector("#modify" + idx).style.display === "block") {
+            document.querySelector("#modify" + idx).style.display = "none";
+        } else {
+            document.querySelector("#modify" + idx).style.display = "block";
+        }
+    }
+
 			function show() {
 				document.querySelector(".background").className = "background show";
 			}
