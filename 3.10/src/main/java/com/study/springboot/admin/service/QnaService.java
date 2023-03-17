@@ -1,6 +1,7 @@
 package com.study.springboot.admin.service;
 
 
+import com.study.springboot.admin.dto.ProductResponseDto;
 import com.study.springboot.entity.Qna;
 import com.study.springboot.entity.QnaRepository;
 import com.study.springboot.admin.dto.QnaResponseDto;
@@ -17,6 +18,7 @@ public class QnaService {
 
     private final QnaRepository qnaRepository;
     private final MemberService memberService;
+    private final ProductService productService;
 
     @Transactional(readOnly = true)
     public QnaResponseDto findById (int qna_IDX){
@@ -45,5 +47,12 @@ public class QnaService {
            dtoList.add(dto);
        }
        return dtoList;
+    }
+
+    @Transactional(readOnly = true)
+    public ProductResponseDto findProductConnected(int productIdx){
+        List<ProductResponseDto> temp = new ArrayList<>();
+        ProductResponseDto pdDto = productService.findById(productIdx);
+        return pdDto;
     }
 }

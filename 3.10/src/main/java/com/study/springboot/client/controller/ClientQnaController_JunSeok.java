@@ -249,16 +249,21 @@ public class ClientQnaController_JunSeok {
     @RequestMapping("/qna/answer")
     public String ClientQnaAnswer(int idx, Model model, @RequestParam(value = "Pw", required = false) String pw){
         QnaResponseDto qnaResponseDto = qnaService.findById(idx);
-        if(qnaResponseDto.getMember_IDX() != null) {
-            model.addAttribute("dto", qnaResponseDto);
-            return "/client/theOthers/qnaView";
-        }else {
-            if(qnaResponseDto.getQna_PW().equals(pw)){
+        if(qnaResponseDto.getQna_SECRET() == 0) {
+            if (qnaResponseDto.getMember_IDX() != null) {
                 model.addAttribute("dto", qnaResponseDto);
                 return "/client/theOthers/qnaView";
-            }else {
-                return "";
+            } else {
+                if (qnaResponseDto.getQna_PW().equals(pw)) {
+                    model.addAttribute("dto", qnaResponseDto);
+                    return "/client/theOthers/qnaView";
+                } else {
+                    return "";
+                }
             }
+        }else {
+            model.addAttribute("dto", qnaResponseDto);
+            return "/client/theOthers/qnaView";
         }
     }
 }

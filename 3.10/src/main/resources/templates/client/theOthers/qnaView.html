@@ -19,14 +19,33 @@
 			}
       textarea{
             resize: none;
+						font-size: 17px;
       }
       .blank{
         margin-top: 3px;
         margin-bottom: 3px;
         width: 100%;
         height: 2px;
-        background-color: darkgray;
+        background-color: #b0b0b0;
       }
+			.select{
+				height: 0;
+			}
+			.qa-write{
+				display: block;
+				max-width: 86px;
+				padding: 10px;
+			}
+			.chheck-title{
+				padding: 10px;
+			}
+			.input-box2{
+				margin-top: 10px;
+			}
+			.answer-box{
+				padding:10px;
+			}
+
 		</style>
 	</head>
 
@@ -46,12 +65,8 @@
 				/>
 				<div class="qa-write-wrap">
 					<div class="qa-write">
-						<div class="select">
+						<div class="sort">
 							<div th:text="${dto.qna_SORT}"></div>
-							<img
-								src="https://image.makeshop.co.kr/mysoho/assets/shop/img/common/arr_bottom.png"
-								alt=""
-							/>
 						</div>
 					</div>
 					<div class="chheck-title">
@@ -61,7 +76,7 @@
 								type="checkbox"
 								name="check1"
 								id="check1"
-                readonly
+                disabled
                 th:checked="${dto.qna_SECRET eq 0}"
 							/>
 							<label for="check1"></label>
@@ -79,21 +94,24 @@
 							style="width: 100%; min-height: 300px;"
 							class="mt-10 qna_CONTENT"
 						></textarea>
-            <div class="blank">
-            </div>
-            <div>
+
+            <div class="answer-box">
              <strong>답변내용</strong> 
             </div>
+						<div class="blank">
+
+						</div>
             <textarea 
             readonly
             style="width: 100%; min-height: 300px;"
-							class="mt-10 qna_CONTENT"
-              th:text=${dto.qna_REACT}>
+						placeholder="답변이 등록되지 않았습니다."
+						class="mt-10 qna_CONTENT"
+            th:text=${dto.qna_REACT}>
             </textarea>
 					</div>
 					<button
 						onclick="location.href='/client/qna/list'"
-						class="input-box btn-h42-gray"
+						class="input-box btn-h42-gray input-box2"
 					>
 						뒤로가기
 					</button>

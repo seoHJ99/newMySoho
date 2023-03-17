@@ -34,15 +34,14 @@ public class ProductController {
     private final MainService mainService;
     private final SearchService searchService;
 
-
     @RequestMapping("/product")
     public String product(int item_idx, Model model) {
         ProductResponseDto dto = productService.findById(item_idx);
 
         searchService.categoryInsertAndFilter();
 
-        model.addAttribute("cate1",cateMap.get("cate1"));
-        model.addAttribute("cate2",cateMap.get("cate2"));
+        model.addAttribute("cate1", cateMap.get("cate1"));
+        model.addAttribute("cate2", cateMap.get("cate2"));
 
         int scoreSum = 0;
         List<ReviewResponseDTO> reviewList = productService.findReviewScore(item_idx);
