@@ -64,10 +64,8 @@ public class Cl_ListService_HyungMin {
     // 상품 리스트 전체 가져오기
     @Transactional(readOnly = true)
     public List<ProductResponseDto> findProductList(){
-
         List<Product> list = productRepository.findAllNoRepeat();
         List<ProductResponseDto> dtoList = getPriceDiscount(list);
-
         return dtoList;
     }
 

@@ -12,6 +12,7 @@ import com.study.springboot.client.dto.MemberJoinDto;
 import com.study.springboot.client.dto.MemberLoginDto;
 import com.study.springboot.client.dto.NonmemberResponseDto;
 import com.study.springboot.client.service.CL_OrderService;
+import com.study.springboot.client.service.CartService_Ho;
 import com.study.springboot.client.service.NonmemberService;
 import com.study.springboot.client.service.OrderDetailSaveDto;
 import com.study.springboot.entity.Member;
@@ -43,6 +44,7 @@ public class CartController_Ho {
     private final NonmemberService nonmemberService;
     private final MemberListRepository memberListRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CartService_Ho cartService;
 
     @RequestMapping("/cart/nonmember") // 이건 뭐냐
     @ResponseBody
@@ -63,25 +65,7 @@ public class CartController_Ho {
     public String cartView(Model model, @RequestParam("item_idx") int item_list[],
                            @RequestParam("item_quantity") int item_quantity[],
                            HttpSession session){
-        List<CartInformation> cartDtoList = new ArrayList<>();
-        List<Integer> count = new ArrayList<>();
-        for(int i=0; i<item_list.length; i++){
-            ProductResponseDto dtoSmall = productService.findById(item_list[i]);
-            int price = dtoSmall.getItem_PRICE();
-            int discount = dtoSmall.getItem_DISCOUNT();
-            dtoSmall.setItem_PRICE_DISCOUNT((int) (Math.floor((price-(price*discount/100))/100)*100));
-            CartInformation cartInformation = CartInformation.builder()
-                    .item_IDX(dtoSmall.getItem_idx())
-                    .item_OPTION(dtoSmall.getItem_OPTION())
-                    .item_COUNT(item_quantity[i])
-                    .item_PRICE_DISCOUNT(dtoSmall.getItem_PRICE_DISCOUNT())
-                    .item_DISCOUNT(dtoSmall.getItem_DISCOUNT())
-                    .item_IMAGE(dtoSmall.getItem_IMAGE())
-                    .item_PRICE(dtoSmall.getItem_PRICE())
-                    .item_NAME(dtoSmall.getItem_NAME())
-                    .build();
-            cartDtoList.add(cartInformation);
-        }
+        List<CartInformation> cartDtoList = cartService.makeCartDto(item_list, item_quantity);
         Optional<Object> memberIdx = Optional.ofNullable(session.getAttribute("member_IDX"));
         memberIdx.ifPresent( idx ->
                                     {MemberResponseDTO memberResponseDTO = memberService.findByIDX((int)idx);
