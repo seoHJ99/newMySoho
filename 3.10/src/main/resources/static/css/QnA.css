@@ -77,8 +77,8 @@
 }
 .qa-list-wrap {
   display: flex;
-  border-top: 1px solid #d6d6d6;
-  padding: 20px 0;
+  /*border-top: 1px solid #d6d6d6;*/
+  /*padding: 20px 0;*/
 }
 .qna-board-list {
   display: flex;

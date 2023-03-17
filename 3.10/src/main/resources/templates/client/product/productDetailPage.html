@@ -749,7 +749,7 @@
 			#buyBtn {
 				width: 100%;
 				max-width: 640px;
-				z-index: 100;
+				z-index: 1;
 				position: fixed;
 				bottom: 0;
 			}
@@ -962,8 +962,8 @@
 			}
 			.qa-list-wrap {
 				display: flex;
-				border-top: 1px solid #d6d6d6;
-				padding: 20px 0;
+				/*border-top: 1px solid #d6d6d6;*/
+				/*padding: 20px 0;*/
 				position: relative;
 			}
 			.qna-board-list {
@@ -1124,7 +1124,7 @@
 			#buyBtn {
 				width: 100%;
 				max-width: 640px;
-				z-index: 100;
+				z-index: 1;
 				position: fixed;
 				bottom: 0;
 			}
@@ -1404,11 +1404,11 @@
 					alt=""
 				/>
 				<!-- 확대링크이미지 z-index예정 -->
-				<a href="javascript:openPopup('product-onepiece3-zoom.html')"
-					><img
-						src="https://image.makeshop.co.kr/mysoho/assets/shop/img/btn/h67_enlarge.png"
-						alt=""
-				/></a>
+<!--				<a href="javascript:openPopup('product-onepiece3-zoom.html')"-->
+<!--					><img-->
+<!--						src="https://image.makeshop.co.kr/mysoho/assets/shop/img/btn/h67_enlarge.png"-->
+<!--						alt=""-->
+<!--				/></a>-->
 			</div>
 			<!-- 상품명 -->
 			<div class="prd-info MSH-prd-info-19520">
@@ -1819,7 +1819,6 @@
 							<button
 								class="js-mo-tpl btn-h42-gray mt-25"
 								id="buyBtn"
-								펼
 							>
 								결제하기
 							</button>
@@ -1914,6 +1913,9 @@
 									<div class="review-wrap gallary-list js-reviews">
 										<div class="txt-detail non js-reviewsEmpty">
 											<div class="no-text">
+												<th:block th:if="${reviewCount == 0}">
+													<div>상품 후기가 없습니다.</div>
+												</th:block>
 												<th:block th:each="review : ${review}">
 													<div class="reivewCon">
 														<table class="review_table reviewTable">
@@ -1987,6 +1989,15 @@
 												alt=""
 											/><strong> 문의작성</strong></a
 										>
+									</div>
+									<div style="padding: 35px 15px; text-align: center">
+									<script  th:inline="javascript">
+										let qnaCount = $(".js-inquiryArea").length;
+										$(".js-inquiryCnt").text(qnaCount);
+										if (qnaCount === 0) {
+											document.write('상품 문의가 없습니다.');
+										}
+									</script>
 									</div>
 								</div>
 								<div class="qa-list-wrap js-qnasArea">

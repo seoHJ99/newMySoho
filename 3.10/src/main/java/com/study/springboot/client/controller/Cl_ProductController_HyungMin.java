@@ -45,6 +45,7 @@ Cl_ProductController_HyungMin {
         }
         List<QnaResponseDto> list = clientQnaServiceJunSeok.findAll();
 
+
         model.addAttribute("list", list);
         model.addAttribute("product", dto);
         model.addAttribute("review",dto1);
