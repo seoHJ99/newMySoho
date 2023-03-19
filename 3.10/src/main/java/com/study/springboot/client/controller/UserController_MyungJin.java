@@ -262,6 +262,6 @@ public class UserController_MyungJin {
     @RequestMapping("/denied")
     @ResponseBody
     public String denied(){
-        return "<script>alert('정지된 이용자입니다.'); location.href='/logoutAction'</script>";
+        return "<script> location.href='/logoutAction'; alert('정지된 이용자입니다.');</script>";
     }
 }

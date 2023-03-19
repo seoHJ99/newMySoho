@@ -59,6 +59,9 @@ public class MemberController {
         try {
             String encodedPassword = passwordEncoder.encode(memberResponseDTO.getMemberPw());
             memberResponseDTO.setMemberPw( encodedPassword );
+            if(memberResponseDTO.getStatus().equals("정지")){
+                memberResponseDTO.setMember_ROLE("ROLE_DENIED") ;
+            }
             Member entity = memberResponseDTO.toUpdateEntity();
             memberListRepository.save(entity);
         } catch (IllegalArgumentException e) {

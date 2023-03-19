@@ -55,7 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //인증성공 후 별도의 처리가 필요한경우 커스텀 핸들러를 생성하여 등록할 수 있습니다.
                 .successHandler((request, response, authentication) -> {
                     System.out.println("상태:"+authentication.getAuthorities());
-                    if(!authentication.getAuthorities().equals("ROLE_USER") && !authentication.getAuthorities().equals("ROLE_ADMIN")){
+                    System.out.println( authentication.getAuthorities().toString());
+                    System.out.println(authentication.getAuthorities().toString().equals("[ROLE_ADMIN]"));
+                    if(!authentication.getAuthorities().toString().equals("[ROLE_USER]") && !authentication.getAuthorities().toString().equals("[ROLE_ADMIN]")){
                         response.sendRedirect("/denied");
                     }else {
                         response.sendRedirect("/main");
