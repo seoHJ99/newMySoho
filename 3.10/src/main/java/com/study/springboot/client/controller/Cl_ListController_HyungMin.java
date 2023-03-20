@@ -6,6 +6,7 @@ import com.study.springboot.client.dto.ProductResponseDto;
 import com.study.springboot.client.service.Cl_ListService_HyungMin;
 import com.study.springboot.client.service.Cl_SearchService_HyungMin;
 import com.study.springboot.client.service.ClientNoticeService;
+import com.study.springboot.client.service.ClientQnaService_JunSeok;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

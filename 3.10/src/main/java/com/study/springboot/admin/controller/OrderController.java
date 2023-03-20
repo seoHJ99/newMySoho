@@ -24,20 +24,10 @@ public class OrderController {
     @RequestMapping("/order")
     public String orderDetail(Integer idx, Model model){
 
-        ArrayList<OrderInfoDto> info = new ArrayList<>();
         List<ProductResponseDto> orderProductsInfo =
         orderService.findOrderItems(orderService.findOrderDetailByOrderId(idx));
         List<OrderDetail> count = orderService.findOrderDetailByOrderId(idx);
-
-        for(int i=0; i<orderProductsInfo.size(); i++){
-            OrderInfoDto orderInfoDto = new OrderInfoDto();
-            orderInfoDto.setItem_name(orderProductsInfo.get(i).getItem_NAME());
-           orderInfoDto.setItem_price(orderProductsInfo.get(i).getItem_PRICE());
-           orderInfoDto.setItem_quantity(count.get(i).getOdetail_QTY());
-           orderInfoDto.setItem_total(orderInfoDto.getItem_quantity() * orderInfoDto.getItem_price());
-           orderInfoDto.setItem_status(count.get(i).getOdetail_STATUS());
-           info.add(orderInfoDto);
-        }
+       ArrayList<OrderInfoDto> info = orderService.setInfo(orderProductsInfo, count);
         int totalPrice =0;
         for(int i=0; i<info.size(); i++){
             totalPrice += info.get(i).getItem_total();

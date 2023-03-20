@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -15,9 +17,9 @@ public class MemberService {
 
     @Transactional(readOnly = true)
 
-    public MemberResponseDTO findByIDX(int idx){
-        Member entity = memberRepository.findById(idx).get();
-        MemberResponseDTO dto = new MemberResponseDTO(entity);
+    public MemberResponseDTO findByIDX(int idx) throws Exception {
+        Optional<Member> entity = memberRepository.findById(idx);
+        MemberResponseDTO dto = new MemberResponseDTO(entity.get());
         return dto;
     }
 

@@ -120,7 +120,6 @@ public class OrderService {
             orderDetailTemp.setUsing_MILEAGE(dtoList.get(j).getUsing_MILEAGE());
             orderDetailTemp.setMember_IDX(dtoList.get(j).getMember_IDX());
 
-
             int priceTemp = 0;
             int discountPrice = 0;
             int refundPrice = 0;
@@ -210,4 +209,18 @@ public class OrderService {
         return ordersStatusList;
     }
 
+    public ArrayList<OrderInfoDto> setInfo(List<ProductResponseDto> orderProductsInfo,
+                               List<OrderDetail> count ){
+        ArrayList<OrderInfoDto> info = new ArrayList<>();
+        for(int i=0; i<orderProductsInfo.size(); i++){
+            OrderInfoDto orderInfoDto = new OrderInfoDto();
+            orderInfoDto.setItem_name(orderProductsInfo.get(i).getItem_NAME());
+            orderInfoDto.setItem_price(orderProductsInfo.get(i).getItem_PRICE());
+            orderInfoDto.setItem_quantity(count.get(i).getOdetail_QTY());
+            orderInfoDto.setItem_total(orderInfoDto.getItem_quantity() * orderInfoDto.getItem_price());
+            orderInfoDto.setItem_status(count.get(i).getOdetail_STATUS());
+            info.add(orderInfoDto);
+        }
+     return info;
+    }
 }

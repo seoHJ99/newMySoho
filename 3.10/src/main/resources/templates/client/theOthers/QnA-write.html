@@ -92,14 +92,6 @@
 								style="width: 100%"
 								class="mt-10 qna_CONTENT"
 						></textarea>
-						<th:block sec:authorize="isAuthenticated()">
-							<input
-									type="hidden"
-									name="qna_PW"
-									class="mt-10"
-									th:value="${session.memberPw}"
-							/>
-						</th:block>
 						<th:block sec:authorize="isAnonymous()">
 							<div>
 								<input

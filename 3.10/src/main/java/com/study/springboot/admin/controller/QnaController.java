@@ -1,6 +1,7 @@
 package com.study.springboot.admin.controller;
 
 
+import com.study.springboot.client.service.ClientQnaService_JunSeok;
 import com.study.springboot.entity.Qna;
 import com.study.springboot.admin.dto.QnaResponseDto;
 import com.study.springboot.admin.service.QnaService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class QnaController {
 
     private final QnaService qnaService;
+
     @GetMapping("/qna")
     public String index ( int idx, Model model){
         QnaResponseDto qnaResponseDto = qnaService.findById(idx);
@@ -31,7 +33,6 @@ public class QnaController {
             model.addAttribute("answer", "미답변");
         }
         model.addAttribute("dto", qnaResponseDto);
-
         return "qna"; //qna.html로 리턴
     }
 
