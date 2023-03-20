@@ -23,16 +23,16 @@ Cl_ProductController_HyungMin {
     private final ClientReviewService_JunTae clientReviewService;
     private final ClientQnaService_JunSeok clientQnaServiceJunSeok;
 
-    @RequestMapping("/product")
+    @RequestMapping("/product") // 제품 상세 페이지
     public String product(@RequestParam("idx") int item_IDX, Model model) {
         ProductResponseDto dto = clProductService.findById(item_IDX);
         List<ProductResponseDto> all = clProductService.findByAllConnection(item_IDX);
         List<ReviewResponseDto> dto1 = clientReviewService.findByItemId(item_IDX);
-        if(!all.isEmpty()){
+        if(!all.isEmpty()){ // 옵션이 존재할경우
             model.addAttribute("options", all);
         }
         float avg=0;
-        if(dto1.size()>0) {
+        if(dto1.size()>0) { // 리뷰 별점
                 for (int i=0; i<dto1.size(); i++) {
                     ReviewResponseDto reviewResponseDto = dto1.get(i);
                     if(reviewResponseDto != null && reviewResponseDto.getReview_STATUS().equals("공개")) {
@@ -53,7 +53,7 @@ Cl_ProductController_HyungMin {
         model.addAttribute("reviewCount", dto1.size());
         return "/client/product/productDetailPage";
     }
-    @RequestMapping("/product/detail")
+    @RequestMapping("/product/detail") // 제품 상세 새 페이지
     public String productDetail(int item_IDX, Model model){
         ProductResponseDto dto = clProductService.findById(item_IDX);
         model.addAttribute("item_DETAIL", dto.getItem_DETAIL());
