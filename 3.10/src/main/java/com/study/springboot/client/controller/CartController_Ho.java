@@ -61,7 +61,14 @@ public class CartController_Ho {
     public String saveOrder(OrderSaveDto orderSaveDto,
                             int [] item_QTY,
                             int [] item_IDX,
-                            HttpServletRequest request,
+                            @RequestParam("delivery_address1") String address1,
+                            @RequestParam("delivery_address2") String address2,
+                            @RequestParam("delivery_address3") String address3,
+                            @RequestParam("sender_phone1") String s_phone1,
+                            @RequestParam("sender_phone2") String s_phone2, // 호준
+                            @RequestParam("phone1") String phone1,
+                            @RequestParam("phone2")String phone2,
+                            @RequestParam(value = "joinCheck", required = false) String joinCheck,
                             Model model,
                             HttpSession session,
                             MemberJoinDto memberDto,
@@ -96,9 +103,35 @@ public class CartController_Ho {
         OrderResponseDto dto = orderService2.findOrderDto(orderIdx);
         model.addAttribute("order",dto);
 
-        if (session.getAttribute("memberID") == null) {
-            memberDto =  clMemberService.setJoinInfoFromOrder(orderSaveDto);
-            clMemberService.userSave(memberDto, bindingResult);
+        System.out.println(joinCheck);
+        if (session.getAttribute("memberID") == null && joinCheck != null && joinCheck.equals("on")) {
+            if (bindingResult.hasErrors()) {
+                // DTO에 설정한 message값을 가져온다.
+                String detail = bindingResult.getFieldError().getDefaultMessage();
+                // DTO에 유효성체크를 걸어놓은 어노테이션명을 가져온다.
+                String bindResultCode = bindingResult.getFieldError().getCode();
+                System.out.println(detail + ":" + bindResultCode);
+            }
+
+            String encodedPassword = passwordEncoder.encode(memberDto.getMemberPw());
+            System.out.println( "encodedPassword:" + encodedPassword );
+            memberDto.setMemberPw( encodedPassword );
+            memberDto.setMember_POINT(0);
+            memberDto.setStatus("활동");
+            memberDto.setMember_NAME(orderSaveDto.getSenders_NAME());
+            memberDto.setMember_ADDRESS(orderSaveDto.getOrders_ADDRESS());
+            memberDto.setMember_POST(orderSaveDto.getOrders_POST());
+            memberDto.setMember_PHONE(orderSaveDto.getSenders_PHONE());
+
+            try {
+                Member entity = memberDto.toSaveEntity();
+                memberListRepository.save(entity);
+            } catch (DataIntegrityViolationException e) {
+                e.printStackTrace();
+                bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            }
             HttpStatus status = HttpStatus.OK;
             if (status == HttpStatus.OK) System.out.println("회원가입 성공!");
         }
