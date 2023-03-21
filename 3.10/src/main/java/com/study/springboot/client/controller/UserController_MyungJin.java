@@ -121,7 +121,7 @@ public class UserController_MyungJin {
 
     // 마이페이지 by 형민
     @GetMapping("/myorder/list")
-    public String userMyOrderList(HttpSession session, Model model) throws Exception {
+    public String userMyOrderList(HttpSession session, Model model) {
         int memSession = (int) session.getAttribute("member_IDX");
         MemberResponseDTO mem = memberService.findByIDX(memSession);
         List<OrderResponseDto> dtoList = orderService.findOrderByMemberIDX(memSession); // 주문 정보. 해당 사용자가 주문한 모든 내역

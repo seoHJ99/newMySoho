@@ -1,26 +1,35 @@
 package com.study.springboot.client.controller;
 
+import com.study.springboot.Test;
 import com.study.springboot.admin.dto.MemberResponseDTO;
 import com.study.springboot.admin.dto.OrderResponseDto;
 import com.study.springboot.admin.dto.OrderSaveDto;
+import com.study.springboot.admin.dto.ProductResponseDto;
 import com.study.springboot.admin.service.MemberService;
 import com.study.springboot.admin.service.OrderService;
 import com.study.springboot.admin.service.ProductService;
 import com.study.springboot.client.dto.CartInformation;
 import com.study.springboot.client.dto.MemberJoinDto;
+import com.study.springboot.client.dto.MemberLoginDto;
 import com.study.springboot.client.dto.NonmemberResponseDto;
 import com.study.springboot.client.service.*;
+import com.study.springboot.entity.Member;
 import com.study.springboot.entity.MemberListRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.net.http.HttpRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,13 +53,7 @@ public class CartController_Ho {
         List<CartInformation> cartDtoList = cartService.makeCartDto(item_list, item_quantity);
         Optional<Object> memberIdx = Optional.ofNullable(session.getAttribute("member_IDX"));
         memberIdx.ifPresent( idx ->
-                                    {
-                                        MemberResponseDTO memberResponseDTO = null;
-                                        try {
-                                            memberResponseDTO = memberService.findByIDX((int)idx);
-                                        } catch (Exception e) {
-                                            throw new RuntimeException(e);
-                                        }
+                                    {MemberResponseDTO memberResponseDTO = memberService.findByIDX((int)idx);
                                         model.addAttribute("member",memberResponseDTO);
                                     });
         model.addAttribute("item",cartDtoList);
@@ -72,7 +75,7 @@ public class CartController_Ho {
                             Model model,
                             HttpSession session,
                             MemberJoinDto memberDto,
-                            BindingResult bindingResult) throws Exception {
+                            BindingResult bindingResult){
         orderSaveDto = cartService.setCartInfoToOrderDto(orderSaveDto, request);
         int nonmemberIdx = 0;
         int orderIdx =0;

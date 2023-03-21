@@ -37,7 +37,9 @@ public class ProductController {
     @RequestMapping("/product")
     public String product(int item_idx, Model model) {
         ProductResponseDto dto = productService.findById(item_idx);
+
         searchService.categoryInsertAndFilter();
+
         model.addAttribute("cate1", cateMap.get("cate1"));
         model.addAttribute("cate2", cateMap.get("cate2"));
 
@@ -54,13 +56,27 @@ public class ProductController {
             int scoreAvg = scoreSum / reviewList.size();
             model.addAttribute("scoreAvg", scoreAvg);
         }
+
         model.addAttribute("dto", dto);
         return "product";
     }
+//    @RequestMapping("/productAction")
+//    @ResponseBody
+//    public String productAction( @RequestParam("item_price") int item_price,
+//                                 @RequestParam("item_idx") int item_idx){
+//        ProductResponseDto dto = productService.findById(item_idx);
+//        dto.setItem_PRICE(item_price);
+//        Product product = new Product();
+//        product.toSaveEntity(dto);
+//        productService.save(product);
+//        return "";
+//    }
+
 
     @RequestMapping("/product/delete")
     @ResponseBody
     public String productDelete(@RequestParam("id") int id){
+
         try {
             productService.delete(id);
         } catch (Exception e) {
@@ -73,6 +89,7 @@ public class ProductController {
     @RequestMapping("/products/delete")
     @ResponseBody
     public String productListDelete(@RequestParam("reviewNo") String reviewNo){
+        System.out.println(reviewNo);
         String[] arrIdx = reviewNo.split(",");
         for (int i=0; i<arrIdx.length; i++) {
             System.out.println(Integer.valueOf(arrIdx[i]));
@@ -136,7 +153,7 @@ public class ProductController {
     }
 
     @RequestMapping("/product/changeImage")
-    public String changeImage( @RequestParam("IMAGE") MultipartFile item_IMAGE, @RequestParam("idx") int idx, Model model) throws Exception{
+    public String changeImage( @RequestParam("IMAGE") MultipartFile item_IMAGE, @RequestParam("idx") int idx) throws Exception{
         String url = awsS3Service.upload(item_IMAGE);
         new ResponseEntity<>(FileResponse.builder().
                 uploaded(true).
@@ -144,24 +161,9 @@ public class ProductController {
                 build(), HttpStatus.OK);
         ProductResponseDto responseDtoSmall = service.findById(idx);
         responseDtoSmall.setItem_IMAGE(url);
-        searchService.categoryInsertAndFilter();
-        model.addAttribute("cate1", cateMap.get("cate1"));
-        model.addAttribute("cate2", cateMap.get("cate2"));
-
-        int scoreSum = 0;
-        List<ReviewResponseDTO> reviewList = productService.findReviewScore(idx);
-        for(int i=0; reviewList.size()>i; i++){
-            int score = reviewList.get(i).getReview_SCORE();
-            scoreSum = scoreSum + score;
-        }
-
-        if(reviewList.size()==0) {
-            model.addAttribute("scoreAvg",0);
-        }else {
-            int scoreAvg = scoreSum / reviewList.size();
-            model.addAttribute("scoreAvg", scoreAvg);
-        }
-        model.addAttribute("dto", responseDtoSmall);
+        Product product = new Product();
+        product.toUpdateEntity(responseDtoSmall);
+        service.save(product);
         return "redirect:/admin/product" +"?item_idx="+idx;
     }
 
