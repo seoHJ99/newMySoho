@@ -110,7 +110,7 @@ public class UserController_MyungJin {
     @ResponseBody
     public String modifyAction(MemberResponseDTO memberResponseDTO) {
         int modifyResult = cl_MemberService.modifyMemberInPage(memberResponseDTO);
-        if(modifyResult == 1) {
+        if(modifyResult == 2) {
             return "<script>alert('회원정보 수정 실패!'); history.back();</script>";
         }else {
             return "<script>alert('회원정보 수정 성공!!'); location.href='/myorder/list';</script>";
