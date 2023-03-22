@@ -43,10 +43,9 @@ Cl_ProductController_HyungMin {
                 }
             avg = ((int)( avg  / dto1.size() * 10) / 10f);
         }
-        List<QnaResponseDto> list = clientQnaServiceJunSeok.findAll();
+        List<QnaResponseDto> qna = clientQnaServiceJunSeok.findByItemIdx(item_IDX);
 
-
-        model.addAttribute("list", list);
+        model.addAttribute("list", qna);
         model.addAttribute("product", dto);
         model.addAttribute("review",dto1);
         model.addAttribute("reviewAVG",avg);

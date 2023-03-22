@@ -1102,6 +1102,11 @@
 				padding-left: 5px;
 				appearance: none;
 			}
+			.no-QNA{
+				display: flex;
+				justify-content: center;
+				margin-bottom: 20px;	
+			}
 			.relative-li {
 				position: relative;
 			}
@@ -1992,15 +1997,9 @@
 											/><strong> 문의작성</strong></a
 										>
 									</div>
-									<div style="padding: 35px 15px; text-align: center">
-									<script  th:inline="javascript">
-										let qnaCount = $(".js-inquiryArea").length;
-										$(".js-inquiryCnt").text(qnaCount);
-										if (qnaCount === 0) {
-											document.write('상품 문의가 없습니다.');
-										}
-									</script>
-									</div>
+								</div>
+								<div class="no-QNA">
+									문의사항이 없습니다.
 								</div>
 								<div class="qa-list-wrap js-qnasArea">
 									<ul class="js-inquiries">
@@ -3473,6 +3472,11 @@
 			}
 			let qnaCount = $(".js-inquiryArea").length;
 			$(".js-inquiryCnt").text(qnaCount);
+			if(qnaCount == 0){
+				$(".no-QNA").css("display", "flex");
+			}else{
+				$(".no-QNA").css("display", "none");
+			}
 		</script>
 		<script th:inline="javascript">
 			 /*<![CDATA[*/

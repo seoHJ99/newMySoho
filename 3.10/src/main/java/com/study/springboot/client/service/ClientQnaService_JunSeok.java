@@ -35,8 +35,8 @@ public class ClientQnaService_JunSeok {
     public void delete(int qna_IDX) {qnARepository.deleteById(qna_IDX);}
 
 
-    public List<QnaResponseDto> findAll() {
-        List<Qna> list = qnARepository.findAll();
+    public List<QnaResponseDto> findByItemIdx(int idx) {
+        List<Qna> list = qnARepository.findByItemIdx(idx);
         return list.stream().map(QnaResponseDto::new).collect(Collectors.toList());
     }
 }
