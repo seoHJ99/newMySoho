@@ -1610,7 +1610,7 @@
 										장바구니
 									</button>
 									<button
-										class="btn2"
+										class="btn2 buypay"
 										onclick="buyBtn()"
 									>
 										결제하기
@@ -1637,7 +1637,7 @@
 				<!-- 장바구니담기버튼 -->
 				<button
 					href=""
-					class="btn-h42-gray2 btn-cart js-add-cart-single"
+					class="btn-h42-gray2 btn-cart js-add-cart-single buypay"
 					onclick="basketNumCount(this)"
 					th:value="${product.item_idx }"
 				>
@@ -1827,7 +1827,7 @@
 								name="accumulate_MILEAGE"
 							/>
 							<button
-								class="js-mo-tpl btn-h42-gray mt-25"
+								class="js-mo-tpl btn-h42-gray mt-25 buypay"
 								id="buyBtn"
 							>
 								결제하기
@@ -2873,7 +2873,7 @@
                     <!--                  <input type="hidden" id="item_IDX" name="item_IDX" />-->
                     <!--                  <input type="hidden" id="item_QTY" name="item_QTY" />-->
                     <!--                  <input type="hidden" id="mileage" name="accumulate_MILEAGE" />-->
-                    <button class="js-btnOrder js-mo-tpl btn-h42-gray mt-25">
+                    <button class="js-btnOrder js-mo-tpl btn-h42-gray mt-25 buypay">
                       결제하기
                     </button>
                   </form>
@@ -3455,6 +3455,14 @@
 			}
 		</script>
 		<script th:inline="javascript">
+			const product = [[${product}]]; 
+			if(product.item_AMOUNT == 0){
+			 for(value of $(".buypay")){
+				$(value).text("품절");
+				$(value).prop("type","button");
+				$(value).removeAttr("onclick");
+			 }
+			}
 			function buyBtn() {
 				document.querySelector(".bg-option").className = "bg-option";
 						basketNum++;

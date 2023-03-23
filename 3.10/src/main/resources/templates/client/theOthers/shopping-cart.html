@@ -938,7 +938,7 @@
         <div class="bg-blank"></div>
       </th:block>
       <!-- 상품 반복문 -->
-      <form action="/order/save" id="form" method="post">
+      <form action="/order/save" id="form" onsubmit="" method="post">
         <input type="hidden" sec:authorize="isAuthenticated()" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
       <div class="order-hd lnk-tab">
         <strong>주문자 정보</strong>
@@ -1644,6 +1644,7 @@
               arr2.push($(".product-count").eq(i).text())
           }
         }
+        let checkSum = 0
         $("#item_IDX").val(arr);
         $("#item_QTY").val(arr2);
         $("#mileage").val( $(".mileage").text().replace("원","").replace(",","").replace("-",""));
@@ -1651,10 +1652,15 @@
         for(let agreeBox of $(".necessary" )){
           if(!$(agreeBox).is(":checked")){
             alert('필수 약관 동의 박스에 체크해주세요!');
+            break;
+          }else{
+            checkSum++;
           }
         }
-
-         $("#form").submit();
+        console.log(checkSum);
+        if(checkSum == 3){
+          $("#form").submit();
+        }
       }
      }
 
