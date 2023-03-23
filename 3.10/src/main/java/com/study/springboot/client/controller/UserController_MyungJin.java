@@ -152,7 +152,13 @@ public class UserController_MyungJin {
     }
 
     @GetMapping("/user/myinfo")
-    public String userMyinfo() {
+    public String userMyinfo(HttpSession session, Model model) {
+        int memSession = (int) session.getAttribute("member_IDX");
+        MemberResponseDTO mem = memberService.findByIDX(memSession);
+        int point = mem.getMember_POINT();
+
+        model.addAttribute("point",point);
+
         return "/client/user/Member/user-myinfo";     // loginForm.html로 응답
     }
 

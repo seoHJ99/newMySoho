@@ -139,6 +139,10 @@
 			.reivewDate {
 				color: darkgray;
 			}
+						.imgSizeOpt {
+				width: 600px;
+				height: 600px;
+			}
 		</style>
 	</head>
 	<body id="bodytest">
@@ -196,6 +200,7 @@
 							th:if="${review.review_IMAGE} != '이미지 없음'"
 						>
 							<img
+									class="imgSizeOpt"
 								th:src="${review.review_IMAGE}"
 								alt=""
 							/>
