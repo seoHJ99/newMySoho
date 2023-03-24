@@ -27,6 +27,7 @@ public class Cl_MemberService {
     public int userSave(MemberJoinDto dto, BindingResult bindingResult){
             String encodedPassword = passwordEncoder.encode(dto.getMemberPw());
             dto.setMemberPw(encodedPassword);
+
         dto.setMember_POINT(0);
         dto.setStatus("활동");
         if (bindingResult.hasErrors()) {

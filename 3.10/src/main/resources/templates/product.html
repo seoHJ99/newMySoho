@@ -263,12 +263,7 @@
 											class="representImage"
 											th:src="${dto.item_IMAGE}"
 										/>
-										<span> -> </span>
-										<img
-											class="representImage"
-											src=""
-											alt=""
-										/>
+
 									</td>
 									<td colspan="2">
 										<form
@@ -296,6 +291,7 @@
 												id="IMAGE"
 												name="IMAGE"
 											/>
+											<button>사진 변경</button>
 										</form>
 									</td>
 								</tr>
@@ -493,6 +489,7 @@
 			  			item_ORIGINAL: $("#original").text(),
 			  			item_NAME: $("#NAME").val(),
 			  			item_DETAIL: $(".ck-content").html(),
+			  			image1 : $(".representImage").attr("src"),
 			  			item_DISCOUNT: $("#salePer").val(),
 			  			item_idx: $("#item_idx").text(),
 			  			item_PRICE: $("#price").val(),
