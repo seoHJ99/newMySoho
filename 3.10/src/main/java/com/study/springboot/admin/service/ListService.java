@@ -36,7 +36,7 @@ public class ListService {
     @Transactional(readOnly = true)
     public Page<Product> findProductList(int page){
         List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("registeredDate"));
+        sorts.add(Sort.Order.desc("item_REGDATE"));
         Pageable pageable = PageRequest.of(page, 12, Sort.by(sorts));
         return productRepository.findAll(pageable);
     }

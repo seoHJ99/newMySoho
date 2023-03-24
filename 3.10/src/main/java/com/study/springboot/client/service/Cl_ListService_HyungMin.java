@@ -5,6 +5,7 @@ package com.study.springboot.client.service;
 import com.study.springboot.admin.dto.ReviewResponseDTO;
 import com.study.springboot.admin.service.ProductService;
 import com.study.springboot.admin.service.ReviewService;
+import com.study.springboot.client.dto.ListComparator;
 import com.study.springboot.client.dto.ProductResponseDto;
 import com.study.springboot.entity.Product;
 
@@ -102,6 +103,7 @@ public class Cl_ListService_HyungMin {
     public List<ProductResponseDto> pdOrderByPrice(){
         List<Product> entityList = productRepository.pdOrderByPrice();
         List<ProductResponseDto> list = getPriceDiscount(entityList);
+        Collections.sort(list, new ListComparator());
         return list;
     }
 
@@ -161,6 +163,7 @@ public class Cl_ListService_HyungMin {
     public List<ProductResponseDto> pdOrderByPrice(String keyword){
         List<Product> entityList = productRepository.pdOrderByPrice(keyword);
         List<ProductResponseDto> list = getPriceDiscount(entityList);
+        Collections.sort(list, new ListComparator());
         return list;
     }
 
