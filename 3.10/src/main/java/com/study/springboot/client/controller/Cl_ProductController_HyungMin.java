@@ -3,6 +3,9 @@
 import com.study.springboot.admin.dto.ProductResponseDto;
 import com.study.springboot.admin.dto.QnaResponseDto;
 import com.study.springboot.admin.dto.ReviewResponseDTO;
+import com.study.springboot.admin.service.ProductService;
+import com.study.springboot.admin.service.ReviewService;
+import com.study.springboot.client.dto.ReviewMine;
 import com.study.springboot.client.dto.ReviewResponseDto;
 import com.study.springboot.client.service.Cl_ProductService_HyungMin;
 import com.study.springboot.client.service.ClientQnaService_JunSeok;
@@ -13,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,6 +26,8 @@ Cl_ProductController_HyungMin {
     private final Cl_ProductService_HyungMin clProductService;
     private final ClientReviewService_JunTae clientReviewService;
     private final ClientQnaService_JunSeok clientQnaServiceJunSeok;
+    private final ClientReviewService_JunTae reviewService;
+    private final ProductService productService;
 
     @RequestMapping("/product") // 제품 상세 페이지
     public String product(@RequestParam("idx") int item_IDX, Model model) {
@@ -31,6 +37,21 @@ Cl_ProductController_HyungMin {
         if(!all.isEmpty()){ // 옵션이 존재할경우
             model.addAttribute("options", all);
         }
+
+        List<ReviewMine> reviewMines = new ArrayList<>();
+        if(dto1.size()>0) {
+            for(ReviewResponseDto dto2 : dto1){
+                ProductResponseDto a = productService.findById(item_IDX);
+                String image = a.getItem_IMAGE();
+                String name = a.getItem_NAME();
+                int idx = dto2.getItem_IDX();
+                ReviewMine temp = new ReviewMine(dto2,image,name,idx);
+                reviewMines.add(temp);
+                System.out.println(temp.getReviewResponseDto().getReview_REPLY());
+            }
+            model.addAttribute("review",reviewMines);
+        }
+
         float avg=0;
         if(dto1.size()>0) { // 리뷰 별점
                 for (int i=0; i<dto1.size(); i++) {
@@ -47,7 +68,6 @@ Cl_ProductController_HyungMin {
 
         model.addAttribute("list", qna);
         model.addAttribute("product", dto);
-        model.addAttribute("review",dto1);
         model.addAttribute("reviewAVG",avg);
         model.addAttribute("reviewCount", dto1.size());
         return "/client/product/productDetailPage";

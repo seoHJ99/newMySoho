@@ -1064,6 +1064,11 @@
 			.fs-14 {
 				font-size: 14px;
 			}
+						.answer{
+			  border: 1px solid darkgray;
+			      border-radius: 15px;
+			}
+
 			.order1,
 			.order2,
 			.order-hd-close-1,
@@ -1183,6 +1188,9 @@
         padding-right: 10px;
         padding-bottom:10px;
         min-height:35px;
+      }
+      .right{
+       float: right;
       }
 			.starScore {
 				font-weight: bold;
@@ -1931,7 +1939,7 @@
 														<table class="review_table reviewTable">
 															<tr class="review_score">
 																<td class="starScore">
-																	<th:block th:switch="${review.review_SCORE}">
+																	<th:block th:switch="${review.reviewResponseDto.review_SCORE}">
 																		<span th:case="1">★</span>
 																		<span th:case="2">★★</span>
 																		<span th:case="3">★★★</span>
@@ -1942,20 +1950,20 @@
 															</tr>
 															<tr class="review_tr">
 																<td >
-																	<span th:text="${review.review_WRITER}"></span>
-																	<span th:text="${review.review_REGDATE}"></span>
+																	<span th:text="${review.reviewResponseDto.review_WRITER}"></span>
+																	<span class="right" th:text="${review.reviewResponseDto.review_REGDATE}"></span>
 																</td>
 
 															</tr>
 
 
 															<tr class="review_title">
-																<td th:text="${product.item_NAME}">
+																<td th:text="${review.reviewResponseDto.review_TITLE}">
 																	리뷰제목
 																</td>
 															</tr>
 															<tr class="review_content">
-																<td th:text="${review.review_CONTENT}">
+																<td th:text="${review.reviewResponseDto.review_CONTENT}">
 																	리뷰내용
 																</td>
 															</tr>
@@ -1963,14 +1971,18 @@
 														<div
 															class="imageBox"
 															colspan="2"
-															th:if="${review.review_IMAGE} != '이미지 없음'"
+															th:if="${review.reviewResponseDto.review_IMAGE} != '이미지 없음'"
 														>
 															<img
-																th:src="${review.review_IMAGE}"
+																th:src="${review.reviewResponseDto.review_IMAGE}"
 																alt=""
 															/>
 														</div>
 														<div class="bg-blank"></div>
+													</div>
+													<div class="answer" th:if="${review.reviewResponseDto.review_REPLY}">
+														<div style="padding-left:10px; color:#b0b0b0">답변</div>
+														<span style="padding-left:10px" th:text="${review.reviewResponseDto.review_REPLY}"></span>
 													</div>
 												</th:block>
 											</div>

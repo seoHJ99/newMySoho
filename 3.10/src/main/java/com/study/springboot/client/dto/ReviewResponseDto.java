@@ -31,6 +31,7 @@ public class ReviewResponseDto {
         this.review_WRITER = entity.getReview_WRITER();
         this.review_TITLE = entity.getReview_TITLE();
         this.review_CONTENT = entity.getReview_CONTENT();
+        this.review_REPLY = entity.getReview_REPLY();
         this.review_SCORE = entity.getReview_SCORE();
         this.review_REGDATE = entity.getReviewREGDATE();
         this.review_STATUS = entity.getReview_STATUS();

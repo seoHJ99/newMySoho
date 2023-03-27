@@ -2,13 +2,10 @@ package com.study.springboot.client.controller;
 
 import com.study.springboot.admin.dto.*;
 import com.study.springboot.admin.dto.ProductResponseDto;
-import com.study.springboot.admin.service.OrderService;
-import com.study.springboot.admin.service.QnaService;
-import com.study.springboot.admin.service.ReviewService;
+import com.study.springboot.admin.service.*;
 import com.study.springboot.client.dto.*;
 import com.study.springboot.client.service.*;
 import com.study.springboot.entity.*;
-import com.study.springboot.admin.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -39,6 +36,7 @@ public class UserController_MyungJin {
     private final EmailService emailService;
     private final QnaService qnaService;
     private final Cl_MemberService cl_MemberService;
+    private final ProductService productService;
 
     @RequestMapping("/id-check")
     @ResponseBody
@@ -199,8 +197,18 @@ public class UserController_MyungJin {
     @RequestMapping("/review/myList")
     public String myReviewList(Model model, HttpSession session){
         List<ReviewResponseDto> dtos = reviewService.findByMemId((String) session.getAttribute("memberID"));
+        List<ReviewMine> reviewMines = new ArrayList<>();
         if(dtos.size()>0) {
-            model.addAttribute("review", dtos);
+            for(ReviewResponseDto dto : dtos){
+                ProductResponseDto a = productService.findById(dto.getItem_IDX());
+                String image = a.getItem_IMAGE();
+                String name = a.getItem_NAME();
+                int idx = dto.getItem_IDX();
+                ReviewMine temp = new ReviewMine(dto,image,name,idx);
+                reviewMines.add(temp);
+                System.out.println(temp.getReviewResponseDto().getReview_REPLY());
+            }
+            model.addAttribute("review",reviewMines);
         }
         return "/client/user/Member/review-mylist";
     }
