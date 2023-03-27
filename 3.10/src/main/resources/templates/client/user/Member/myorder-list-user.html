@@ -314,7 +314,7 @@
         color: #999;
       }
       .final-price-tit {
-        font-size: 21px !important;
+        font-size: 21px;
         font-weight: bold !important;
         color: #000 !important;
       }
@@ -715,13 +715,12 @@
                                                 <div class="lcont-tit-sub">
                                                     총 할인/적립금 사용 금액
                                                 </div>
-
-
-                                                <th:block th:if="${firstList.item_DISCOUNT} < 1000">
+                                                <span style="font-size:16px;" class="final-price-tit"  th:text="${firstList.using_MILEAGE}+'원'"> 원</span>
+                                                <th:block th:if="${firstList.item_DISCOUNT} > 1000">
                                                     <div class="lcont-info-sub"
                                                          th:text="${firstList.item_DISCOUNT}+'원'">
                                                         44,500
-                                                        <span class="final-price-tit"> 원</span>
+                                                        <span class="final-price-tit"  th:text="${firstList.using_MILEAGE}+'원'"> 원</span>
                                                     </div>
                                                 </th:block>
                                                 <th:block th:if="${firstList.item_DISCOUNT} >= 1000">
