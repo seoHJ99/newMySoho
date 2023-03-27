@@ -37,17 +37,17 @@ Cl_ProductController_HyungMin {
         if(!all.isEmpty()){ // 옵션이 존재할경우
             model.addAttribute("options", all);
         }
-
         List<ReviewMine> reviewMines = new ArrayList<>();
         if(dto1.size()>0) {
-            for(ReviewResponseDto dto2 : dto1){
-                ProductResponseDto a = productService.findById(item_IDX);
-                String image = a.getItem_IMAGE();
-                String name = a.getItem_NAME();
-                int idx = dto2.getItem_IDX();
-                ReviewMine temp = new ReviewMine(dto2,image,name,idx);
-                reviewMines.add(temp);
-                System.out.println(temp.getReviewResponseDto().getReview_REPLY());
+            for(ReviewResponseDto dto2 : dto1) {
+                if (dto2.getReview_STATUS().equals("공개")) {
+                    ProductResponseDto a = productService.findById(item_IDX);
+                    String image = a.getItem_IMAGE();
+                    String name = a.getItem_NAME();
+                    int idx = dto2.getItem_IDX();
+                    ReviewMine temp = new ReviewMine(dto2, image, name, idx);
+                    reviewMines.add(temp);
+                }
             }
             model.addAttribute("review",reviewMines);
         }
