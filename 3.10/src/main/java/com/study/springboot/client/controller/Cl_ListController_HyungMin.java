@@ -43,7 +43,6 @@ public class Cl_ListController_HyungMin {
         }
         model.addAttribute("list1", list1);
         model.addAttribute("list2", list2);
-        
         // 정렬 기준
         model.addAttribute("date", listService.pdOrderByDate());
         model.addAttribute("selling", listService.pdOrderBySelling());

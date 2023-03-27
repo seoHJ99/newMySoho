@@ -44,18 +44,21 @@ public class ClientReviewService_JunTae {
         if(temp.getItem_OPTION() != null){
             List<Product> entities= productRepository.findByItem_OPTION(item_IDX);
             for(Product entity: entities){
-                System.out.println(entity.getItem_OPTION());
               List<Review> tempList = reviewRepository.findByItemIDX(entity.getItem_idx());
               for(Review s : tempList){
                   ReviewResponseDto dto = new ReviewResponseDto(s);
-                  all.add(dto);
+                  if(dto.getReview_STATUS().equals("공개")) {
+                      all.add(dto);
+                  }
               }
             }
         }else {
             List<Review> review = reviewRepository.findByItemIDX(item_IDX);
             for (Review temp2 : review) {
                 ReviewResponseDto reviewResponseDto1 = new ReviewResponseDto(temp2);
-                all.add(reviewResponseDto1);
+                if(reviewResponseDto1.getReview_STATUS().equals("공개")) {
+                    all.add(reviewResponseDto1);
+                }
             }
         }
         return all;
