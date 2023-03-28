@@ -31,7 +31,6 @@ public class NoticeController {
     public String noticeInsertAction(NoticeSaveDto noticeSaveDto,
                                      @RequestParam(value = "date", required = false) String date,
                                      @RequestParam(value = "time", required = false) String time){
-        
         if(noticeSaveDto.getNotice_REGTYPE().equals("일반")){
             noticeSaveDto.setNoticeREGDATE(LocalDateTime.now());
             noticeService.saveNotice(noticeSaveDto);

@@ -47,8 +47,7 @@ public class CartController_Ho {
 
     @RequestMapping("/cart") // 장바구니 구현
     public String cartView(Model model, @RequestParam("item_idx") int item_list[],
-                           @RequestParam("item_quantity") int item_quantity[],
-                           HttpSession session){
+                           @RequestParam("item_quantity") int item_quantity[], HttpSession session){
         List<CartInformation> cartDtoList = cartService.makeCartDto(item_list, item_quantity);
         Optional<Object> memberIdx = Optional.ofNullable(session.getAttribute("member_IDX"));
         memberIdx.ifPresent( idx ->

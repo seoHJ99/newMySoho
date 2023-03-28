@@ -43,7 +43,6 @@ public class SiteController {
                     cateMap.add("cate1", cate1);
                 }
             }
-
             if (!cate2.equals("")) {
                 if (!cateMap.get("cate2").contains(cate2)) {
                     cateMap.add("cate2", cate2);

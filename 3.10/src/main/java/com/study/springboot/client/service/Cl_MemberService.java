@@ -27,7 +27,6 @@ public class Cl_MemberService {
     public int userSave(MemberJoinDto dto, BindingResult bindingResult){
             String encodedPassword = passwordEncoder.encode(dto.getMemberPw());
             dto.setMemberPw(encodedPassword);
-
         dto.setMember_POINT(0);
         dto.setStatus("활동");
         if (bindingResult.hasErrors()) {
@@ -35,7 +34,6 @@ public class Cl_MemberService {
             String detail = bindingResult.getFieldError().getDefaultMessage();
             // DTO에 유효성체크를 걸어놓은 어노테이션명을 가져온다.
             String bindResultCode = bindingResult.getFieldError().getCode();
-            System.out.println(detail + ":" + bindResultCode);
         }
         try {
             Member entity = dto.toSaveEntity();

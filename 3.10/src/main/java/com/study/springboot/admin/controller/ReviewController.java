@@ -25,7 +25,7 @@ public class ReviewController {
     }
 
     @RequestMapping("/review/reply")
-    public String addReviewReply(Model model, @RequestParam("idx") int idx,
+    public String modifyReview(Model model, @RequestParam("idx") int idx,
                                  @RequestParam("reply")String reply,
                                  @RequestParam("status")String status){
         reviewService.replyModify(idx, reply, status);

@@ -36,23 +36,21 @@ public class SearchService {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("item_NAME"));
         Pageable pageable = PageRequest.of(page, 12, Sort.by(sorts));
-
-        Page<Product> a = null;
+        Page<Product> result = null;
         if(category1.equals("전체") && category2.equals("전체")) {
-            a = productRepository.searchAll(keyword, pageable);
-            return a;// 둘다 전체일때
+            result = productRepository.searchAll(keyword, pageable);
+            return result;// 둘다 전체일때
         } else if (!category1.equals("전체") && category2.equals("전체")) {
-            a = productRepository.searchWithCate1( category1, keyword ,pageable);
-            return a;// 1만 선택되었을때
+            result = productRepository.searchWithCate1( category1, keyword ,pageable);
+            return result;// 1만 선택되었을때
         } else if (!category2.equals("전체") && category1.equals("전체")) {
-            a = productRepository.searchWithCate2(category2, keyword, pageable);
-            return a;// 2만 선택되었을때
+            result = productRepository.searchWithCate2(category2, keyword, pageable);
+            return result;// 2만 선택되었을때
         } else if (!category1.equals("전체") && !category2.equals("전체")) {
-            a = productRepository.searchWithCate1AndCate2(category1, category2, keyword, pageable);
-            return a;// 둘다 옵션 선택했을때
+            result = productRepository.searchWithCate1AndCate2(category1, category2, keyword, pageable);
+            return result;// 둘다 옵션 선택했을때
         }
-
-        return a;
+        return result;
     }
 
 

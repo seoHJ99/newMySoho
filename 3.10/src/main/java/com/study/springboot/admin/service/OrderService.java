@@ -120,7 +120,6 @@ public class OrderService {
             orderDetailTemp.setUsing_MILEAGE(dtoList.get(j).getUsing_MILEAGE());
             orderDetailTemp.setMember_IDX(dtoList.get(j).getMember_IDX());
 
-
             int priceTemp = 0;
             int discountPrice = 0;
             int refundPrice = 0;
