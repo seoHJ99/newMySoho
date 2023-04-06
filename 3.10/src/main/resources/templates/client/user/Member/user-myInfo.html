@@ -229,6 +229,7 @@
 				<form
 					th:action="@{/userModify}"
 					method="post"
+					onsubmit="return necessaryCheck()"
 				>
 					<input
 						type="hidden"
@@ -262,7 +263,7 @@
 						type="password"
 						name="beforeMemberPw"
 						placeholder="기존 비밀번호"
-						value=""
+						th:value="${session.memberPw}"
 					/>
 
 					<input
@@ -300,6 +301,7 @@
 					</div>
 					<input
 						class="input-st01 users-login-input mt-10"
+						id="inputName"
 						type="text"
 						name="member_NAME"
 						placeholder="이름"
@@ -418,6 +420,11 @@
 								type="hidden"
 								name="status"
 								value="0"
+							/>
+							<input
+									type="hidden"
+									name="member_POINT"
+									th:value="${point}"
 							/>
 						</ul>
 					</div>
@@ -584,6 +591,21 @@
 ></th:block>
 
 <script>
+
+function necessaryCheck() {
+        if (
+          $(".check-txt-pw3").css("display") == "block" &&
+          $(".check-txt-phone3").css("display") == "block" &&
+          $(".check-txt-name3").css("display") == "block" &&
+		  $(".check-txt-email3").css("display") == "block"
+        ) {
+            return true;
+        } else {
+          alert("필수기입사항을 입력해주세요");
+          return false;
+        }
+      }
+
 	//사이드메뉴
 	function openNav() {
 		// document.body.style.backgroundColor = "rgba(0,0,0,0.5)";
@@ -744,14 +766,13 @@
 				} else if (type === "phone") {
 					mode = ckeckPhone;
 				}
-
+				console.log(!mode.test(val))
 				if (!mode.test(val)) {
 					document.querySelector(".check-txt-" + type).style.display = "none";
 					document.querySelector(".check-txt-" + type + "2").style.display =
 						"block";
 					document.querySelector(".check-txt-" + type + "3").style.display =
 						"none";
-					document.querySelector(".input-" + type).focus();
 				} else {
 					document.querySelector(".check-txt-" + type).style.display = "none";
 					document.querySelector(".check-txt-" + type + "2").style.display =
@@ -760,6 +781,9 @@
 						"block";
 				}
 			}
+
+			checkUserinfo("name", $("#inputName").val());
+
 		</script>
 		<!-- 우편번호 -->
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -812,18 +836,9 @@
 						document.getElementById("sample6_address").value = addr;
 						// 커서를 상세주소 필드로 이동한다.
 						document.getElementById("sample6_detailAddress").focus();
-					},
+					}
 				}).open();
 			}
-
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById("sample6_postcode").value = data.zonecode;
-                document.getElementById("sample6_address").value = addr;
-                // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("sample6_detailAddress").focus();
-            },
-        }).open();
-    }
 
     function trash() {
         alert("장바구니가 비었습니다. 관심있는 상품을 담아보세요");

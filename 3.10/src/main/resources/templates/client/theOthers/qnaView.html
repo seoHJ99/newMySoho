@@ -18,6 +18,7 @@
 				padding-top: 5px;
 			}
       textarea{
+				background-color: #f8f8f8;
             resize: none;
 						font-size: 17px;
       }
@@ -33,7 +34,7 @@
 			}
 			.qa-write{
 				display: block;
-				max-width: 86px;
+				max-width: 105px;
 				padding: 10px;
 			}
 			.chheck-title{
@@ -110,7 +111,7 @@
             </textarea>
 					</div>
 					<button
-						onclick="location.href='/client/qna/list'"
+						onclick="history.back();"
 						class="input-box btn-h42-gray input-box2"
 					>
 						뒤로가기
@@ -124,6 +125,7 @@
 		></th:block>
 
 		<script>
+
 			//사이드메뉴
 			function openNav() {
 				// document.body.style.backgroundColor = "rgba(0,0,0,0.5)";

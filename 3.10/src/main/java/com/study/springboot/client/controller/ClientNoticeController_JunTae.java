@@ -32,7 +32,7 @@ public class ClientNoticeController_JunTae {
         List<NoticeResponseDTO> listdto = clientNoticeService.findNoticeList();
         for (Iterator<NoticeResponseDTO> dtos = listdto.iterator(); dtos.hasNext(); ) {
             NoticeResponseDTO dto = dtos.next();
-            if (dto.getNoticeREGDATE().isAfter(LocalDateTime.now())) { // 예약 날짜가 현제 날짜보다 뒤라면 제외
+            if (dto.getNoticeREGDATE().isAfter(LocalDateTime.now())) { // 예약 날짜가 현재 날짜보다 뒤라면 제외
                 dtos.remove();
             }
         }

@@ -34,7 +34,6 @@ public class Cl_MemberService {
             String detail = bindingResult.getFieldError().getDefaultMessage();
             // DTO에 유효성체크를 걸어놓은 어노테이션명을 가져온다.
             String bindResultCode = bindingResult.getFieldError().getCode();
-            System.out.println(detail + ":" + bindResultCode);
         }
         try {
             Member entity = dto.toSaveEntity();

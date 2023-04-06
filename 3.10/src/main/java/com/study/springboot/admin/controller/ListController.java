@@ -48,7 +48,7 @@ public class ListController {
         for(Member entity : paging){
             list.add(new MemberResponseDTO(entity));
         }
-        searchService.categoryInsertAndFilter();
+        searchService.memberInsertAndFilter();
         model.addAttribute("memberCate", cateMap.get("memberCate"));
         model.addAttribute("type","member");
         model.addAttribute("list", list);

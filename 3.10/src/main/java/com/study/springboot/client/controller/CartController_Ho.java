@@ -36,20 +36,18 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 public class CartController_Ho {
-    private final ProductService productService;
     private final CL_OrderService orderService;
     private final OrderService orderService2;
     private final MemberService memberService;
     private final NonmemberService nonmemberService;
     private final MemberListRepository memberListRepository;
-    private final Cl_MemberService clMemberService;
     private final CartService_Ho cartService;
+    private final PasswordEncoder passwordEncoder;
 
 
     @RequestMapping("/cart") // 장바구니 구현
     public String cartView(Model model, @RequestParam("item_idx") int item_list[],
-                           @RequestParam("item_quantity") int item_quantity[],
-                           HttpSession session){
+                           @RequestParam("item_quantity") int item_quantity[], HttpSession session){
         List<CartInformation> cartDtoList = cartService.makeCartDto(item_list, item_quantity);
         Optional<Object> memberIdx = Optional.ofNullable(session.getAttribute("member_IDX"));
         memberIdx.ifPresent( idx ->
@@ -64,6 +62,7 @@ public class CartController_Ho {
     public String saveOrder(OrderSaveDto orderSaveDto,
                             int [] item_QTY,
                             int [] item_IDX,
+                            HttpServletRequest request,
                             @RequestParam("delivery_address1") String address1,
                             @RequestParam("delivery_address2") String address2,
                             @RequestParam("delivery_address3") String address3,
@@ -106,7 +105,6 @@ public class CartController_Ho {
         OrderResponseDto dto = orderService2.findOrderDto(orderIdx);
         model.addAttribute("order",dto);
 
-        System.out.println(joinCheck);
         if (session.getAttribute("memberID") == null && joinCheck != null && joinCheck.equals("on")) {
             if (bindingResult.hasErrors()) {
                 // DTO에 설정한 message값을 가져온다.
@@ -117,7 +115,6 @@ public class CartController_Ho {
             }
 
             String encodedPassword = passwordEncoder.encode(memberDto.getMemberPw());
-            System.out.println( "encodedPassword:" + encodedPassword );
             memberDto.setMemberPw( encodedPassword );
             memberDto.setMember_POINT(0);
             memberDto.setStatus("활동");
@@ -138,7 +135,6 @@ public class CartController_Ho {
             HttpStatus status = HttpStatus.OK;
             if (status == HttpStatus.OK) System.out.println("회원가입 성공!");
         }
-
         return "/client/order/order-complete";
     }
 }

@@ -68,7 +68,6 @@ public class MemberController {
             e.printStackTrace();
             return "<script>alert('회원정보 수정 실패!'); history.back();</script>";
         }
-
         return "<script>alert('회원정보 수정 성공!!'); location.href='/admin/list/member';</script>";
     }
 }

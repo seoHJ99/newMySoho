@@ -20,6 +20,10 @@ public interface QnaRepository extends JpaRepository <Qna,Integer> {
     @Query(value = "SELECT * FROM qna WHERE member_IDX = :idx", nativeQuery = true)
     List<Qna> findByMemberIDX(@Param(value = "idx") int idx);
 
+    @Query(value = "SELECT * FROM qna WHERE item_IDX = :idx ORDER BY qna_REGDATE DESC", nativeQuery = true)
+    List<Qna> findByItemIdx(@Param(value = "idx") int idx);
+
+
 
     // 옵션 둘 다 선택했을때
     @Query(value = "SELECT * FROM qna WHERE qna_ANSWERED != '미답변' AND qna_SORT =:category2 AND qna_IDX LIKE CONCAT('%',:keyword,'%') OR qna_ANSWERED != '미답변' AND qna_SORT =:category2 AND qna_CONTENT LIKE CONCAT('%',:keyword,'%')", nativeQuery = true)

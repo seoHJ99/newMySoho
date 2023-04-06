@@ -21,7 +21,6 @@ spring:
           timeout: 5000 # 6
           starttls:
             enable: true # 7
-
   servlet:
     multipart:
       max-file-size: 10MB
