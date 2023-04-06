@@ -1,9 +1,7 @@
 package com.study.springboot.client.dto;
 
 import com.study.springboot.entity.Member;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
@@ -13,6 +11,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class MemberJoinDto {
     @Nullable
     private Integer member_IDX;
@@ -38,8 +38,11 @@ public class MemberJoinDto {
                 .memberPw(memberPw)
                 .member_NAME(member_NAME)
                 .member_MAIL(member_MAIL)
+                .member_ADDRESS(member_ADDRESS)
+                .member_POST(member_POST)
                 .member_PHONE(member_PHONE)
                 .joinDate(member_SIGNUP)
+                .member_ROLE(member_ROLE)
                 .status(status)
                 .build();
     }

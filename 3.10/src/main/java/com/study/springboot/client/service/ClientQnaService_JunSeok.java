@@ -1,5 +1,6 @@
 package com.study.springboot.client.service;
 
+import com.study.springboot.admin.dto.QnaResponseDto;
 import com.study.springboot.entity.Qna;
 import com.study.springboot.entity.QnaRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,4 +34,9 @@ public class ClientQnaService_JunSeok {
     @Transactional
     public void delete(int qna_IDX) {qnARepository.deleteById(qna_IDX);}
 
+
+    public List<QnaResponseDto> findByItemIdx(int idx) {
+        List<Qna> list = qnARepository.findByItemIdx(idx);
+        return list.stream().map(QnaResponseDto::new).collect(Collectors.toList());
+    }
 }

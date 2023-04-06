@@ -29,9 +29,8 @@ public class NoticeController {
 
     @RequestMapping("/notice/insert") // 생성
     public String noticeInsertAction(NoticeSaveDto noticeSaveDto,
-                                     @RequestParam("date") String date,
-                                     @RequestParam("time") String time){
-        
+                                     @RequestParam(value = "date", required = false) String date,
+                                     @RequestParam(value = "time", required = false) String time){
         if(noticeSaveDto.getNotice_REGTYPE().equals("일반")){
             noticeSaveDto.setNoticeREGDATE(LocalDateTime.now());
             noticeService.saveNotice(noticeSaveDto);
@@ -79,7 +78,7 @@ public class NoticeController {
 
     @RequestMapping("/notice/delete")
     @ResponseBody
-    public String deleteNotice(@RequestParam("id") int id){
+    public String deleteNotice(@RequestParam("notice_idx") int id){
         noticeService.noticeDeleteById(id);
         return "1";
     }

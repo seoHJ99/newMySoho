@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .head_table {
+        margin-top: 10px;
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      .head_title {
+        text-align: center;
+        width: 100px;
+        height: 30px;
+        background-color: #d0d0d0;
+        border: 1px solid black;
+      }
+      .head_con {
+        text-align: center;
+        width: 200px;
+        height: 30px;
+        border: 1px solid black;
+      }
+      .nav_one {
+        border: 1px solid black;
+      }
+      .nav_one:hover {
+        background-color: #f8f8f8;
+      }
+      .nav_table {
+        border-collapse: collapse;
+        margin-top: 30px;
+      }
+
+      .nav_one {
+        text-align: center;
+        width: 220px;
+      }
+      h3 {
+        color: black;
+      }
+      .nav_one > a {
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="head">
+      <table class="head_table">
+        <tr>
+          <td class="head_title">title</td>
+          <td class="head_con">경로</td>
+          <td class="head_title">name</td>
+          <td class="head_con">사용자</td>
+          <td class="head_title">date</td>
+          <td class="head_con" id="clock" style="color: black">날짜</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="nav">
+      <div class="nav_container">
+        <table class="nav_table">
+          <td class="nav_one">
+            <a href=""><h3>회원 관리</h3></a>
+          </td>
+          <td class="nav_one">
+            <a href=""><h3>상품 관리</h3></a>
+          </td>
+          <td class="nav_one">
+            <a href=""><h3>사이트 관리</h3></a>
+          </td>
+          <td class="nav_one">
+            <a href=""><h3>기타 관리</h3></a>
+          </td>
+        </table>
+      </div>
+    </div>
+    <script>
+      var Target = document.getElementById("clock");
+      function clock() {
+        var time = new Date();
+        var month = time.getMonth();
+        var date = time.getDate();
+        var day = time.getDay();
+        var week = ["일", "월", "화", "수", "목", "금", "토"];
+
+        var hours = time.getHours();
+        var minutes = time.getMinutes();
+        var seconds = time.getSeconds();
+
+        Target.innerText =
+          `${month + 1}월 ${date}일 ${week[day]}요일 ` +
+          `${hours < 10 ? `0${hours}` : hours}:${
+            minutes < 10 ? `0${minutes}` : minutes
+          }:${seconds < 10 ? `0${seconds}` : seconds}`;
+        console.log(Target);
+      }
+      clock();
+      setInterval(clock, 1000); // 1초마다 실행
+    </script>
+  </body>
+</html>

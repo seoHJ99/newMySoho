@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,6 @@ public class ClientQnaController_JunSeok {
 
     private final Cl_ProductService_HyungMin clProductService;
 
-//    -------------------------------------------- 거의 다 수정
 
     @RequestMapping("/client/qna/write")
     public String qnaWrite() {
@@ -45,7 +45,6 @@ public class ClientQnaController_JunSeok {
     @RequestMapping("/client/qna/write2")
     public String qnaWrite2(Model model, @RequestParam("idx") int item_idx) {
         ProductResponseDto dto = clProductService.findById(item_idx);
-
 
         model.addAttribute("product", dto);
         return "/client/theOthers/QnA-write2";
@@ -71,9 +70,7 @@ public class ClientQnaController_JunSeok {
     @RequestMapping("/client/qna/write/save2")
     @ResponseBody
     public String qnaSave2(QnaResponseDto qnaResponseDto, @RequestParam(value = "check1",required = false) String check1) {
-
-        qnaResponseDto.setQna_CATE("게시판");
-
+        qnaResponseDto.setQna_CATE("상품");
         if (check1 != null && check1.equals("on")) {
             qnaResponseDto.setQna_SECRET(0);
         }else{
@@ -213,6 +210,61 @@ public class ClientQnaController_JunSeok {
         int itemIdx = qnaResponseDto.getItem_IDX();
         clientQnaService_junSeok.delete(idx);
         return "redirect:/product?idx=" + itemIdx;
+    }
+
+    @RequestMapping("/qna/answer-check")
+    @ResponseBody
+    public String checkAnswer(int idx, HttpSession session){
+        QnaResponseDto qnaResponseDto = qnaService.findById(idx);
+        if( qnaResponseDto.getQna_SECRET() == 0) {
+            if(qnaResponseDto.getMember_IDX() == null){//비밀글이고 비회원 글일때
+                return "<script>location.href='/open/qna/pw?idx="+idx+"'</script>";
+            } // 비밀글이고 접근자의 글이 아닐때
+            if (session.getAttribute("member_IDX") == null || (int)session.getAttribute("member_IDX") != qnaResponseDto.getMember_IDX()) {
+                return "<script>alert('비밀글은 작성자만 확인 가능합니다.'); history.back();</script>";
+            }else { // 비회원이 아니고 자기글일때
+                return "<script>location.href='/qna/answer?idx=" + idx + "';</script>";
+            }
+        }else { // 비밀글이 아니면 다 보임
+            return "<script>location.href='/qna/answer?idx=" + idx + "';</script>";
+        }
+    }
+
+    @RequestMapping("/open/qna/pw")
+    public String nonMemQnACheck(int idx, Model model){
+        model.addAttribute("qnaIDX", idx);
+        return "/client/theOthers/qnaPWcheck";
+    }
+    @RequestMapping("/check/qna/pw")
+    @ResponseBody
+    public String qnacheckPW(@RequestParam("idx") int idx, @RequestParam("Pw")String pw){
+        QnaResponseDto dto = qnaService.findById(idx);
+        if(dto.getQna_PW().equals(pw)){
+           return "<script>location.href='/qna/answer?idx=" + idx + "&Pw=" + pw +"';</script>";
+        }else {
+            return "<script>alert('비밀번호가 틀립니다.'); history.back();</script>";
+        }
+    }
+
+    @RequestMapping("/qna/answer")
+    public String ClientQnaAnswer(int idx, Model model, @RequestParam(value = "Pw", required = false) String pw){
+        QnaResponseDto qnaResponseDto = qnaService.findById(idx);
+        if(qnaResponseDto.getQna_SECRET() == 0) {
+            if (qnaResponseDto.getMember_IDX() != null) {
+                model.addAttribute("dto", qnaResponseDto);
+                return "/client/theOthers/qnaView";
+            } else {
+                if (qnaResponseDto.getQna_PW().equals(pw)) {
+                    model.addAttribute("dto", qnaResponseDto);
+                    return "/client/theOthers/qnaView";
+                } else {
+                    return "";
+                }
+            }
+        }else {
+            model.addAttribute("dto", qnaResponseDto);
+            return "/client/theOthers/qnaView";
+        }
     }
 }
 

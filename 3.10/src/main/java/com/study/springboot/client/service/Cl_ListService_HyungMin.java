@@ -5,6 +5,7 @@ package com.study.springboot.client.service;
 import com.study.springboot.admin.dto.ReviewResponseDTO;
 import com.study.springboot.admin.service.ProductService;
 import com.study.springboot.admin.service.ReviewService;
+import com.study.springboot.client.dto.ListComparator;
 import com.study.springboot.client.dto.ProductResponseDto;
 import com.study.springboot.entity.Product;
 
@@ -64,10 +65,8 @@ public class Cl_ListService_HyungMin {
     // 상품 리스트 전체 가져오기
     @Transactional(readOnly = true)
     public List<ProductResponseDto> findProductList(){
-
         List<Product> list = productRepository.findAllNoRepeat();
         List<ProductResponseDto> dtoList = getPriceDiscount(list);
-
         return dtoList;
     }
 
@@ -104,6 +103,7 @@ public class Cl_ListService_HyungMin {
     public List<ProductResponseDto> pdOrderByPrice(){
         List<Product> entityList = productRepository.pdOrderByPrice();
         List<ProductResponseDto> list = getPriceDiscount(entityList);
+        Collections.sort(list, new ListComparator());
         return list;
     }
 
@@ -130,7 +130,7 @@ public class Cl_ListService_HyungMin {
             int item_idx = entityList.get(i).getItem_idx();
             List<ReviewResponseDTO> reviewList = productService.findReviewScore(item_idx);
             for(int j=0; reviewList.size()>j; j++){
-                int score = reviewList.get(i).getReview_SCORE();
+                int score = reviewList.get(j).getReview_SCORE();
                 scoreSum = scoreSum + score;
             }
             if(reviewList.size()==0) {
@@ -163,6 +163,7 @@ public class Cl_ListService_HyungMin {
     public List<ProductResponseDto> pdOrderByPrice(String keyword){
         List<Product> entityList = productRepository.pdOrderByPrice(keyword);
         List<ProductResponseDto> list = getPriceDiscount(entityList);
+        Collections.sort(list, new ListComparator());
         return list;
     }
 

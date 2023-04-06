@@ -1,41 +1,27 @@
 package com.study.springboot.client.controller;
 
-import com.study.springboot.admin.dto.CouponResoponseDTO;
-import com.study.springboot.admin.dto.MemberResponseDTO;
-import com.study.springboot.admin.dto.OrderResponseDto;
-import com.study.springboot.admin.service.OrderService;
+import com.study.springboot.admin.dto.*;
+import com.study.springboot.admin.dto.ProductResponseDto;
+import com.study.springboot.admin.service.*;
 import com.study.springboot.client.dto.*;
-import com.study.springboot.client.service.ClientReviewService_JunTae;
-import com.study.springboot.client.service.CouponService;
-import com.study.springboot.client.service.EmailService;
-import com.study.springboot.client.service.NonmemberService;
-import com.study.springboot.entity.Member;
-import com.study.springboot.entity.MemberListRepository;
-import com.study.springboot.admin.service.MemberService;
+import com.study.springboot.client.service.*;
+import com.study.springboot.entity.*;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-//import javax.mail.*;
-//import javax.mail.internet.AddressException;
-//import javax.mail.internet.InternetAddress;
-//import javax.mail.internet.MimeMessage;
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-//import java.util.Properties;
-//import java.util.Random;
 
 @Controller
 @RequiredArgsConstructor
@@ -47,7 +33,10 @@ public class UserController_MyungJin {
     private final CouponService couponService;
     private final NonmemberService nonmemberService;
     private final ClientReviewService_JunTae reviewService;
-
+    private final EmailService emailService;
+    private final QnaService qnaService;
+    private final Cl_MemberService cl_MemberService;
+    private final ProductService productService;
 
     @RequestMapping("/id-check")
     @ResponseBody
@@ -61,14 +50,13 @@ public class UserController_MyungJin {
 
     @GetMapping("/loginForm")
     public String loginForm() {
-        return "/client/login/userlogin";     // loginForm.html로 응답
+        return "/client/login/userlogin";
     }
 
 
     @GetMapping("/logoutAction")
     @ResponseBody
     public String loguotAction(HttpServletRequest request) {
-        // 세션 종료
         request.getSession().invalidate();
         return "<script>alert('로그아웃 되었습니다.'); location.href='/';</script>";
     }
@@ -82,40 +70,19 @@ public class UserController_MyungJin {
     @ResponseBody
     public String joinAction(@Valid MemberJoinDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            // DTO에 설정한 message값을 가져온다.
             String detail = bindingResult.getFieldError().getDefaultMessage();
-            // DTO에 유효성체크를 걸어놓은 어노테이션명을 가져온다.
             String bindResultCode = bindingResult.getFieldError().getCode();
             System.out.println(detail + ":" + bindResultCode);
             return "<script>alert('" + detail + "'); history.back();</script>";
         }
-
-        System.out.println(dto.getMemberID());
-        System.out.println(dto.getMemberPw());
-
-        //암호화를 위해 시큐리티의 BCryptPasswordEncoder 클래스를 사용
-        String encodedPassword = passwordEncoder.encode(dto.getMemberPw());
-        System.out.println("encodedPassword:" + encodedPassword);
-        dto.setMemberPw(encodedPassword);
-        dto.setMember_POINT(0);
-        dto.setStatus("활동");
-
-        //회원가입 DB 액션 수행
-        try {
-            Member entity = dto.toSaveEntity();
-            memberListRepository.save(entity);
-        } catch (DataIntegrityViolationException e) {
-            e.printStackTrace();
-            bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
+        int result = cl_MemberService.userSave(dto,bindingResult);
+        if(result==2) {
             return "<script>alert('이미 등록된 사용자입니다.');history.back();</script>";
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+        } else if (result==3) {
             return "<script>alert('회원가입 실패했습니다.');history.back();</script>";
         }
-
         HttpStatus status = HttpStatus.OK;
         if (status == HttpStatus.OK) {
-            System.out.println("회원가입 성공!");
             return "<script>alert('회원가입 성공!'); location.href='/loginForm';</script>";
         } else {
             return "<script>alert('회원가입 실패'); history.back();</script>";
@@ -123,69 +90,57 @@ public class UserController_MyungJin {
     }
 
 
+
     @PostMapping("/checkPw")
-    public String checkPw(HttpServletRequest request) {
+    @ResponseBody
+    public String checkPw(HttpServletRequest request)  {
+        boolean checkPw = cl_MemberService.checkEncodePw((int) request.getSession().getAttribute("member_IDX"), request);
         Member entity = memberListRepository.findById((int) request.getSession().getAttribute("member_IDX")).get();
         request.getSession().setAttribute("memberEntity", entity);
-        String realPw = entity.getMemberPw();
-        String ppw = request.getParameter("memberPw");
-        String encodedPassword = passwordEncoder.encode(ppw);
-        boolean checkPw = passwordEncoder.matches(ppw, realPw);
         if (checkPw) {
-            return "/client/user/Member/user-myinfo";
+            return "<script>location.href='/user/myinfo';</script>";
+        } else {
+            return "<script>alert('비밀번호가 일치하지 않습니다.'); history.back();</script>";
         }
-        return "/client/user/Member/myorder-list-user";
     }
 
     @RequestMapping("/userModify")
     @ResponseBody
     public String modifyAction(MemberResponseDTO memberResponseDTO) {
-
-        memberResponseDTO.setMember_SIGNUP(memberListRepository.findById(memberResponseDTO.getMember_IDX()).get().getJoinDate());
-        try {
-            String encodedPassword = passwordEncoder.encode(memberResponseDTO.getMemberPw());
-            memberResponseDTO.setMemberPw(encodedPassword);
-            Member entity = memberResponseDTO.toUpdateUserEntity();
-            memberListRepository.save(entity);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+        int modifyResult = cl_MemberService.modifyMemberInPage(memberResponseDTO);
+        if(modifyResult == 2) {
             return "<script>alert('회원정보 수정 실패!'); history.back();</script>";
+        }else {
+            return "<script>alert('회원정보 수정 성공!!'); location.href='/myorder/list';</script>";
         }
-        return "<script>alert('회원정보 수정 성공!!'); location.href='/myorder/list';</script>";
     }
+
 
 
     // 마이페이지 by 형민
     @GetMapping("/myorder/list")
     public String userMyOrderList(HttpSession session, Model model) {
-
         int memSession = (int) session.getAttribute("member_IDX");
-
         MemberResponseDTO mem = memberService.findByIDX(memSession);
         List<OrderResponseDto> dtoList = orderService.findOrderByMemberIDX(memSession); // 주문 정보. 해당 사용자가 주문한 모든 내역
         List<CouponResoponseDTO> couponList = couponService.findCouponByMemberIDX(memSession);
-        List<OrderDetailTemp> orderTests = orderService.userMyOrderLogic(dtoList, couponList);
+        List<OrderDetailTemp> orderTests = orderService.userMyOrderLogic(dtoList,couponList);
         OrdersStatus test = orderService.dtoListLogic(dtoList, orderTests);
-
         int status = dtoList.size();
-
         int refundCnt = 0;
-        for (int i = 0; i < orderTests.size(); i++) {
+        for(int i =0; i < orderTests.size(); i++) {
             refundCnt = refundCnt + orderTests.get(i).getRefundCnt();
         }
-
         model.addAttribute("status", status);
-        model.addAttribute("order1", test.getNoPayCnt());
-        model.addAttribute("order2", test.getOrderReadyCnt());
-        model.addAttribute("order3", test.getOrderingCnt());
-        model.addAttribute("order4", test.getCompleteCnt());
+        model.addAttribute("order1", test.getNoPayCnt() );
+        model.addAttribute("order2", test.getOrderReadyCnt() );
+        model.addAttribute("order3", test.getOrderingCnt() );
+        model.addAttribute("order4", test.getCompleteCnt() );
         model.addAttribute("order5", refundCnt);
-
         model.addAttribute("member", mem);
         model.addAttribute("point", mem.getMember_POINT());
         model.addAttribute("couponCnt", couponList.size());
         model.addAttribute("list", orderTests);
-
         return "/client/user/Member/myorder-list-user";     // loginForm.html로 응답
     }
 
@@ -195,38 +150,40 @@ public class UserController_MyungJin {
     }
 
     @GetMapping("/user/myinfo")
-    public String userMyinfo() {
+    public String userMyinfo(HttpSession session, Model model) {
+        int memSession = (int) session.getAttribute("member_IDX");
+        MemberResponseDTO mem = memberService.findByIDX(memSession);
+        int point = mem.getMember_POINT();
+
+        model.addAttribute("point",point);
+
         return "/client/user/Member/user-myinfo";     // loginForm.html로 응답
     }
 
 
     // 비회원페이지 by 형민
     @PostMapping("/myorder-list")
-    public String nonUserMyOrderList(Model model, HttpServletRequest request) {
-
+    public String nonUserMyOrderList(Model model,HttpServletRequest request) {
         String name = request.getParameter("sender");
-        String phone1 = request.getParameter("phone1");
-        String phone2 = request.getParameter("phone2");
-        String phone = phone1 + phone2;
-
+        String phone = request.getParameter("phone1") + request.getParameter("phone2");
         NonmemberResponseDto nonmember = nonmemberService.findNonmember(name, phone);
+        if(nonmember == null){
+            return "회원정보 없음 페이지";
+        }
         List<OrderResponseDto> orderDto = nonmemberService.findOrderByNonMemberIDX(nonmember.getIdx());
         List<OrderDetailTemp> orderTests = nonmemberService.userMyOrderLogic(orderDto);
         OrdersStatus test = orderService.dtoListLogic(orderDto, orderTests);
-
         int status = orderDto.size();
-
         int refundCnt = 0;
-        for (int i = 0; i < orderTests.size(); i++) {
+        for(int i =0; i < orderTests.size(); i++) {
             refundCnt = refundCnt + orderTests.get(i).getRefundCnt();
         }
-
         model.addAttribute("member", name);
         model.addAttribute("status", status);
-        model.addAttribute("order1", test.getNoPayCnt());
-        model.addAttribute("order2", test.getOrderReadyCnt());
-        model.addAttribute("order3", test.getOrderingCnt());
-        model.addAttribute("order4", test.getCompleteCnt());
+        model.addAttribute("order1", test.getNoPayCnt() );
+        model.addAttribute("order2", test.getOrderReadyCnt() );
+        model.addAttribute("order3", test.getOrderingCnt() );
+        model.addAttribute("order4", test.getCompleteCnt() );
         model.addAttribute("order5", refundCnt);
         model.addAttribute("list", orderTests);
         return "/client/user/Nonmember/myorder-list";
@@ -238,10 +195,20 @@ public class UserController_MyungJin {
     }
 
     @RequestMapping("/review/myList")
-    public String myReviewList(Model model, HttpSession session) {
+    public String myReviewList(Model model, HttpSession session){
         List<ReviewResponseDto> dtos = reviewService.findByMemId((String) session.getAttribute("memberID"));
-        if (dtos.size() > 0) {
-            model.addAttribute("review", dtos);
+        List<ReviewMine> reviewMines = new ArrayList<>();
+        if(dtos.size()>0) {
+            for(ReviewResponseDto dto : dtos){
+                ProductResponseDto a = productService.findById(dto.getItem_IDX());
+                String image = a.getItem_IMAGE();
+                String name = a.getItem_NAME();
+                int idx = dto.getItem_IDX();
+                ReviewMine temp = new ReviewMine(dto,image,name,idx);
+                reviewMines.add(temp);
+                System.out.println(temp.getReviewResponseDto().getReview_REPLY());
+            }
+            model.addAttribute("review",reviewMines);
         }
         return "/client/user/Member/review-mylist";
     }
@@ -255,40 +222,60 @@ public class UserController_MyungJin {
         }
         return "/client/login/find-ID";
     }
-    private final EmailService emailService;
-
 
     // 임시 비밀번호 발급
+    
+
     @PostMapping("/findPW")
-    public String sendPasswordMail(@RequestParam("email") String mail, @RequestParam("id")String id) {
+    public String sendPasswordMail(@RequestParam("email") String mail,
+                                   @RequestParam("id")String id) {
         EmailMessage emailMessage = EmailMessage.builder()
                 .to(mail)
                 .subject("임시 비밀번호 발급")
                 .build();
-        String pw = createCode();
-        emailService.sendMail(emailMessage, pw);
+        String pw = cl_MemberService.createCode();
         MemberResponseDTO dto = memberService.findByMail(mail, id);
-        dto.setMemberPw(passwordEncoder.encode(pw));
-        Member member = dto.toUpdateEntity();
-        memberListRepository.save(member);
-        return "/main";
+        if(dto == null){
+            return "/client/login/noID";
+        }else {
+            emailService.sendMail(emailMessage, pw);
+            dto.setMemberPw(passwordEncoder.encode(pw));
+            Member member = dto.toUpdateEntity();
+            memberListRepository.save(member);
+            return "redirect:/main";
+        }
     }
 
-    public String createCode() {
-        Random random = new Random();
-        StringBuffer key = new StringBuffer();
-
-        for (int i = 0; i < 8; i++) {
-            int index = random.nextInt(4);
-
-            switch (index) {
-                case 0: key.append((char) ((int) random.nextInt(26) + 97)); break;
-                case 1: key.append((char) ((int) random.nextInt(26) + 65)); break;
-                default: key.append(random.nextInt(9));
+    @RequestMapping("/qna/myList/product")
+    public String myQnAList(HttpSession session, Model model){
+        List<QnaResponseDto> qnaResponseDtos = qnaService.findByMemberId((int)session.getAttribute("member_IDX"));
+        List<ProductQnaDto> productQnaDtos = new ArrayList<>();
+        for(QnaResponseDto dto : qnaResponseDtos){
+            if(dto.getQna_CATE().equals("상품")){
+                ProductQnaDto dto2 = new ProductQnaDto(qnaService.findProductConnected(dto.getItem_IDX()), dto);
+                productQnaDtos.add(dto2);
             }
         }
-        return key.toString();
+        model.addAttribute("dto", productQnaDtos);
+        return "/client/user/Member/myProductQnA";
+    }
+
+    @RequestMapping("/qna/myList")
+    public String myQnAListProduct(HttpSession session, Model model){
+        List<QnaResponseDto> qnaResponseDtos = qnaService.findByMemberId((int)session.getAttribute("member_IDX"));
+        List<QnaResponseDto> allQna = new ArrayList<>();
+        for(QnaResponseDto dto : qnaResponseDtos){
+            if(dto.getQna_CATE().equals("게시판")){
+                allQna.add(dto);
+            }
+        }
+        model.addAttribute("allQNA", allQna);
+        return "/client/user/Member/qna-user";
+    }
+
+    @RequestMapping("/denied")
+    @ResponseBody
+    public String denied(){
+        return "<script> location.href='/logoutAction'; alert('정지된 이용자입니다.');</script>";
     }
 }
-
-

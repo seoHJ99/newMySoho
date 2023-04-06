@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 
 @Setter
 @Getter
@@ -48,6 +49,7 @@ public class ProductResponseDto implements Comparable<ProductResponseDto> {
         this.registeredDate = entity.getRegisteredDate();
     }
 
+
     @Override
     public int compareTo(ProductResponseDto o) {
         if(this.review_COUNT > o.review_COUNT) return -1;
@@ -56,4 +58,18 @@ public class ProductResponseDto implements Comparable<ProductResponseDto> {
         }
         return 1;
     }
+
+
+
+
+//    public int compareTo(ProductResponseDto o, String type) {
+//        if (type.equals("selling")) {
+//            if(this.item_PRICE_DISCOUNT > o.item_PRICE_DISCOUNT) return  -1;
+//            else if (this.item_PRICE_DISCOUNT == o.item_PRICE_DISCOUNT) {
+//                return 0;
+//            }
+//        }
+//        return 1;
+//    }
+
 }

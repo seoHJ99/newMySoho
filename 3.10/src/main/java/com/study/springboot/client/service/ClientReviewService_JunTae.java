@@ -3,6 +3,7 @@ package com.study.springboot.client.service;
 
 import com.study.springboot.admin.dto.ProductResponseDto;
 import com.study.springboot.admin.dto.ReviewResponseDTO;
+import com.study.springboot.admin.service.ProductService;
 import com.study.springboot.client.dto.ReviewResponseDto;
 import com.study.springboot.client.dto.ReviewSaveResponsedto;
 import com.study.springboot.entity.Product;
@@ -21,6 +22,7 @@ import java.util.List;
 public class ClientReviewService_JunTae {
     private final ProductRepository productRepository;
     private final ReviewRepository reviewRepository;
+    private final ProductService productService;
 
     @Transactional(readOnly = true)
     public ProductResponseDto findById(int item_idx){
@@ -37,13 +39,29 @@ public class ClientReviewService_JunTae {
 
     @Transactional(readOnly = true)
     public List<ReviewResponseDto> findByItemId(int item_IDX){
-        List<Review> review = reviewRepository.findByItemIDX(item_IDX);
-        List<ReviewResponseDto> reviewResponseDto = new ArrayList<>();
-        for ( Review temp : review){
-            ReviewResponseDto reviewResponseDto1 = new ReviewResponseDto(temp);
-            reviewResponseDto.add(reviewResponseDto1);
+        ProductResponseDto temp = productService.findById(item_IDX);
+        List<ReviewResponseDto> all = new ArrayList<>();
+        if(temp.getItem_OPTION() != null){
+            List<Product> entities= productRepository.findByItem_OPTION(item_IDX);
+            for(Product entity: entities){
+              List<Review> tempList = reviewRepository.findByItemIDX(entity.getItem_idx());
+              for(Review s : tempList){
+                  ReviewResponseDto dto = new ReviewResponseDto(s);
+                  if(dto.getReview_STATUS().equals("공개")) {
+                      all.add(dto);
+                  }
+              }
+            }
+        }else {
+            List<Review> review = reviewRepository.findByItemIDX(item_IDX);
+            for (Review temp2 : review) {
+                ReviewResponseDto reviewResponseDto1 = new ReviewResponseDto(temp2);
+                if(reviewResponseDto1.getReview_STATUS().equals("공개")) {
+                    all.add(reviewResponseDto1);
+                }
+            }
         }
-        return reviewResponseDto;
+        return all;
     }
 
     @Transactional(readOnly = true)

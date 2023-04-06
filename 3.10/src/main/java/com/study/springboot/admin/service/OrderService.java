@@ -1,7 +1,7 @@
 package com.study.springboot.admin.service;
 
 
-import com.study.springboot.admin.dto.CouponResoponseDTO;
+import com.study.springboot.admin.dto.*;
 import com.study.springboot.client.dto.OrderDetailTemp;
 import com.study.springboot.client.dto.OrdersStatus;
 import com.study.springboot.client.dto.ProductInfo;
@@ -9,9 +9,6 @@ import com.study.springboot.entity.Order;
 import com.study.springboot.entity.OrderDetail;
 import com.study.springboot.entity.OrderDetailRepository;
 import com.study.springboot.entity.OrdersRepository;
-import com.study.springboot.admin.dto.OrderResponseDto;
-import com.study.springboot.admin.dto.OrderSaveDto;
-import com.study.springboot.admin.dto.ProductResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,6 +64,11 @@ public class OrderService {
         List<OrderDetail> orderDetailList = orderDetailRepository.findByOrdersIDX(idx);
         return orderDetailList;
     }
+
+    @Transactional
+    public void modifyOdetail(OrderDetailDto dto){
+        orderDetailRepository.save(dto.toModifyEntity());
+    }
     @Transactional(readOnly = true)
     public List<ProductResponseDto> findOrderItems (List<OrderDetail> orderDetailList) {
         List<ProductResponseDto> list = new ArrayList<>();
@@ -117,7 +119,6 @@ public class OrderService {
             orderDetailTemp.setOrders_STATUS(dtoList.get(j).getOrders_STATUS());
             orderDetailTemp.setUsing_MILEAGE(dtoList.get(j).getUsing_MILEAGE());
             orderDetailTemp.setMember_IDX(dtoList.get(j).getMember_IDX());
-
 
             int priceTemp = 0;
             int discountPrice = 0;

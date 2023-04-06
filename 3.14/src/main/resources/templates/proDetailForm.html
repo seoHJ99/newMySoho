@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <html lang="ko">
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+      <title>Document</title>
+      <style>
+        .total {
+          display: flex;
+          justify-content: center;
+        }
+        .part {
+          width: 800px;
+        }
+        .head_table {
+          margin-top: 10px;
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+        .head_title {
+          text-align: center;
+          width: 100px;
+          height: 30px;
+          background-color: #d0d0d0;
+          border: 1px solid black;
+        }
+        .head_con {
+          text-align: center;
+          width: 200px;
+          height: 30px;
+          border: 1px solid black;
+        }
+        .nav_one {
+          border: 1px solid black;
+        }
+        .nav_one:hover {
+          background-color: #f8f8f8;
+        }
+        .nav_table {
+          border-collapse: collapse;
+          margin-top: 30px;
+        }
+
+        .nav_one {
+          text-align: center;
+          width: 220px;
+        }
+
+        .main_tr > td:nth-child(1) {
+          width: 150px;
+          height: 50px;
+          text-align: right;
+        }
+        .main_tr > td:nth-child(2) {
+          width: 440px;
+        }
+        .main_tr1 {
+          height: 250px;
+        }
+        td {
+          border: 1px solid black;
+        }
+        .product {
+          width: 104px;
+        }
+        table {
+          width: 100%;
+        }
+        .option {
+          width: 100%;
+        }
+        .sub_option {
+          margin-left: 20px;
+        }
+        .center_right {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-left: 300px;
+          padding-right: 10px;
+        }
+        a {
+          text-decoration: none;
+          color: black;
+        }
+        .explain {
+          padding-bottom: 120px;
+          padding-left: 10px;
+        }
+        .score {
+          padding-left: 10px;
+        }
+        .score_button {
+          margin-left: 340px;
+        }
+        .ok {
+          margin-left: 40px;
+        }
+        .categori_one {
+          margin-left: 80px;
+        }
+        .categori_two {
+          margin-left: 150px;
+        }
+        .price_one {
+          margin-left: 20px;
+        }
+        .discount {
+          margin-left: 20px;
+        }
+        .explain_one {
+          margin-left: 40px;
+        }
+        .real_explain {
+          padding-left: 15px;
+        }
+      </style>
+    </head>
+    <body>
+      <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+      <div class="total">
+        <div class="part">
+          <div class="head">
+            <table class="head_table">
+              <tr>
+                <td class="head_title">title</td>
+                <td class="head_con">경로</td>
+                <td class="head_title">name</td>
+                <td class="head_con">사용자</td>
+                <td class="head_title">date</td>
+                <td class="head_con">날짜</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="nav">
+            <div class="nav_container">
+              <table class="nav_table">
+                <td class="nav_one">
+                  <a href=""><h3>회원 관리</h3></a>
+                </td>
+                <td class="nav_one">
+                  <a href=""><h3>상품 관리</h3></a>
+                </td>
+                <td class="nav_one">
+                  <a href=""><h3>사이트 관리</h3></a>
+                </td>
+                <td class="nav_one">
+                  <a href=""><h3>기타 관리</h3></a>
+                </td>
+              </table>
+            </div>
+          </div>
+
+          <!--  -->
+          <div>상품정보 조회 및 수정 페이지</div>
+          <div class="main">
+            <table class="main_table">
+              <tr class="main_tr">
+                <td>* 카테고리</td>
+                <td id="aaaa" colspan="1">
+                  <select id="category_first" name="">
+                    <option value="">카테고리 1</option>
+                    <option value="상의">상의</option>
+                    <option value="하의">하의</option>
+                    <option value="원피스">원피스</option>
+                    <option value="악세사리">악세사리</option>
+                  </select>
+                  <select id="category_second" name="">
+                    <option value="">카테고리 2</option>
+                    <option value="할인">할인</option>
+                    <option value="행사">행사</option>
+                  </select>
+                </td>
+                <td>* 원본상품</td>
+                <td th:text="${dto.item_ORIGINAL}"></td>
+              </tr>
+
+              <tr class="main_tr">
+                <td>* 제품명</td>
+                <td th:text="${ dto.item_NAME }"></td>
+                <td class="product">* 상품번호</td>
+                <td id="item_idx" th:text="${ dto.item_idx }"></td>
+              </tr>
+              <tr class="main_tr">
+                <td>* 가격</td>
+                <td>
+                  <div class="price_one">
+                    <input
+                      type="number"
+                      id="price"
+                      name="item_price"
+                      th:value="${ dto.item_PRICE }"
+                      placeholder="가격 입력"
+                    />
+                    <button>적용</button>
+                  </div>
+                </td>
+                <td class="product">* 등록일</td>
+                <td th:text="${dto.registeredDate}"></td>
+              </tr>
+              <tr class="main_tr">
+                <td>* 할인율</td>
+                <td class="discount" colspan="3">
+                  <div class="discount">
+                    <input
+                      id="salePer"
+                      type="number"
+                      name="item_discount"
+                      th:value="${ dto.item_DISCOUNT }"
+                    /><button>적용</button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="main_tr">
+                <td>* 재고량</td>
+                <td class="option" colspan="3" th:text="${dto.item_SELL}"></td>
+              </tr>
+              <tr class="main_tr">
+                <td>* 발주</td>
+                <td colspan="3">
+                  <input type="number" id="order" th:value="${dto.item_SELL}" />
+                </td>
+              </tr>
+              <tr class="main_tr">
+                <td>* 상품 리뷰</td>
+                <td colspan="3">
+                  <span class="score" th:text="${scoreAvg}"
+                    >상품 평균 별점</span
+                  >
+                  <a th:href="@{/product(?idx=${dto.item_IDX})}" class="score_button">해당 상품 리뷰 보러가기</ㅁ>
+                </td>
+              </tr>
+              <tr class="main_tr1">
+                <td class="real_explain">
+                  * 상품 사진 및<br />
+                  <span class="explain_one">설명</span>
+                </td>
+                <td colspan="3">
+                  <form action="" method="POST">
+                    <input
+                      type="hidden"
+                      sec:authorize="isAuthenticated()"
+                      th:name="${_csrf.parameterName}"
+                      th:value="${_csrf.token}"
+                    />
+                    <textarea
+                      name="text"
+                      id="editor"
+                      th:text="${dto.item_DETAIL}"
+                    ></textarea>
+                    <p></p>
+                  </form>
+
+                  <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+                  <script th:inline="javascript">
+                    let editor;
+                    let a = [[${_csrf.token}]];
+                    let b = [[${_csrf.parameterName}]];
+                    console.log(a);
+                    console.log(b);
+                    ClassicEditor.create(document.querySelector("#editor"), {
+                      language: "ko",
+                      ckfinder: {
+                    	uploadUrl:"/admin/imgUpload?"+ b + "=" + a,
+                      },
+                    })
+                      .then((newEditor) => {
+                    	editor = newEditor;
+                      })
+                      .catch((error) => {
+                    	console.error(error);
+                      });
+                  </script>
+                  <div class="explain">상품 사진 및 설명</div>
+                </td>
+              </tr>
+              <tr class="main_tr">
+                <td colspan="4">
+                  <div class="center_right">
+                    <div class="center">
+                      <button onclick="deletePD()">삭제</button>
+                      <button onclick="modify()">수정</button>
+                    </div>
+
+                    <div class="right">
+                      <button>이전</button>
+                      <button onclick="location.href='product'">목록</button>
+                      <button>다음</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </body>
+    <script>
+      function deletePD() {
+        $.ajax({
+          url: "/admin/product/delete",
+          type: "POST",
+          data: {
+            id: $("#item_idx").text(),
+          },
+          success: function (response) {
+            alert("보내기 성공");
+            location.href = "/list";
+          },
+        });
+      }
+
+      function modify() {
+        $.ajax({
+          url: "/admin/product/modify",
+          type: "POST",
+          data: {
+            cate1: $("#category_first option:selected").text(),
+            cate2: $("#category_second option:selected").text(),
+            price: $("#price").val(),
+            salePer: $("#salePer").val(),
+            order: $("#order").val(),
+            detail: $("#editor").text(),
+            id: $("#item_idx").text(),
+          },
+          success: function (response) {
+            alert("보내기 성공");
+          },
+        });
+      }
+    </script>
+  </html>
+</html>

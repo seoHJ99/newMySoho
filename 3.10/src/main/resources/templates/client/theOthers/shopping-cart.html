@@ -3,6 +3,7 @@
   lang="ko"
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
   <head>
     <th:block th:replace="/client/fragments/Clhead :: headFragment"></th:block>
@@ -687,7 +688,7 @@
         <div class="prd-info MSH-prd-info-19520"
              th:value="${itemList.item_IDX}">
           <input type="checkbox" class="check-box-pd" onchange="check(this)" th:value="${itemList.item_PRICE_DISCOUNT}" checked />
-          <span th:text="${itemList.item_IDX}" ></span>
+          <span style="display: none;" th:text="${itemList.item_IDX}" ></span>
           <div class="cart-info">
             <div class="bsk-info">
               <!-- 상품이미지 -->
@@ -937,7 +938,7 @@
         <div class="bg-blank"></div>
       </th:block>
       <!-- 상품 반복문 -->
-      <form action="/order/save" id="form" method="post">
+      <form action="/order/save" id="form" onsubmit="" method="post">
         <input type="hidden" sec:authorize="isAuthenticated()" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
       <div class="order-hd lnk-tab">
         <strong>주문자 정보</strong>
@@ -961,7 +962,7 @@
           <div class="title js-useDeliveryOff">
             <div><strong>주문자정보</strong></div>
             <div class="cbx-tit" sec:authorize="isAnonymous()">
-              <input type="checkbox" onclick="onclickCbx()" />
+              <input type="checkbox" name="joinCheck" id="joinCheck" onclick="onclickCbx()" />
               회원가입
             </div>
             <!-- 호준 -->
@@ -976,8 +977,6 @@
               const memberInfo = [[${member}]]
               $("input[name=senders_NAME]").val(memberInfo.member_NAME);
               $("input[name=sender_phone2]").val(memberInfo.member_PHONE.substr(3));
-              console.log(memberInfo.member_PHONE.substr(3));
-              console.log($("input[name=sender_phone2]").val());
               for(let i=0; i<6; i++){
                 if(memberInfo.member_PHONE.substr(0,3) == $("#phoneSelect option:eq(" + i + ")").val()){
                   $("#phoneSelect option:eq(" + i + ")").prop("selected",true);
@@ -1014,7 +1013,10 @@
             </li>
           </ul>
         </div>
+
+
         <!-- 회원가입 -->
+        <input type="hidden" sec:authorize="isAnonymous()" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <div id="userJoinFormDiv" class="receiver-wrap users-join-line">
           <div class="title bold">회원가입 정보</div>
           <div class="users-cont nopd">
@@ -1022,7 +1024,7 @@
               <input
                 class="input-st01 users-login-input input-id"
                 type="text"
-                name="user_id"
+                name="memberID"
                 placeholder="아이디(5자~20자 이내)"
                 onBlur="checkTxt('id', this.value)"
                 onchange="checkUserinfo('id', this.value)"
@@ -1042,7 +1044,7 @@
               <input
                 class="input-st01 users-login-input mt-10"
                 type="email"
-                name="user_email"
+                name="member_MAIL"
                 placeholder="이메일(비밀번호 찾기 시 이메일로 발송됩니다"
                 onBlur="checkTxt('email', this.value)"
                 onchange="checkUserinfo('email', this.value)"
@@ -1067,7 +1069,7 @@
               id="check-txt-pw"
               class="input-st01 users-login-input mt-10"
               type="password"
-              name="user_password"
+              name="memberPw"
               placeholder="비밀번호 (영문,숫자,특수문자 조합 8자리 이상)"
               onchange="checkUserinfo('pw', this.value)"
             />
@@ -1086,7 +1088,7 @@
               id="check-txt-pwcheck"
               class="input-st01 users-login-input mt-10"
               type="password"
-              name="user_password"
+              name=""
               placeholder="비밀번호 재입력"
               onBlur="checkPW(this.value)"
               onchange="checkTxt('pw', this.value)"
@@ -1097,8 +1099,13 @@
             <div class="red check-txt check-txt-pwcheck-not">
               비밀번호가 일치하지 않습니다.
             </div>
+<!--            <input type="hidden" name="member_NAME" value="임시">-->
+<!--            <input type="hidden" name="member_PHONE" value="00000000000">-->
+            <input type="hidden" name="member_ROLE" value="ROLE_USER">
           </div>
         </div>
+
+
         <!-- 수령자정보 -->
         <div class="receiver-wrap same same2">
           <div class="title js-useDeliveryOff">
@@ -1212,6 +1219,7 @@
             </li>
           </ul>
         </div>
+
         <!-- 구분선 빈박스-->
         <div class="bg-blank none"></div>
       </div>
@@ -1306,6 +1314,7 @@
                   name="using_MILEAGE"
                   value="0"
                   min="0"
+                  oninput="mileageFunc();"
                   id="using_MILEAGE"
                   class="readonly-input"
                   style="background-color: white;"
@@ -1534,7 +1543,8 @@
               <div class="between h23">
                 <div class="price-text">- 적립금 사용</div>
                 <div class="price-text-price">
-                  <span class="gray">(-)</span>0원
+                  <span class="gray">(-)</span>
+                 <span class="mileageUse">0</span> 원
                 </div>
               </div>
             </div>
@@ -1588,6 +1598,14 @@
         if($("#useAllMileage").is(":checked")){
           $("#using_MILEAGE").val($(".js-userMileageText").text().replace("원",""));
         }
+          let usingPoint = $("#using_MILEAGE").val();
+         if( usingPoint > 0 ){
+          $(".mileageUse").text(usingPoint);
+          $(".total_discounted").text(numberFormatter( usingPoint));
+        }
+        $(".total_price_last").text(
+         numberFormatter( Number($(".total_price_last").text().replace("원","").replace(",","")) - usingPoint)
+          );
       }
 
       $(".check-box-all").text($(".check-box-pd").length);
@@ -1617,8 +1635,22 @@
           price = Number(price) + (Number($(a).val()) * Number($(".product-count").text()));
           $(".mileage").text(numberFormatter( price/10));
           price = numberFormatter(price);
+          $(".mileageUse").text(point)
          $(".total_price_last").text(price);
         }
+        }
+      }
+
+      function mileageFunc(){
+        let usingPoint = $("#using_MILEAGE").val();
+        console.log(usingPoint);
+        if( usingPoint > 0 ){
+          console.log(usingPoint);
+          $(".mileageUse").text(usingPoint);
+          $(".total_discounted").text(numberFormatter( usingPoint));
+          $(".total_price_last").text(
+         numberFormatter( Number($(".total_price_last").text().replace("원","").replace(",","")) - usingPoint) 
+            );
         }
       }
 
@@ -1636,6 +1668,7 @@
               arr2.push($(".product-count").eq(i).text())
           }
         }
+        let checkSum = 0
         $("#item_IDX").val(arr);
         $("#item_QTY").val(arr2);
         $("#mileage").val( $(".mileage").text().replace("원","").replace(",","").replace("-",""));
@@ -1643,10 +1676,15 @@
         for(let agreeBox of $(".necessary" )){
           if(!$(agreeBox).is(":checked")){
             alert('필수 약관 동의 박스에 체크해주세요!');
+            break;
+          }else{
+            checkSum++;
           }
         }
-
-         $("#form").submit();
+        console.log(checkSum);
+        if(checkSum == 3){
+          $("#form").submit();
+        }
       }
      }
 
@@ -1955,9 +1993,11 @@
             goCart();
           }
        }
-       if(document.cookie.split('; ') == ''){
+       if(document.cookie.split(';').length == 1){
         alert('장바구니가 비었습니다. 상품을 담아보세요.');
          location.href = "/main";  
+       }else{
+        goCart();
        }
        check();
       }

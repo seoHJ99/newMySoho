@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+
+    <th:block th:replace="fragments/head :: headFragment"></th:block>
+
+
+    <style>
+        .search {
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: center;
+        height: 50px;
+        width: 900px;
+        background-color: #f8f8f8;
+    }
+    .search_con {
+        height: 30px;
+        border : 1px solid #d0d0d0;
+    }
+    .search_con2 {
+        width: 300px;
+        padding: 3px 0;
+        padding-left: 5px;
+    }
+    .delete_button{
+    margin-left : 57px;
+    }
+    .product_button{
+    margin-left : 30px;
+    }
+    .review_button{
+    margin-left: -20px;
+    }
+    .qna_button{
+    margin-left : -19px;
+    }
+
+    </style>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+
+<header th:replace="fragments/header :: headerFragment"></header>
+<div style="display: flex; justify-content: center;">
+    <div class="search">
+        <form  th:action="@{/admin/list/search/product}"
+               th:if="${type} == 'product'"
+        >
+        			<input type="hidden" sec:authorize="isAuthenticated()" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+            <!--        검색페이지에 들어간 후 검색 실행하고 난 후에 nav바에 있는 항목으로 이동이 안됨.(뒤돌아가기) -->
+            <select
+                    class="search_con"
+                    name="option1"
+            >
+                <option value="전체">전체</option>
+                <option th:each="a:${cate1}" th:text="${a}"></option>
+
+
+            </select>
+            <select
+                    class="search_con"
+                    name="option2"
+            >
+                <option value="전체">전체</option>
+                <option th:each="b:${cate2}" th:text="${b}"></option>
+            </select>
+            <input
+                    class="search_con2"
+                    type="text"
+                    placeholder="검색어 입력"
+                    name="search"
+            />
+            <button class="search_con">검색</button>
+        </form>
+
+        <form  th:action="@{/admin/list/search/member}"
+               th:if="${type} == 'member'"
+        >
+        			<input type="hidden" sec:authorize="isAuthenticated()" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+            <!--        검색페이지에 들어간 후 검색 실행하고 난 후에 nav바에 있는 항목으로 이동이 안됨.(뒤돌아가기) -->
+            <select
+                    class="search_con"
+                    name="option"
+            >
+                <option value="전체">전체</option>
+                <option th:each="b:${memberCate}" th:text="${b}"></option>
+
+            </select>
+            <input
+                    class="search_con2"
+                    type="text"
+                    placeholder="검색어 입력"
+                    name="search"
+            />
+            <button class="search_con">검색</button>
+        </form>
+
+        <form  th:action="@{/admin/list/search/review}"
+               th:if="${type} == 'review'"
+        >
+        			<input type="hidden" sec:authorize="isAuthenticated()" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+            <select
+                    class="search_con"
+                    name="option"
+            >
+                <option value="전체">전체</option>
+                <option th:each="a:${review}" th:text="${a}"></option>
+            </select>
+            <input
+                    class="search_con2"
+                    type="text"
+                    placeholder="검색어 입력"
+                    name="search"
+            />
+            <button class="search_con">검색</button>
+        </form>
+
+        <form  th:action="@{/admin/list/search/notice}"
+               th:if="${type} == 'notice'"
+        >
+        			<input type="hidden" sec:authorize="isAuthenticated()" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+            <select
+                    class="search_con"
+                    name="option1"
+            >
+                <option value="전체">전체</option>
+                <option th:each="a:${cate1}" th:text="${a}"></option>
+            </select>
+            <select
+                    class="search_con"
+                    name="option2"
+            >
+                <option value="전체">전체</option>
+                <option th:each="b:${cate2}" th:text="${b}"></option>
+            </select>
+            <input
+                    class="search_con2"
+                    type="text"
+                    placeholder="검색어 입력"
+                    name="search"
+            />
+            <button class="search_con">검색</button>
+        </form>
+
+        <form  th:action="@{/admin/list/search/qna}"
+               th:if="${type} == 'qna'"
+        >
+        			<input type="hidden" sec:authorize="isAuthenticated()" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+            <!--        검색페이지에 들어간 후 검색 실행하고 난 후에 nav바에 있는 항목으로 이동이 안됨.(뒤돌아가기) -->
+            <select
+                    class="search_con"
+                    name="option1"
+            >
+                <option value="전체">전체</option>
+                <option th:each="a:${qnaCate1}" th:text="${a}"></option>
+
+
+            </select>
+            <select
+                    class="search_con"
+                    name="option2"
+            >
+                <option value="전체">전체</option>
+                <option th:each="b:${qnaCate2}" th:text="${b}"></option>
+            </select>
+            <input
+                    class="search_con2"
+                    type="text"
+                    placeholder="검색어 입력"
+                    name="search"
+            />
+            <button class="search_con">검색</button>
+        </form>
+
+        <form  th:action="@{/admin/list/search/order}"
+               th:if="${type} == 'order'"
+        >
+        			<input type="hidden" sec:authorize="isAuthenticated()" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+            <select
+                    class="search_con"
+                    name="option1"
+            >
+                <option value="전체">전체</option>
+                <option th:each="a:${cate1}" th:text="${a}"></option>
+            </select>
+            <select
+                    class="search_con"
+                    name="option2"
+            >
+                <option value="전체">전체</option>
+                <option th:each="a:${cate2}" th:text="${a}"></option>
+            </select>
+            <input
+                    class="search_con2"
+                    type="text"
+                    placeholder="검색어 입력"
+                    name="search"
+            />
+            <button class="search_con">검색</button>
+        </form>
+
+    </div>
+</div>
+
+
+<th:block th:if="${type}=='member'">
+    <div class="main_con">
+        <table class="table" style="margin-left: auto; margin-right: auto; width: 900px;">
+            <thead class="table-light">
+            <tr class="no">
+                <td><input type="checkbox" name="RowCheck" value="selectAll" onclick="selectAll(this)"/></td>
+                <th scope="col">No.</th>
+                <th scope="col">회원번호</th>
+                <th scope="col">id</th>
+                <th scope="col">이름</th>
+                <th scope="col">가입일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr
+                    class="content"
+                    th:each="list,status:${list}"
+            >
+                <td><input name="RowCheck"  class="member" th:value="${list.member_IDX}" type="checkbox"/></td>
+                <td th:text="${status.count}"></td>
+                <td class="id" th:text="${list.member_IDX}"></td>
+                <td>
+                    <a th:href="@{/admin/member(idx=${list.member_IDX})}"
+                       th:text="${list.memberID }"></a>
+                </td>
+                <td th:text="${list.member_NAME}"></td>
+                <td th:text="${list.member_SIGNUP}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</th:block>
+
+<th:block th:if="${type}=='product'">
+    <div class="main_con">
+        <table class="table" style="margin-left: auto; margin-right: auto; width: 900px;">
+            <thead class="table-light">
+            <tr class="no">
+                <td><input type="checkbox" name="RowCheck" value="selectAll" onclick="selectAll(this)"/></td>
+
+                <th scope="col">No.</th>
+                <th scope="col">카테고리</th>
+                <th scope="col">이미지</th>
+                <th scope="col">이름</th>
+                <th scope="col">연관상품</th>
+                <th scope="col">상품번호</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="content" th:each="list,status:${list}">
+                <td><input name="RowCheck"  class="product" th:value="${list.item_idx}" type="checkbox"/></td>
+                <td th:text="${status.count}"></td>
+                <td th:text="${list.item_CATEGORY1}">
+
+                </td>
+                <td><img th:src="${list.item_IMAGE}" alt="첨부이미지" width="100px" height="130px"></td>
+                <td>
+                    <a th:href="@{/admin/product(item_idx=${list.item_idx})}"
+                       th:text="${list.item_NAME }"></a>
+                </td>
+                <td th:text="${list.item_ORIGINAL}"></td>
+                <td  class="id"  th:text="${list.item_idx}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="product_button" style="width: 30%; text-align: end;">
+            <button
+                    class="btn btn-sm"
+                    type="button"
+                    style="background-color: #d0d0d0"
+                    onclick="location.href='/admin/product/insert'"
+            >
+                생성
+            </button>
+            <button
+                    class="btn btn-sm"
+                    type="button"
+                    style="background-color: #d0d0d0"
+                    onclick="deleteValue()"
+            >
+                삭제
+            </button>
+        </div>
+    </div>
+</th:block>
+
+<th:block th:if="${type}=='qna'">
+    <div class="main_con">
+        <table class="table" style="margin-left: auto; margin-right: auto; width: 900px;">
+            <thead class="table-light">
+            <tr class="no">
+                <td><input type="checkbox" name="RowCheck" value="selectAll" onclick="selectAll(this)"/></td>
+
+                <td scope="col">No.</td>
+                <td scope="col">문의 번호</td>
+                <td scope="col">문의 카테고리</td>
+                <td scope="col">질문 내용</td>
+                <td scope="col">작성자</td>
+                <td scope="col">날짜</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr
+                    class="content"
+                    th:each="list,status:${list}"
+            >
+                <td><input name="RowCheck"  class="qna" th:value="${list.qna_IDX}" type="checkbox"/></td>
+
+                <td th:text="${status.count}"></td>
+                <td class="id" th:text="${list.qna_IDX}"></td>
+                <td th:text="${list.qna_CATE}"></td>
+                <td>
+                    <a th:href="@{/admin/qna(idx=${list.qna_IDX})}"
+                       th:text="${list.qna_CONTENT}" style="overflow: hidden;"></a>
+                </td>
+                <td th:text="${list.qna_WRITER}"></td>
+                <td th:text="${list.qna_REGDATE}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="qna_button" style="width: 30%; text-align: end;">
+        <button
+                class="btn btn-sm"
+                type="button"
+                onclick="deleteValue()"
+        >
+            삭제
+        </button>
+    </div>
+</th:block>
+
+<th:block th:if="${type}=='notice'">
+    <div class="main_con">
+        <table class="table" style="margin-left: auto; margin-right: auto; width: 900px;">
+            <thead class="table-light">
+            <tr class="no">
+                <td><input type="checkbox" name="RowCheck" value="selectAll" onclick="selectAll(this)"/></td>
+                <td scope="col">No.</td>
+                <td scope="col">번호</td>
+                <td scope="col">카테고리</td>
+                <td scope="col">예약 여부</td>
+                <td scope="col">공지 제목</td>
+                <td scope="col">작성자</td>
+                <td scope="col">등록 날짜</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr
+                    class="content"
+                    th:each="list,status:${list}"
+            >
+                <td><input name="RowCheck"  class="notice" th:value="${list.notice_IDX}" type="checkbox"/></td>
+                <td th:text="${status.count}"></td>
+                <td class="id" th:text="${list.notice_IDX}"></td>
+                <td th:text="${list.notice_CATE}"></td>
+                <td class="regType" th:text="${list.notice_REGTYPE}"></td>
+
+                <td>
+                    <a th:href="@{/admin/notice(idx=${list.notice_IDX})}"
+                       th:text="${list.notice_TITLE }"></a>
+                </td>
+                <td th:text="${list.notice_WRITER}"></td>
+                <td th:text="${list.noticeREGDATE}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+        <div class="product_button" style="width: 30%; text-align: end;">
+            <button
+                    class="btn btn-sm"
+                    type="button"
+                    style="background-color: #d0d0d0"
+                    onclick="location.href='/admin/notice/insertForm'"
+            >
+                생성
+            </button>
+            <button
+                    class="btn btn-sm"
+                    type="button"
+                    style="background-color: #d0d0d0"
+                    onclick="deleteValue()"
+            >
+                삭제
+            </button>
+        </div>
+    </div>
+</th:block>
+
+<th:block th:if="${type}=='review'">
+    <div class="main_con">
+        <table class="table" style="margin-left: auto; margin-right: auto; width: 900px;">
+            <thead class="table-light">
+            <tr class="no">
+                <td><input type="checkbox" name="RowCheck" value="selectAll" onclick="selectAll(this)"/></td>
+                <td scope="col">No.</td>
+                <td scope="col">리뷰번호</td>
+                <td scope="col">주문번호</td>
+                <td scope="col">제목</td>
+                <td scope="col">등록일</td>
+                <td scope="col">작성자</td>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr
+                    class="content"
+                    th:each="list,status:${list}"
+            >
+                <td><input name="RowCheck"  class="review" th:value="${list.review_IDX}" type="checkbox"/></td>
+                <td th:text="${status.count}"></td>
+                <td class="id" th:text="${list.review_IDX}"></td>
+                <td th:text="${list.orders_IDX}"></td>
+                <td>
+                    <a th:href="@{/admin/review(idx=${list.review_IDX})}"
+                       th:text="${list.review_TITLE}">
+                    </a>
+                </td>
+                <td th:text="${list.review_REGDATE}"></td>
+                <td th:text="${list.review_WRITER}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="review_button" style="width: 30%; text-align: end;">
+            <button
+                    class="btn btn-sm"
+                    type="button"
+                    style="background-color: #d0d0d0"
+                    onclick="deleteValue()"
+            >
+                삭제
+            </button>
+        </div>
+    </div>
+</th:block>
+
+<th:block th:if="${type}=='order'">
+    <div class="main">
+        <table class="table" style="margin-left: auto; margin-right: auto; width: 900px;">
+            <thead class="table-light">
+            <tr class="no">
+                <td><input type="checkbox" name="RowCheck" value="selectAll" onclick="selectAll(this)"/></td>
+                <td scope="col">No.</td>
+                <td scope="col">주문번호</td>
+                <td scope="col">주문상태</td>
+                <td scope="col">주문금액</td>
+                <td scope="col">주문자 이름</td>
+                <td scope="col">결제방식</td>
+                <td scope="col">주문 날짜</td>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr
+                    class="content"
+                    th:each="list,status:${list}"
+            >
+                <td><input name="RowCheck"  class="order" th:value="${list.orders_IDX}" type="checkbox"/></td>
+                <td th:text="${status.count}"></td>
+                <td class="id" th:text="${list.orders_IDX}"></td>
+                <td class="status" th:text="${list.orders_STATUS}"></td>
+                <td th:text="${list.orders_AMOUNT}"></td>
+                <td>
+                    <a th:href="@{/admin/order(idx=${list.orders_IDX})}"
+                       th:text="${list.orders_NAME }"></a>
+                </td>
+                <td th:text="${list.orders_PAYMENT}"></td>
+                <td th:text="${list.orders_DATE}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="delete_button" style="width: 26%; text-align: end;">
+            <button
+                    class="btn btn-sm"
+                    type="button"
+                    style="background-color: #d0d0d0"
+                    onclick="deleteValue()"
+            >
+                삭제
+            </button>
+        </div>
+    </div>
+</th:block>
+
+
+<div class="footer1">
+    <div class="footer">
+        <ul class="pagination justify-content-center">
+            <li
+                    class="page-item"
+                    th:classappend="${!paging.hasPrevious} ? 'disabled'"
+            >
+                <a
+                        class="page-link"
+                        th:href="@{|?page=${paging.number-1}|}"
+                >
+                    <span style="color: #212529">이전</span>
+                </a>
+            </li>
+            <th:block>
+                <li
+                        th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                        th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                        th:classappend="${page == paging.number} ? 'active'"
+                        class="page-item"
+                >
+                    <a
+                            th:text="${page} + 1"
+                            class="page-link"
+                            th:href="@{|?page=${page}|}"
+                    ></a>
+                </li>
+            </th:block>
+            <li
+                    class="page-item"
+                    th:classappend="${!paging.hasNext} ? 'disabled'"
+            >
+                <a
+                        class="page-link"
+                        th:href="@{|?page=${paging.number+1}|}"
+                >
+                    <span style="color: #212529">다음</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<script>
+
+
+     function deleteValue(){
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		var name = $("#userName").val();
+
+     let reviewNo = "";
+     $( "input[name='RowCheck']:checked" ).each (function (){
+     reviewNo = reviewNo + $(this).val()+"," ;
+     });
+    if(reviewNo == ""){
+     alert("삭제할 대상을 선택하세요.");
+     return false;
+     }
+
+     if( $("input[name='RowCheck']:checked")[0].className == 'product'){ // 끝
+     $.ajax({
+            url : '/admin/products/delete',
+            type : 'POST',
+            traditional : true,
+            beforeSend : function(xhr)
+            {   
+				xhr.setRequestHeader(header, token);
+            },
+            data : {
+              reviewNo : reviewNo
+            },
+            success: function(jdata){
+              if(jdata = 1){
+                alert("삭제 성공");
+                location.replace("/admin/list/product")
+              }
+              else{
+                alert("삭제 실패")
+              }
+            }
+        });
+        }
+
+        if( $("input[name='RowCheck']:checked")[0].className == 'notice'){
+     $.ajax({
+            url : '/admin/notices/delete',
+            type : 'POST',
+            traditional : true,
+            beforeSend : function(xhr)
+            {   
+				xhr.setRequestHeader(header, token);
+            },
+            data : {
+              reviewNo : reviewNo
+            },
+            success: function(jdata){
+              if(jdata = 1){
+                alert("삭제 성공");
+                location.replace("/admin/list/notice")
+              }
+              else{
+                alert("삭제 실패")
+              }
+            }
+        });
+        }
+        if( $("input[name='RowCheck']:checked")[0].className == 'qna'){
+     $.ajax({
+            url : '/admin/qnas/delete',
+            type : 'POST',
+            traditional : true,
+            beforeSend : function(xhr)
+            {   
+				xhr.setRequestHeader(header, token);
+            },
+            data : {
+              reviewNo : reviewNo
+            },
+            success: function(jdata){
+              if(jdata = 1){
+                alert("삭제 성공");
+                location.replace("/admin/list/qna")
+              }
+              else{
+                alert("삭제 실패")
+              }
+            }
+        });
+        }
+
+        if( $("input[name='RowCheck']:checked")[0].className == 'review'){ // 끝
+     $.ajax({
+            url : '/admin/reviews/delete',
+            type : 'POST',
+            traditional : true,
+            beforeSend : function(xhr)
+            {   
+				xhr.setRequestHeader(header, token);
+            },
+            data : {
+              reviewNo : reviewNo
+            },
+            success: function(jdata){
+              if(jdata = 1){
+                alert("삭제 성공");
+                location.replace("/admin/list/review")
+              }
+              else{
+                alert("삭제 실패")
+              }
+            }
+        });
+        }
+    }
+
+    function selectAll(selectAll)  {
+  const checkboxes
+       = document.getElementsByName('RowCheck');
+
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = selectAll.checked;
+  })
+}
+
+    </script>
+</body>
+</html>

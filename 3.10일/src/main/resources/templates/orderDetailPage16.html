@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+
+    <th:block th:replace="fragments/head :: headFragment"></th:block>
+
+    <style>
+      * {
+        padding: 0px;
+        margin: 0px;
+      }
+
+      table {
+        display: flex;
+        justify-content: center;
+      }
+
+      tr {
+        display: flex;
+      }
+
+      td {
+        display: flex;
+        border: 1px solid black;
+        border-bottom: 0px solid black;
+        padding-right: 10px;
+        justify-content: right;
+        align-items: center;
+      }
+
+      .order_tr td:nth-child(1) {
+        background-color: #d0d0d0;
+        border-right: 0px solid black;
+        height: 40px;
+        width: 150px;
+      }
+      .order_tr td:nth-child(2) {
+        width: 626px;
+      }
+      .order_tr td:nth-child(3) {
+        width: 100px;
+        border-right: 0px solid black;
+        border-left: 0px solid black;
+      }
+      .order_tr td:nth-child(4) {
+        width: 262px;
+      }
+
+      form {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      #child {
+        width: 263.5px;
+      }
+
+      #order_detail {
+        display: flex;
+        align-items: center;
+        height: 200px;
+      }
+      .order_detail > td:nth-child(1) {
+        width: 150px;
+        background-color: #d0d0d0;
+        border-right: 0px solid black;
+      }
+      .order_detail > td:nth-child(2) {
+        width: 625.9px;
+      }
+
+      .button_nav {
+        padding-top: 10px;
+        width: 900px;
+        display: flex;
+        justify-content: space-between;
+        align-self: center;
+      }
+
+      .left {
+        display: flex;
+        gap: 10px;
+        margin-left: 12px;
+      }
+
+      .right {
+        display: flex;
+        margin-right: 12px;
+        gap: 5px;
+      }
+
+      input[type="submit"],
+      input[type="button"] {
+        width: 40px;
+        height: 30px;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+      }
+
+      .wrap {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 900px;
+      }
+
+      .title {
+        display: flex;
+        flex-direction: row;
+        min-width: 900px;
+        justify-content: start;
+        margin-left: 60px;
+        padding-top: 15px;
+      }
+
+      .select_td {
+        display: block;
+      }
+
+      .order_info {
+        margin: 10px;
+        width: 80%;
+      }
+
+      .square_box {
+        margin-left: 3px;
+        margin-top: 7px;
+        margin-right: 10px;
+        width: 10px;
+        height: 10px;
+        background-color: black;
+      }
+      .items_list {
+        display: none;
+      }
+      .inner_table span:nth-child(1) {
+        display: inline-block;
+        text-align: center;
+        overflow: hidden;
+        width: 250px;
+      }
+      .inner_table span:nth-child(2) {
+        display: inline-block;
+        width: 100px;
+        text-align: center;
+      }
+      .inner_table span:nth-child(3) {
+        display: inline-block;
+        text-align: center;
+        width: 85px;
+      }
+      .inner_table span:nth-child(4) {
+        display: inline-block;
+        width: 100px;
+        text-align: center;
+      }
+      #select {
+        float: right;
+      }
+      .order_color {
+        background-color: rgb(240, 240, 240);
+      }
+      .member_now {
+        background-color: #d0d0d0;
+      }
+      .button_nav {
+        width: 800px;
+      }
+      .order_table {
+        border-bottom: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header th:replace="fragments/header :: headerFragment"></header>
+      <div class="title">
+        <div class="square_box"></div>
+        <div>주문 상세 페이지</div>
+      </div>
+      <!-- 이거 뭐임? -->
+      <form action="/admin/order/modify" method="post">
+        <input
+          type="hidden"
+          th:name="${_csrf.parameterName}"
+          th:value="${_csrf.token}"
+        />
+        <input type="hidden" th:value="${order.orders_IDX}" name="orders_IDX" />
+        <!-- <input type="hidden" name="several_status"> -->
+
+        <table class="order_table">
+          <tr class="order_tr">
+            <td>주문번호</td>
+            <td th:text="${order.orders_IDX}"></td>
+          </tr>
+          <tr class="order_tr">
+            <td>주문자이름</td>
+            <td id="child" th:text="${order.orders_NAME}"></td>
+            <td class="member_now">회원여부</td>
+            <td></td>
+          </tr>
+          <tr class="order_tr">
+            <td>주문자 주소</td>
+            <td th:text="${order.orders_ADDRESS} + ${order.orders_POST}"></td>
+          </tr>
+          <tr class="order_tr">
+            <td>전화번호</td>
+            <td th:text="${order.orders_PHONE}"></td>
+          </tr>
+          <tr class="order_tr">
+            <td>결제방식</td>
+            <td th:text="${order.orders_PAYMENT}"></td>
+          </tr>
+          <tr class="order_tr">
+            <td>주문상태</td>
+            <td th:text="${order.orders_STATUS}"></td>
+          </tr>
+          <tr class="order_detail">
+            <td id="order_detail">주문 상품 내역</td>
+            <td class="select_td">
+              <div class="order_product_name">
+                <div class="inner_table">
+                  <span>상품명</span>
+                  <span>상품가격</span>
+                  <span>수량</span>
+                  <span>합계가격</span>
+                  <span>상태</span>
+                </div>
+                <div class="order_color">
+                  <div class="inner_table" th:each="list, status:${list}">
+                    <span
+                      th:text="${status.count}+'. ' + ${list.item_name}"
+                    ></span>
+                    <span th:text="${list.item_price}"></span>
+                    <span th:text="${list.item_quantity}"></span>
+                    <span th:text="${list.item_total}"></span>
+
+                    <select id="select" name="several_status">
+                      <option
+                        th:selected="${list.item_status} == '기본'"
+                        value="기본"
+                      >
+                        기본
+                      </option>
+                      <option
+                        th:selected="${list.item_status} == '교환'"
+                        value="교환"
+                      >
+                        교환
+                      </option>
+                      <option
+                        th:selected="${list.item_status} == '환불'"
+                        value="환불"
+                      >
+                        환불
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="order_tr">
+            <td>결제 금액</td>
+            <td th:text="${total}"></td>
+          </tr>
+          <tr class="order_tr">
+            <td>배송 요청 사항</td>
+            <td th:text="${order.orders_DELIVERY_PS}"></td>
+          </tr>
+        </table>
+
+        <div class="button_nav">
+          <div class="left">
+            <a href="http://localhost:8080/admin/list/order"
+              ><input type="button" value="목록"
+            /></a>
+          </div>
+          <div class="right">
+            <input type="submit" value="저장" />
+            <input type="button" value="삭제" />
+          </div>
+        </div>
+      </form>
+    </div>
+    <script></script>
+  </body>
+</html>

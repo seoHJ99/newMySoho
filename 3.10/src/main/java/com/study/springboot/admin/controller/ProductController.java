@@ -1,6 +1,7 @@
 package com.study.springboot.admin.controller;
 
 
+import com.amazonaws.auth.policy.Resource;
 import com.study.springboot.other.ckEditor.AwsS3Service;
 import com.study.springboot.other.ckEditor.FileResponse;
 import com.study.springboot.other.ckEditor.MainService;
@@ -11,6 +12,8 @@ import com.study.springboot.entity.ProductRepository;
 import com.study.springboot.admin.dto.ReviewResponseDTO;
 import com.study.springboot.admin.service.SearchService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.data.repository.init.ResourceReader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -34,45 +37,27 @@ public class ProductController {
     private final MainService mainService;
     private final SearchService searchService;
 
-
     @RequestMapping("/product")
     public String product(int item_idx, Model model) {
         ProductResponseDto dto = productService.findById(item_idx);
-
         searchService.categoryInsertAndFilter();
-
-        model.addAttribute("cate1",cateMap.get("cate1"));
-        model.addAttribute("cate2",cateMap.get("cate2"));
-
+        model.addAttribute("cate1", cateMap.get("cate1"));
+        model.addAttribute("cate2", cateMap.get("cate2"));
         int scoreSum = 0;
         List<ReviewResponseDTO> reviewList = productService.findReviewScore(item_idx);
         for(int i=0; reviewList.size()>i; i++){
             int score = reviewList.get(i).getReview_SCORE();
             scoreSum = scoreSum + score;
         }
-
         if(reviewList.size()==0) {
             model.addAttribute("scoreAvg",0);
         }else {
             int scoreAvg = scoreSum / reviewList.size();
             model.addAttribute("scoreAvg", scoreAvg);
         }
-
         model.addAttribute("dto", dto);
         return "product";
     }
-    @RequestMapping("/productAction")
-    @ResponseBody
-    public String productAction( @RequestParam("item_price") int item_price,
-                                 @RequestParam("item_idx") int item_idx){
-        ProductResponseDto dto = productService.findById(item_idx);
-        dto.setItem_PRICE(item_price);
-        Product product = new Product();
-        product.toSaveEntity(dto);
-        productService.save(product);
-        return "";
-    }
-
 
     @RequestMapping("/product/delete")
     @ResponseBody
@@ -130,6 +115,7 @@ public class ProductController {
     public String productModify(@RequestParam("item_CATEGORY1") String cate1,
                                 @RequestParam("item_CATEGORY2") String cate2,
                                 @RequestParam("item_NAME") String name,
+                                @RequestParam("image1") String image,
                                 @RequestParam("item_DETAIL") String detail,
                                 @RequestParam("item_DISCOUNT") int discount,
                                 @RequestParam("item_ORIGINAL") int original,
@@ -137,6 +123,7 @@ public class ProductController {
                                 @RequestParam("item_PRICE") int price) throws Exception{
 
         ProductResponseDto productResponseDto = service.findById(idx);
+        productResponseDto.setItem_IMAGE(image);
         productResponseDto.setItem_CATEGORY1(cate1);
         productResponseDto.setItem_CATEGORY2(cate2);
         productResponseDto.setItem_DETAIL(detail);
@@ -149,12 +136,13 @@ public class ProductController {
         product.toUpdateEntity(productResponseDto);
         service.save(product);
 
-
         return "redirect:/admin/list/product"; // responseBody 없이도 되는지 시험
     }
 
+
+
     @RequestMapping("/product/changeImage")
-    public String changeImage( @RequestParam("IMAGE") MultipartFile item_IMAGE, @RequestParam("idx") int idx) throws Exception{
+    public String changeImage( @RequestParam("IMAGE") MultipartFile item_IMAGE, @RequestParam("idx") int idx, Model model) throws Exception{
         String url = awsS3Service.upload(item_IMAGE);
         new ResponseEntity<>(FileResponse.builder().
                 uploaded(true).
@@ -162,10 +150,25 @@ public class ProductController {
                 build(), HttpStatus.OK);
         ProductResponseDto responseDtoSmall = service.findById(idx);
         responseDtoSmall.setItem_IMAGE(url);
-        Product product = new Product();
-        product.toUpdateEntity(responseDtoSmall);
-        service.save(product);
-        return "redirect:/admin/product" +"?item_idx="+idx;
+
+        searchService.categoryInsertAndFilter();
+        model.addAttribute("cate1", cateMap.get("cate1"));
+        model.addAttribute("cate2", cateMap.get("cate2"));
+        int scoreSum = 0;
+        List<ReviewResponseDTO> reviewList = productService.findReviewScore(responseDtoSmall.getItem_idx());
+        for(int i=0; reviewList.size()>i; i++){
+            int score = reviewList.get(i).getReview_SCORE();
+            scoreSum = scoreSum + score;
+        }
+
+        if(reviewList.size()==0) {
+            model.addAttribute("scoreAvg",0);
+        }else {
+            int scoreAvg = scoreSum / reviewList.size();
+            model.addAttribute("scoreAvg", scoreAvg);
+        }
+        model.addAttribute("dto", responseDtoSmall);
+        return "product";
     }
 
     @PostMapping("/imgUpload")

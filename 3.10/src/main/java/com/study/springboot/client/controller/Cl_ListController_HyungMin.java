@@ -1,9 +1,11 @@
 package com.study.springboot.client.controller;
 
+import com.study.springboot.admin.dto.NoticeResponseDTO;
 import com.study.springboot.admin.service.ProductService;
 import com.study.springboot.client.dto.ProductResponseDto;
 import com.study.springboot.client.service.Cl_ListService_HyungMin;
 import com.study.springboot.client.service.Cl_SearchService_HyungMin;
+import com.study.springboot.client.service.ClientNoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
 @Controller
 public class Cl_ListController_HyungMin {
 
+    private final ClientNoticeService noticeService;
     private final Cl_ListService_HyungMin listService;
     private final Cl_SearchService_HyungMin searchService;
 
@@ -39,13 +43,15 @@ public class Cl_ListController_HyungMin {
         }
         model.addAttribute("list1", list1);
         model.addAttribute("list2", list2);
-        
         // 정렬 기준
         model.addAttribute("date", listService.pdOrderByDate());
         model.addAttribute("selling", listService.pdOrderBySelling());
         model.addAttribute("price", listService.pdOrderByPrice());
         model.addAttribute("review", listService.pdOrderByReview());
         model.addAttribute("score", listService.pdOrderByScore());
+        if(noticeService.findRecentNotice() != null) {
+            model.addAttribute("dto", noticeService.findRecentNotice());
+        }
         return "client/theOthers/home";
     }
 

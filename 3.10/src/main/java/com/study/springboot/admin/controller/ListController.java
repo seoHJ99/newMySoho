@@ -48,7 +48,7 @@ public class ListController {
         for(Member entity : paging){
             list.add(new MemberResponseDTO(entity));
         }
-        searchService.categoryInsertAndFilter();
+        searchService.memberInsertAndFilter();
         model.addAttribute("memberCate", cateMap.get("memberCate"));
         model.addAttribute("type","member");
         model.addAttribute("list", list);
@@ -64,6 +64,9 @@ public class ListController {
         for(Product entity : paging){
             list.add(new ProductResponseDto(entity));
         }
+        searchService.categoryInsertAndFilter();
+        model.addAttribute("cate1",cateMap.get("cate1"));
+        model.addAttribute("cate2",cateMap.get("cate2"));
         model.addAttribute("type","product");
         model.addAttribute("list", list);
         return "listForm";
@@ -94,7 +97,9 @@ public class ListController {
         for(Qna entity : paging){
             list.add(new QnaResponseDto(entity));
         }
-
+        searchService.qnaInsertAndFilter();
+        model.addAttribute("qnaCate1",cateMap.get("qnaCate1"));
+        model.addAttribute("qnaCate2",cateMap.get("qnaCate2"));
         model.addAttribute("type","qna");
         model.addAttribute("list", list);
         return "listForm";

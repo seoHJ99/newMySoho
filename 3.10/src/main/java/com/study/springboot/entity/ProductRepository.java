@@ -62,6 +62,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
                                    @Param(value = "keyword") String keyword,
                                    Pageable pageable);
 
+    @Query(value = "SELECT * FROM item ORDER BY item_IDX desc", nativeQuery = true)
+    Page<Product> findAll (Pageable pageable);
+
     //옵션 2번만 선택했을때
     @Query(value = "SELECT * FROM item WHERE item_CATEGORY2 =:category2 AND item_NAME LIKE CONCAT('%',:keyword,'%') OR item_CATEGORY2 =:category2 AND item_IDX LIKE CONCAT('%',:keyword,'%')", nativeQuery = true)
     Page<Product> searchWithCate2 (@Param(value = "category2") String category2,
