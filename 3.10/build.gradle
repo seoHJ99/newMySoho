@@ -38,3 +38,9 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+bootJar{
+	archivesBaseName = 'Ex15_JPA_RealDB-0.0.1-SNAPSHOT'
+	archiveFileName = 'mysoho.jar'
+	archiveVersion = "0.0.0"
+}
