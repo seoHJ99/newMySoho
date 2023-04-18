@@ -1,4 +1,4 @@
-
+create database soho_db;
 USE soho_db;
 
 
