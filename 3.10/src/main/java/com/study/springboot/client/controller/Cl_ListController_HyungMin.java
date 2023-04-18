@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,12 @@ public class Cl_ListController_HyungMin {
     private final ClientNoticeService noticeService;
     private final Cl_ListService_HyungMin listService;
     private final Cl_SearchService_HyungMin searchService;
+
+    @GetMapping("/test")
+    @ResponseBody
+    public String mm(){
+        return "aaaa";
+    }
 
     // home.html
     @GetMapping("/main")
