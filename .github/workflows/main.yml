@@ -60,7 +60,7 @@ jobs:
     - name: Make zip file
       run: zip -r ./3.10.zip .         # (12)
       shell: bash
-
+#
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1      #(13)
