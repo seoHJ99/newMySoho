@@ -58,7 +58,7 @@ jobs:
 
 # 아래부분이 추가되는 내용입니다.
     - name: Make zip file
-      run: zip -r ./$PROJECT_NAME.zip .         # (12)
+      run: zip -r ./3.10.zip .         # (12)
       shell: bash
 
     - name: Configure AWS credentials
