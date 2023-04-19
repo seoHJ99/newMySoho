@@ -1,5 +1,5 @@
 env:
-  S3_BUCKET_NAME: actions-deploy-bucket-mysoho # 내가 설정한 S3 버킷 이름
+  S3_BUCKET_NAME: mysoho # 내가 설정한 S3 버킷 이름
   PROJECT_NAME: 3.10 # 내 Git Hub 프로젝트 이름
 
 name: deploy # (0) GitHub Action에서 보여질 이름을 지정합니다. 
