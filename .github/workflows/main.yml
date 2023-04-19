@@ -33,9 +33,9 @@ jobs:
       run: chmod +x /home/runner/work/newMySoho/newMySoho/3.10/gradlew # (7)
       shell: bash
     
-    - name: Directory
-      run: find / -type f -name "gradlew"
-      shell: bash
+   # - name: Directory
+   #   run: find / -type f -name "gradlew"
+   #   shell: bash
 
 
     - name: Build with Gradle
