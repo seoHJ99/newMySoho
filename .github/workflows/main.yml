@@ -34,7 +34,7 @@ jobs:
       shell: bash
     
     - name: Directory
-      run: ls (8)
+      run: find / -type f -name "gradlew"
       shell: bash
 
 
