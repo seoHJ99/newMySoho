@@ -38,7 +38,7 @@ jobs:
    #   shell: bash
 
     - name: Build with Gradle
-      run: /home/runner/work/newMySoho/newMySoho/3.10/gradlew init clean build -x test # (8)
+      run: /home/runner/work/newMySoho/newMySoho/3.10/gradlew build -x test # (8)
       shell: bash
 
 #     - name: Build with Gradle
