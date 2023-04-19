@@ -86,7 +86,10 @@ jobs:
       shell: bash
 
     - name: Upload to S3
-      run: aws s3 cp --region ap-northeast-2 /home/runner/work/newMySoho/newMySoho/deploy/3.10.zip s3://$S3_BUCKET_NAME/3.10/3.10.zip    #(14)
+      run: |
+        pwd
+        ls
+        aws s3 cp --region ap-northeast-2 /home/runner/work/newMySoho/newMySoho/deploy/3.10.zip s3://$S3_BUCKET_NAME/3.10/3.10.zip    #(14)
       
     - name: Code Deploy #(16)
       run: aws deploy create-deployment --application-name $CODE_DEPLOY_APP_NAME --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name $CODE_DEPLOY_GROUP_NAME --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=3.10/3.10.zip
