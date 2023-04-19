@@ -37,6 +37,9 @@ jobs:
    #   run: find / -type f -name "gradlew"
    #   shell: bash
 
+    - name: Build with Gradle
+      run: /home/runner/work/newMySoho/newMySoho/3.10/gradlew init # (8)
+      shell: bash
 
     - name: Build with Gradle
       run: /home/runner/work/newMySoho/newMySoho/3.10/gradlew clean build -x test # (8)
