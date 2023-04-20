@@ -39,6 +39,8 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+apply plugin: 'org.springframework.boot'
+
 bootJar{
 	archivesBaseName = 'Ex15_JPA_RealDB-0.0.1-SNAPSHOT'
 	archiveFileName = 'mysoho.jar'
