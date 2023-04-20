@@ -41,10 +41,8 @@ jobs:
    #   shell: bash
 
     - name: Build with Gradle
-      run: cd /home/runner/work/newMySoho/newMySoho/3.10 && ./gradlew clean # (8)
+      run: cd /home/runner/work/newMySoho/newMySoho/3.10 && ./gradlew clean build -x test  # (8)
       shell: bash
-      
-# build -x test
 
     - name: Get current time
       uses: 1466587594/get-current-time@v2  # (9)
