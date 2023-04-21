@@ -24,7 +24,7 @@ public class ClientNoticeController_JunTae {
         String time = notice.getNoticeREGDATE().toString().replaceAll("T", " ");
         model.addAttribute("time", time);
         model.addAttribute("notice", notice);
-        return "/client/theOthers/notice";
+        return "client/theOthers/notice";
     }
 
     @RequestMapping("/notice/list")
@@ -37,6 +37,6 @@ public class ClientNoticeController_JunTae {
             }
         }
         model.addAttribute("list", listdto);
-        return "/client/theOthers/noticelist";
+        return "client/theOthers/noticelist";
     }
 }

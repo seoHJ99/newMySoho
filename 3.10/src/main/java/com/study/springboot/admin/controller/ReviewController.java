@@ -37,7 +37,7 @@ public class ReviewController {
     @RequestMapping("/review/delete")
     public String reviewDelete(int id){
         reviewService.reviewDelete(id);
-        return "/admin/list/review";
+        return "admin/list/review";
     }
 
     @RequestMapping("/reviews/delete")

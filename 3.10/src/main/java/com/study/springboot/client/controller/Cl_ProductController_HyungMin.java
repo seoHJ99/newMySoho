@@ -70,7 +70,7 @@ Cl_ProductController_HyungMin {
         model.addAttribute("product", dto);
         model.addAttribute("reviewAVG",avg);
         model.addAttribute("reviewCount", dto1.size());
-        return "/client/product/productDetailPage";
+        return "client/product/productDetailPage";
     }
     @RequestMapping("/product/detail") // 제품 상세 새 페이지
     public String productDetail(int item_IDX, Model model){

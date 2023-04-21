@@ -87,6 +87,6 @@ public class Cl_ListController_HyungMin {
         model.addAttribute("score", listService.pdOrderByScore(keyword));
         model.addAttribute("keyword",keyword);
         model.addAttribute("count", list.size());
-        return "/client/theOthers/searchpage";
+        return "client/theOthers/searchpage";
     }
 }

@@ -55,7 +55,7 @@ public class CartController_Ho {
                                         model.addAttribute("member",memberResponseDTO);
                                     });
         model.addAttribute("item",cartDtoList);
-        return "/client/theOthers/shopping-cart";
+        return "client/theOthers/shopping-cart";
     }
 
     @RequestMapping("/order/save")
@@ -135,6 +135,6 @@ public class CartController_Ho {
             HttpStatus status = HttpStatus.OK;
             if (status == HttpStatus.OK) System.out.println("회원가입 성공!");
         }
-        return "/client/order/order-complete";
+        return "client/order/order-complete";
     }
 }

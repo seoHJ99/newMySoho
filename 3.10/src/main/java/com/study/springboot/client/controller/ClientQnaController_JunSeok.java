@@ -39,7 +39,7 @@ public class ClientQnaController_JunSeok {
 
     @RequestMapping("/client/qna/write")
     public String qnaWrite() {
-        return "/client/theOthers/QnA-write";
+        return "client/theOthers/QnA-write";
     }
 
     @RequestMapping("/client/qna/write2")
@@ -47,7 +47,7 @@ public class ClientQnaController_JunSeok {
         ProductResponseDto dto = clProductService.findById(item_idx);
 
         model.addAttribute("product", dto);
-        return "/client/theOthers/QnA-write2";
+        return "client/theOthers/QnA-write2";
     }
 
     @RequestMapping("/client/qna/write/save")
@@ -101,7 +101,7 @@ public class ClientQnaController_JunSeok {
         // entity를 향상된 for문을 이용하여 dto로 변환 후 list에 넣어준다.
         model.addAttribute("list", list);
 
-        return "/client/theOthers/QnAList"; // QnAList.html로 반환한다.
+        return "client/theOthers/QnAList"; // QnAList.html로 반환한다.
 
     }
 
@@ -116,7 +116,7 @@ public class ClientQnaController_JunSeok {
         model.addAttribute("paging", paging);
         model.addAttribute("list", list);
 
-        return "/client/theOthers/QnAList";
+        return "client/theOthers/QnAList";
     }
     @RequestMapping("/client/qna/modify")
     public String clientQnaListModify(@RequestParam("idx") int qna_IDX, Model model) {
@@ -125,7 +125,7 @@ public class ClientQnaController_JunSeok {
         QnaResponseDto qnaResponseDto = new QnaResponseDto(qna);
         model.addAttribute("qna", qna);
 
-        return "/client/theOthers/QnA-modify";
+        return "client/theOthers/QnA-modify";
     }
 
     @PostMapping("/checkPw2")
@@ -233,7 +233,7 @@ public class ClientQnaController_JunSeok {
     @RequestMapping("/open/qna/pw")
     public String nonMemQnACheck(int idx, Model model){
         model.addAttribute("qnaIDX", idx);
-        return "/client/theOthers/qnaPWcheck";
+        return "client/theOthers/qnaPWcheck";
     }
     @RequestMapping("/check/qna/pw")
     @ResponseBody
@@ -252,18 +252,18 @@ public class ClientQnaController_JunSeok {
         if(qnaResponseDto.getQna_SECRET() == 0) {
             if (qnaResponseDto.getMember_IDX() != null) {
                 model.addAttribute("dto", qnaResponseDto);
-                return "/client/theOthers/qnaView";
+                return "client/theOthers/qnaView";
             } else {
                 if (qnaResponseDto.getQna_PW().equals(pw)) {
                     model.addAttribute("dto", qnaResponseDto);
-                    return "/client/theOthers/qnaView";
+                    return "client/theOthers/qnaView";
                 } else {
                     return "";
                 }
             }
         }else {
             model.addAttribute("dto", qnaResponseDto);
-            return "/client/theOthers/qnaView";
+            return "client/theOthers/qnaView";
         }
     }
 }

@@ -50,7 +50,7 @@ public class UserController_MyungJin {
 
     @GetMapping("/loginForm")
     public String loginForm() {
-        return "/client/login/userlogin";
+        return "client/login/userlogin";
     }
 
 
@@ -63,7 +63,7 @@ public class UserController_MyungJin {
 
     @GetMapping("/joinForm")
     public String joinForm() {
-        return "/client/login/userjoin";
+        return "client/login/userjoin";
     }
 
     @PostMapping("/joinAction")
@@ -141,12 +141,12 @@ public class UserController_MyungJin {
         model.addAttribute("point", mem.getMember_POINT());
         model.addAttribute("couponCnt", couponList.size());
         model.addAttribute("list", orderTests);
-        return "/client/user/Member/myorder-list-user";     // loginForm.html로 응답
+        return "client/user/Member/myorder-list-user";     // loginForm.html로 응답
     }
 
     @GetMapping("/user/myinfoPswd")
     public String userMyinfoPswd() {
-        return "/client/user/Member/user-myinfo-Pswd";     // loginForm.html로 응답
+        return "client/user/Member/user-myinfo-Pswd";     // loginForm.html로 응답
     }
 
     @GetMapping("/user/myinfo")
@@ -157,7 +157,7 @@ public class UserController_MyungJin {
 
         model.addAttribute("point",point);
 
-        return "/client/user/Member/user-myinfo";     // loginForm.html로 응답
+        return "client/user/Member/user-myinfo";     // loginForm.html로 응답
     }
 
 
@@ -186,12 +186,12 @@ public class UserController_MyungJin {
         model.addAttribute("order4", test.getCompleteCnt() );
         model.addAttribute("order5", refundCnt);
         model.addAttribute("list", orderTests);
-        return "/client/user/Nonmember/myorder-list";
+        return "client/user/Nonmember/myorder-list";
     }
 
     @GetMapping("/myorder")
     public String nonUserMyorder() {
-        return "/client/user/Nonmember/myorder";
+        return "client/user/Nonmember/myorder";
     }
 
     @RequestMapping("/review/myList")
@@ -210,7 +210,7 @@ public class UserController_MyungJin {
             }
             model.addAttribute("review",reviewMines);
         }
-        return "/client/user/Member/review-mylist";
+        return "client/user/Member/review-mylist";
     }
 
     @RequestMapping("/findID")
@@ -220,7 +220,7 @@ public class UserController_MyungJin {
         if (!memberID.equals("없음")) {
             model.addAttribute("id", memberID);
         }
-        return "/client/login/find-ID";
+        return "client/login/find-ID";
     }
 
     // 임시 비밀번호 발급
@@ -236,7 +236,7 @@ public class UserController_MyungJin {
         String pw = cl_MemberService.createCode();
         MemberResponseDTO dto = memberService.findByMail(mail, id);
         if(dto == null){
-            return "/client/login/noID";
+            return "client/login/noID";
         }else {
             emailService.sendMail(emailMessage, pw);
             dto.setMemberPw(passwordEncoder.encode(pw));
@@ -257,7 +257,7 @@ public class UserController_MyungJin {
             }
         }
         model.addAttribute("dto", productQnaDtos);
-        return "/client/user/Member/myProductQnA";
+        return "client/user/Member/myProductQnA";
     }
 
     @RequestMapping("/qna/myList")
@@ -270,7 +270,7 @@ public class UserController_MyungJin {
             }
         }
         model.addAttribute("allQNA", allQna);
-        return "/client/user/Member/qna-user";
+        return "client/user/Member/qna-user";
     }
 
     @RequestMapping("/denied")

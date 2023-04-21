@@ -21,13 +21,13 @@ public class ClientOrderController_Hojun {
 //        오더 번호 저장한 뒤, 오더 디테일 저장해야 함.
 //        리스트로 아이템 넘버와 갯수를 받아온 뒤 저장
 //        orderService.saveOrder(orderSaveDto);
-//        return "/order/complete?idx=";
+//        return "order/complete?idx=";
 //    }
 
     @RequestMapping("/order/complete/{param}")
     public String orderComplete(Model model, @RequestParam("param") int idx){
 
-        return "/client/order/order-complete";
+        return "client/order/order-complete";
     }
 
 }

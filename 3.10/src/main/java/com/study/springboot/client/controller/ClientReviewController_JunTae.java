@@ -31,7 +31,7 @@ public class ClientReviewController_JunTae {
     public String test(Model model, int item_idx) {
         ProductResponseDto dto = clientReviewService.findById(item_idx);
         model.addAttribute("dto", dto);
-        return "/client/theOthers/reviewpage";
+        return "client/theOthers/reviewpage";
     }
 
     @RequestMapping("/review/save")
