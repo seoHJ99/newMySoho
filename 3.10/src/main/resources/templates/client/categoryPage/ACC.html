@@ -4,7 +4,7 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
 <head>
-  <th:block th:replace="/client/fragments/Clhead :: headFragment"></th:block>
+  <th:block th:replace="client/fragments/Clhead :: headFragment"></th:block>
   <style>
     .profile-area {
       background-color: rgb(233, 240, 250);
@@ -183,7 +183,7 @@ height:45px;
   </style>
 <body id="bodytest">
 <th:block
-        th:replace="/client/fragments/Clheader :: headerFragment"
+        th:replace="client/fragments/Clheader :: headerFragment"
 ></th:block>
 
 <div class="container-sale">
@@ -540,7 +540,7 @@ height:45px;
 
 <!-- 푸터 -->
 <th:block
-        th:replace="/client/fragments/Clfooter :: footerFragment"
+        th:replace="client/fragments/Clfooter :: footerFragment"
 ></th:block>
 
 <!--<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>-->
@@ -556,7 +556,7 @@ height:45px;
 <!--&gt;</script>-->
 
 <th:block
-        th:replace="/client/fragments/Clscript :: scriptFragment"
+        th:replace="client/fragments/Clscript :: scriptFragment"
 ></th:block>
 
 <script>

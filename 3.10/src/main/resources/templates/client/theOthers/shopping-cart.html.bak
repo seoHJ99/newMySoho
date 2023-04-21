@@ -5,7 +5,7 @@
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
   <head>
-    <th:block th:replace="/client/fragments/Clhead :: headFragment"></th:block>
+    <th:block th:replace="client/fragments/Clhead :: headFragment"></th:block>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -657,7 +657,7 @@
   </head>
 
   <body id="bodytest">
-    <th:block th:replace="/client/fragments/Clheader :: headerFragment"></th:block>
+    <th:block th:replace="client/fragments/Clheader :: headerFragment"></th:block>
     <!-- <form action="/save/order" name="payComplete" method="post"> -->
     <div class="content-view text-align-center">
       <!-- 장바구니 -->
@@ -1578,7 +1578,7 @@
 
     <!-- 푸터 -->
     <th:block
-      th:replace="/client/fragments/Clfooter :: footerFragment"
+      th:replace="client/fragments/Clfooter :: footerFragment"
     ></th:block>
     <script>
       $("#using_MILEAGE").attr("max", $(".js-userMileageText").text().replace("원",""));

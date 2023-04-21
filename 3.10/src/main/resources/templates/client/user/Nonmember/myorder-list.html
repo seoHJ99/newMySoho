@@ -5,7 +5,7 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
 <head>
-    <th:block th:replace="/client/fragments/Clhead :: headFragment"></th:block>
+    <th:block th:replace="client/fragments/Clhead :: headFragment"></th:block>
     <style>
 			.container-myorder-list {
 				padding-bottom: 140px;
@@ -458,7 +458,7 @@
 </head>
 <body id="bodytest">
 <th:block
-        th:replace="/client/fragments/Clheader :: headerFragment"
+        th:replace="client/fragments/Clheader :: headerFragment"
 ></th:block>
 
 <div class="container-myorder-list">
@@ -799,7 +799,7 @@
                         </div>
                     </div>
                 </div>
-                <th:block th:replace="/client/user/Member/myorder-fragment :: myorderFragment"></th:block>
+                <th:block th:replace="client/user/Member/myorder-fragment :: myorderFragment"></th:block>
             </div>
 
             <div class="order_list list-type1" style="display: none;">
@@ -1043,7 +1043,7 @@
                             </div>
                         </div>
                     </div>
-                    <th:block th:replace="/client/user/Member/myorder-fragment :: myorderFragment"></th:block>
+                    <th:block th:replace="client/user/Member/myorder-fragment :: myorderFragment"></th:block>
                 </th:block>
             </div>
 
@@ -1288,7 +1288,7 @@
                             </div>
                         </div>
                     </div>
-                    <th:block th:replace="/client/user/Member/myorder-fragment :: myorderFragment"></th:block>
+                    <th:block th:replace="client/user/Member/myorder-fragment :: myorderFragment"></th:block>
                 </th:block>
             </div>
 
@@ -1533,7 +1533,7 @@
                             </div>
                         </div>
                     </div>
-                    <th:block th:replace="/client/user/Member/myorder-fragment :: myorderFragment"></th:block>
+                    <th:block th:replace="client/user/Member/myorder-fragment :: myorderFragment"></th:block>
                 </th:block>
             </div>
 
@@ -1778,14 +1778,14 @@
                             </div>
                         </div>
                     </div>
-                    <th:block th:replace="/client/user/Member/myorder-fragment :: myorderFragment"></th:block>
+                    <th:block th:replace="client/user/Member/myorder-fragment :: myorderFragment"></th:block>
                 </th:block>
             </div>
 
             <div class="order_list list-type5" style="display: none;">
                 <div class="list" th:each="secondList : ${firstList.productInfoList}"
                      th:if="${#strings.equals(secondList.status, '환불')} or ${#strings.equals(secondList.status, '교환')}">
-                    <th:block th:replace="/client/user/Member/myorder-refund :: myorderRefund"></th:block>
+                    <th:block th:replace="client/user/Member/myorder-refund :: myorderRefund"></th:block>
                 </div>
             </div>
 
@@ -1794,7 +1794,7 @@
 </div>
 <!-- 푸터 -->
 <th:block
-        th:replace="/client/fragments/Clfooter :: footerFragment"
+        th:replace="client/fragments/Clfooter :: footerFragment"
 ></th:block>
 <script>
 			//사이드메뉴

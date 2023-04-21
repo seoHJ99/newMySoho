@@ -4,7 +4,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
 	<head>
-		<th:block th:replace="/client/fragments/Clhead :: headFragment"></th:block>
+		<th:block th:replace="client/fragments/Clhead :: headFragment"></th:block>
 
 		<link
 			rel="stylesheet"
@@ -157,7 +157,7 @@
 	</head>
 	<body id="bodytest">
 		<th:block
-			th:replace="/client/fragments/Clheader :: headerFragment"
+			th:replace="client/fragments/Clheader :: headerFragment"
 		></th:block>
 		<!-- 나의 상품 후기 -->
 		<div class="containerlogin">
@@ -237,7 +237,7 @@
 		</div>
 		<!-- 푸터 -->
 		<th:block
-			th:replace="/client/fragments/Clfooter :: footerFragment"
+			th:replace="client/fragments/Clfooter :: footerFragment"
 		></th:block>
 
 		<script>

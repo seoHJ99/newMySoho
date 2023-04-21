@@ -4,7 +4,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
 	<head>
-		<th:block th:replace="/client/fragments/Clhead :: headFragment"></th:block>
+		<th:block th:replace="client/fragments/Clhead :: headFragment"></th:block>
 		<style>
 			.container-order-complete {
 				padding-bottom: 100px;
@@ -96,7 +96,7 @@
 	</head>
 	<body id="bodytest">
 		<th:block
-			th:replace="/client/fragments/Clheader :: headerFragment"
+			th:replace="client/fragments/Clheader :: headerFragment"
 		></th:block>
 		<!-- 로그인 -->
 		<div class="container-order-complete">
@@ -175,7 +175,7 @@
 		</div>
 		<!-- 푸터 -->
 		<th:block
-			th:replace="/client/fragments/Clfooter :: footerFragment"
+			th:replace="client/fragments/Clfooter :: footerFragment"
 		></th:block>
 
 		<script>
