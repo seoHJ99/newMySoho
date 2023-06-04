@@ -26,11 +26,6 @@ public class Cl_ListController_HyungMin {
     private final Cl_ListService_HyungMin listService;
     private final Cl_SearchService_HyungMin searchService;
 
-    @GetMapping("/test")
-    @ResponseBody
-    public String mm(){
-        return "aaaa";
-    }
 
     // home.html
     @GetMapping("/main")

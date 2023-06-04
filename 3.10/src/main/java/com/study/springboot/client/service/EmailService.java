@@ -5,17 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.util.Random;
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class EmailService {
     private final JavaMailSender javaMailSender;
-    private final SpringTemplateEngine templateEngine;
+
 
     public String sendMail(EmailMessage emailMessage, String pw) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
