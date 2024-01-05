@@ -139,7 +139,4 @@ public class ListController {
         model.addAttribute("list", list);
         return "listForm";
     }
-
-
-
 }

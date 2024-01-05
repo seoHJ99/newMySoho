@@ -47,11 +47,12 @@ CREATE TABLE item (
 	item_IMAGE TEXT NOT NULL,								-- 상품 사진
 	item_DETAIL TEXT NOT NULL,								-- 상품 상세
 	item_REGDATE DATE NOT NULL,								-- 상품 등록일
-	item_SELL INT NOT NULL DEFAULT 0						-- 상품 판매량
+	item_SELL INT NOT NULL DEFAULT 0,						-- 상품 판매량
+	item_option VARCHAR(10)
 );
 
-INSERT INTO item VALUES (NULL, '원피스', '할인', '베이지원피스', '28000', '10', '베이지', '5', 'http://www.nate.com', '베이지원피스입니다~', '2023-01-03', DEFAULT);
-INSERT INTO item VALUES (NULL, '하의', '행사', '아크네데님연청', '35000', '0', '블루', '2', 'http://www.naver.com', '연청바지입니다~', '2023-01-03', 10);
+INSERT INTO item VALUES (NULL, '원피스', '할인', '베이지원피스', '28000', '10', '0', '5', 'http://www.nate.com', '베이지원피스입니다~', '2023-01-03', DEFAULT, null);
+INSERT INTO item VALUES (NULL, '하의', '행사', '아크네데님연청', '35000', '0', '0', '2', 'http://www.naver.com', '연청바지입니다~', '2023-01-03', 10, null);
 
 DROP TABLE IF EXISTS cart;
 CREATE TABLE cart (
@@ -122,7 +123,7 @@ INSERT INTO orders_detail VALUES (NULL, '1', '1', '2', default);
 INSERT INTO orders_detail VALUES (NULL, '1', '2', '1', '교환');
 SELECT * FROM orders_detail;
 
-DROP TABLE review;
+DROP TABLE if exists review;
 CREATE TABLE review (
 	review_IDX INT NOT NULL PRIMARY KEY AUTO_INCREMENT,			-- 리뷰 번호
 	orders_IDX INT NOT NULL,									-- 주문 번호(FK)
@@ -131,16 +132,16 @@ CREATE TABLE review (
 	review_WRITER VARCHAR(30),									-- 리뷰 작성자
 	review_TITLE VARCHAR(50) NOT NULL,							-- 리뷰 제목
 	review_CONTENT TEXT NOT NULL,								-- 리뷰 내용
-	review_IMAGE TEXT DEFAULT '이미지 없음',											-- 리뷰 사진
+	review_IMAGE TEXT DEFAULT '이미지 없음',					-- 리뷰 사진
 	review_REGDATE DATE NOT NULL,								-- 리뷰 등록날짜
 	review_REPLY VARCHAR(500),                          -- 리뷰 답변
 	review_STATUS CHAR(3)                                -- 리뷰 상태 공개, 비공개
 );
 
-INSERT INTO review VALUES (null, '3', '1', '3', null, '1234', '좋아요', '옷이 이쁘고 배송이 빨리와서 좋았어요', DEFAULT, '2023-01-14', NULL, '공개');
+INSERT INTO review VALUES (null, '3', '1', '3', '1234', '좋아요', '옷이 이쁘고 배송이 빨리와서 좋았어요', DEFAULT, '2023-01-14', NULL, '공개');
 SELECT * FROM review;
 
-DROP TABLE qna;
+DROP TABLE if exists qna;soho_db
 CREATE TABLE qna (
 	qna_IDX INT NOT NULL PRIMARY KEY AUTO_INCREMENT,		-- 문의글 번호
 	item_IDX INT,											-- 상품 번호(FK)
@@ -159,7 +160,7 @@ CREATE TABLE qna (
 INSERT INTO qna VALUES (null, '1', '상품', '교환', '무야호', '1234', '교환문의', '사이즈가 너무 커서 바꾸고싶어요', NULL, '2023-01-16', DEFAULT, 1);
 SELECT * FROM qna;
 
-DROP TABLE admin;
+DROP TABLE if exists admin;
 CREATE TABLE admin (
 	admin_IDX INT NOT NULL PRIMARY KEY AUTO_INCREMENT,	-- 관리자 번호
 	admin_ID VARCHAR(30) NOT NULL,						-- 관리자 아이디
@@ -171,7 +172,7 @@ CREATE TABLE admin (
 
 INSERT INTO admin VALUES (null, 'hong2002', '1234', '홍명보', 1, '2023-02-06');
 
-DROP TABLE notice;
+DROP TABLE if exists notice;
 CREATE TABLE notice (
 	notice_IDX INT NOT NULL PRIMARY KEY AUTO_INCREMENT,			-- 공지글 번호soho_db
 	notice_CATE CHAR(3) NOT NULL,		-- 0.일반 1.이벤트 			-- 공지글 카테고리
