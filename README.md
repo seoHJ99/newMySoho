@@ -1,4 +1,3 @@
-<img width="530" alt="image" src="https://github.com/seoHJ99/newMySoho/assets/121778872/fc04a125-6931-48ab-a3f0-5667dd8b0288"># MySoho project
 
 ### Purpose
 
