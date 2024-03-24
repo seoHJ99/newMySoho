@@ -1,4 +1,4 @@
-# MySoho project
+<img width="530" alt="image" src="https://github.com/seoHJ99/newMySoho/assets/121778872/fc04a125-6931-48ab-a3f0-5667dd8b0288"># MySoho project
 
 ### Purpose
 
@@ -16,7 +16,7 @@
 | Distribution | Github Actions, AWS Code Deploy, AWS S3, AWS EC2  |
 
 ### Database
-![image](https://github.com/MakingNameIsAnnoying/newMySoho/assets/121778872/af2cdd97-eaf5-41cb-9497-492e4e059c6f)
+![image](<img width="530" alt="image" src="https://github.com/seoHJ99/newMySoho/assets/121778872/80afd142-0c0c-4689-be80-06d4cb7fb2a8">)
 
 
 ### Functional Decomposition
