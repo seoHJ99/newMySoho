@@ -16,7 +16,7 @@
 | Distribution | Github Actions, AWS Code Deploy, AWS S3, AWS EC2  |
 
 ### Database
-![image](<img width="530" alt="image" src="https://github.com/seoHJ99/newMySoho/assets/121778872/80afd142-0c0c-4689-be80-06d4cb7fb2a8">)
+![image](https://github.com/seoHJ99/newMySoho/assets/121778872/80afd142-0c0c-4689-be80-06d4cb7fb2a8)
 
 
 ### Functional Decomposition
